@@ -4,7 +4,7 @@ function Home() {
   return (
     <div>
       <Hero />
-      {/* About section preview goes here next */}
+     
     </div>
   );
 }
