@@ -40,7 +40,7 @@ function ApproachSection() {
             className="overflow-hidden rounded-sm lg:col-span-6"
           >
             <img
-              src="/AboutApproachImg.png"
+              src="/Rectangle 1.png"
               alt="Pitches Creative brand and product work"
               loading="lazy"
               className="h-full w-full object-cover"
