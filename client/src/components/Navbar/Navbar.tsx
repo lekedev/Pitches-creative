@@ -36,7 +36,11 @@ function Navbar() {
           end
           className="text-xl font-semibold tracking-tight text-white no-underline"
         >
-          Pitches
+          <img
+            src="PitchesCreative.png"
+            alt="Pitches Creative"
+            className="h-10 w-auto"
+          />
         </NavLink>
 
         {/* Desktop horizontal nav */}
