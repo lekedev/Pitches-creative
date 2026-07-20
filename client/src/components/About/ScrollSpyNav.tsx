@@ -1,5 +1,5 @@
-// components/About/ScrollSpyNav.tsx
 import { useEffect, useState } from "react";
+import mirror from "../../assets/images/mirror.png";
 
 interface NavItem {
   id: string;
@@ -46,22 +46,31 @@ function ScrollSpyNav() {
 
   return (
     <>
-      {/* Desktop: full labeled card, fixed right side */}
-      <nav className="fixed right-12 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-1 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm lg:flex">
-        {sections.map((section) => (
-          <button
-            key={section.id}
-            onClick={() => handleClick(section.id)}
-            className={`rounded-md px-3 py-2 text-left text-sm transition-colors ${
-              activeId === section.id
-                ? "bg-white/10 font-medium text-white"
-                : "text-white/60 hover:text-white"
-            }`}
-          >
-            {section.label}
-          </button>
-        ))}
-      </nav>
+      {/* Desktop: nav card + decorative image, grouped as one sticky block */}
+      <div className="fixed right-12 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-end gap-6 lg:flex">
+        <nav className="flex flex-col gap-1  rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => handleClick(section.id)}
+              className={`rounded-md px-3 py-2 text-left text-sm transition-colors ${
+                activeId === section.id
+                  ? "bg-white/10 font-medium text-white"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
+
+        <img
+          src={mirror}
+          alt=""
+          aria-hidden="true"
+          className="w-[193px] h-[287px] object-contain"
+        />
+      </div>
 
       {/* Mobile: minimal progress dots, fixed right edge, no labels */}
       <nav className="fixed right-4 top-1/2 z-40 flex -translate-y-1/2 flex-col gap-3 lg:hidden">

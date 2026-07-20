@@ -1,148 +1,85 @@
-import { useState, useEffect, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import wrld from "../../assets/images/wrld.png";
+import deliverd from "../../assets/images/deliverd.png";
+import happycl from "../../assets/images/happycl.png";
 
-const slides = [
+interface Stat {
+  icon: string;
+  stat: string;
+  label: string;
+}
+
+const stats: Stat[] = [
   {
-    bg: "/homebg.png",
-    description:
-      "Pitches Creative helps ambitious businesses turn ideas into powerful brand identities,",
+    icon: wrld,
     stat: "10",
     label: "Years of Experience",
   },
   {
-    bg: "/homebg.png",
-    description:
-      "We partner closely with founders and teams to build brands people trust.",
-    stat: "128",
-    label: "Happy Clients",
-  },
-  {
-    bg: "/homebg.png",
-    description:
-      "From strategy to execution, every project is built to perform.",
+    icon: deliverd,
     stat: "128",
     label: "Projects Delivered",
   },
+  {
+    icon: happycl,
+    stat: "120",
+    label: "Happy Clients",
+  },
 ];
 
-const AUTO_ADVANCE_MS = 5000;
-
 function StatsCarousel() {
-  const [index, setIndex] = useState(0);
-
-  const goTo = useCallback((i: number) => {
-    setIndex((i + slides.length) % slides.length);
-  }, []);
-
-  const next = useCallback(() => goTo(index + 1), [index, goTo]);
-  const prev = useCallback(() => goTo(index - 1), [index, goTo]);
-
-  // Autoplay, resets whenever index changes (manual nav restarts the timer)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, AUTO_ADVANCE_MS);
-    return () => clearInterval(timer);
-  }, [index]);
-
   return (
-    <section className="bg-[#0a0a0a] font-[Aspekta] px-5 py-16 lg:px-12 lg:py-24">
-      {/* Mobile: single full-width card, crossfades */}
-      <div className="relative h-[420px] w-full overflow-hidden rounded-sm lg:hidden">
-        <AnimatePresence mode="wait">
+    <section className="relative overflow-hidden bg-[#0a0a0a] px-5 py-16 font-[Aspekta] lg:px-12 lg:py-24">
+      <img
+        src="/homebg.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-black/50" />
+
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-3">
+        {stats.map((item, i) => (
           <motion.div
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className="absolute inset-0"
+            key={item.label}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            /*
+              CARD SIZE: aspect-[401/199] locks the card to the exact
+              Figma ratio (roughly 2:1) at any width. `relative` lets the
+              icon below position itself against this card's edges,
+              not the page.
+            */
+            className="relative aspect-[401/199] overflow-visible rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-md"
           >
+            {/*
+              ICON: positioned absolute, pulled outside the top-left
+              corner with negative offsets so it visually "bleeds" past
+              the card border, matching the screenshot. Adjust -top-* /
+              -left-* to control how far it overflows, and the h-/w-
+              values to resize the icon itself.
+            */}
             <img
-              src={slides[index].bg}
+              src={item.icon}
               alt=""
-              className="h-full w-full object-cover"
+              className="absolute -left-0 -top-0 h-24 w-24 object-contain lg:h-28 lg:w-28"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
-              <p className="max-w-[55%] text-sm text-white/90">
-                {slides[index].description}
+
+            {/*
+              TEXT BLOCK: pinned to the bottom-right corner of the card,
+              right-aligned. Adjust `bottom-6 right-6` to change its
+              distance from the card edges.
+            */}
+            <div className="absolute bottom-6 right-6 text-right">
+              <p className="flex items-baseline justify-end text-4xl font-bold text-white lg:text-5xl">
+                {item.stat}
+                <span className="ml-1 text-[#FFC24F]">+</span>
               </p>
-              <div className="text-right">
-                <p className="flex items-baseline justify-end text-4xl font-[Aspekta] font-bold text-white">
-                  {slides[index].stat}
-                  <span className="ml-1 text-[#FFC24F]">+</span>
-                </p>
-                <p className="text-[16px] font-[Aspekta] text-white/70">{slides[index].label}</p>
-              </div>
+              <p className="text-sm text-white/70">{item.label}</p>
             </div>
           </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Desktop: peek carousel, next slides visible as slivers */}
-      <div className="relative hidden h-[440px] font-[Aspekta] w-full overflow-hidden rounded-sm lg:block">
-        <motion.div
-          className="flex h-full gap-4"
-          animate={{ x: `calc(-${index} * (90% + 1rem))` }}
-          transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
-        >
-          {slides.map((slide, i) => (
-            <div
-              key={slide.bg}
-              className="relative h-full w-[90%] flex-shrink-0 overflow-hidden rounded-sm"
-            >
-              <img
-                src={slide.bg}
-                alt=""
-                loading={i === 0 ? "eager" : "lazy"}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 p-10">
-                <p className="max-w-sm text-[26px] text-white/90">
-                  {slide.description}
-                </p>
-                <div className="flex-shrink-0 text-right">
-                  <p className="flex items-baseline justify-end text-6xl font-[Aspekta] font-bold text-white">
-                    {slide.stat}
-                    <span className="ml-1 text-[#FFC24F]">+</span>
-                  </p>
-                  <p className="text-[16px] font-[Aspekta] text-white/70">{slide.label}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Arrows */}
-        <button
-          onClick={prev}
-          aria-label="Previous slide"
-          className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-        >
-          ←
-        </button>
-        <button
-          onClick={next}
-          aria-label="Next slide"
-          className="absolute right-[calc(10%+1rem+1rem)] top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-        >
-          →
-        </button>
-      </div>
-
-      {/* Dots — shared across breakpoints */}
-      <div className="mt-6 flex items-center justify-center gap-2">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              i === index ? "w-6 bg-orange-500" : "w-2 bg-white/30"
-            }`}
-          />
         ))}
       </div>
     </section>

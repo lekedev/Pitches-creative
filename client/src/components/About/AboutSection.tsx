@@ -1,13 +1,14 @@
+// components/About/AboutSection.tsx
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import type { ReactNode } from "react";
-import dice from "../../assets/images/dice.png";
 
 interface Card {
   icon: string;
   heading: ReactNode;
   description: string;
   featured?: boolean;
+  image?: string;
 }
 
 interface AboutSectionProps {
@@ -19,6 +20,7 @@ interface AboutSectionProps {
   ctaLabel?: string;
   ctaTo?: string;
   cards?: Card[];
+  cardsLayout?: "bento" | "uniform"; // bento = 2 top (custom sizes) + rest below; uniform = equal 3-col grid
 }
 
 function AboutSection({
@@ -30,28 +32,28 @@ function AboutSection({
   ctaLabel,
   ctaTo,
   cards,
+  cardsLayout = "bento",
 }: AboutSectionProps) {
+  const cardBorder = (card: Card) =>
+    card.featured ? "border-[#FFC24F]" : "border-white/10";
+
   return (
     <section
       id={id}
       className="relative overflow-hidden bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:pr-64 lg:py-28"
     >
-      {/* Background Image */}
       {backgroundImage && (
         <>
           <img
             src={backgroundImage}
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover scale-110"
+            className="absolute inset-0 h-full w-full scale-110 object-cover"
           />
-
-          {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/90 via-[#0a0a0a]/80 to-[#0a0a0a]/95" />
         </>
       )}
 
-      {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-6xl">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -64,7 +66,6 @@ function AboutSection({
         </motion.h2>
 
         <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
-          {/* Text */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,10 +74,7 @@ function AboutSection({
             className="order-2 flex flex-col gap-6 lg:order-1"
           >
             {paragraphs.map((p, i) => (
-              <p
-                key={i}
-                className="text-sm leading-relaxed text-white/80"
-              >
+              <p key={i} className="text-sm leading-relaxed text-white/80">
                 {p}
               </p>
             ))}
@@ -91,7 +89,6 @@ function AboutSection({
             )}
           </motion.div>
 
-          {/* Optional Image Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -110,76 +107,102 @@ function AboutSection({
           </motion.div>
         </div>
 
-        {/* Value Cards */}
-              {cards && cards.length > 0 && (
-                <div className="mt-20 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:mt-28">
-                  {cards.map((card, i) => (
+        {/* ================= Cards ================= */}
+        {cards && cards.length > 0 && (
+          <>
+            {cardsLayout === "bento" ? (
+              <div className="mt-20 space-y-6 lg:mt-28">
+                {/* Top row: 2 custom-sized cards */}
+                <div className="flex flex-col gap-6 lg:flex-row">
+                  {cards.slice(0, 2).map((card, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: i * 0.1 }}
-                      className={`flex flex-col items-center rounded-2xl border p-8 text-center ${
-                        card.featured
-                          ? "border-[#FFC24F] bg-white/10 backdrop-blur-md"
-                          : "border-white/10 bg-white/5 backdrop-blur-md"
+                      className={`flex flex-col rounded-2xl border bg-transparent p-8 backdrop-blur-md ${cardBorder(
+                        card
+                      )} ${
+                        i === 0
+                          ? "lg:h-[321px] lg:w-[382px]"
+                          : "lg:h-[319px] lg:w-[290px]"
                       }`}
                     >
-                      {/* Icon */}
-                      <div className="mb-6 flex h-20 w-20 items-center justify-center  bg-white/0">
-                        <img
-                          src={dice}
-                          alt=""
-                          className="h-[291px] w-[262px] object-contain"
-                        />
-                      </div>
-
-                      {/* Heading */}
-                      <h3 className="mb-4 text-xl font-medium text-[#FFFBF4]">
+                      <img
+                        src={card.icon}
+                        alt=""
+                        className="mb-6 h-[108px] w-[89px] object-contain"
+                      />
+                      <h3 className="mb-4 text-xl font-medium text-white">
                         {card.heading}
                       </h3>
-
-                      {/* Description */}
-                      <p className="text-sm leading-relaxed text-[#FFFBF4]/70">
+                      <p className="text-sm leading-relaxed text-white/70">
                         {card.description}
                       </p>
                     </motion.div>
                   ))}
                 </div>
-              )}
-        {/* {cards && cards.length > 0 && (
-          <div className="mt-20 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:mt-28">
-            {cards.map((card, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`rounded-2xl border p-8 ${
-                  card.featured
-                    ? "border-[#FFC24F] bg-white/10 backdrop-blur-md"
-                    : "border-white/10 bg-white/5 backdrop-blur-md"
-                }`}
-              >
-                <img
-                  src={dice}
-                  alt=""
-                  className="mb-6 h-16 w-16 object-contain"
-                />
 
-                <h3 className="mb-4 text-xl font-medium text-white">
-                  {card.heading}
-                </h3>
-
-                <p className="text-sm leading-relaxed text-white/70">
-                  {card.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        )} */}
+                {/* Bottom row: remaining cards, equal size */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {cards.slice(2).map((card, i) => (
+                    <motion.div
+                      key={i + 2}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: (i + 2) * 0.1 }}
+                      className={`flex flex-col rounded-2xl border bg-transparent p-8 backdrop-blur-md lg:h-[284px] ${cardBorder(
+                        card
+                      )}`}
+                    >
+                      <img
+                        src={card.icon}
+                        alt=""
+                        className="mb-6 h-16 w-16 object-contain"
+                      />
+                      <h3 className="mb-4 font-[Aspekta] text-xl font-medium text-white">
+                        {card.heading}
+                      </h3>
+                      <p className="font-[Aspekta] text-sm leading-relaxed text-white/70">
+                        {card.description}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              /* Uniform: equal-size cards, plain wrapping grid */
+              <div className="mt-20 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-28 lg:grid-cols-3">
+                {cards.map((card, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    className={`flex flex-col gap-6 rounded-2xl border bg-transparent p-8 backdrop-blur-md ${cardBorder(
+                      card
+                    )}`}
+                  >
+                    <img
+                      src={card.icon}
+                      alt=""
+                      className="h-[98px] w-[98px] object-contain"
+                    />
+                    <h3 className="text-xl font-medium text-white">
+                      {card.heading}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/70">
+                      {card.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );

@@ -17,9 +17,10 @@ function Home() {
     <div>
       <Hero />
       <AboutIntro />
+      <StatsCarousel />
       <ApproachSection />
       <LogoMarquee />
-      <StatsCarousel />
+      
       <ServicesIntro />
       <ServicesCarousel />
       <PortfolioShowcase />
