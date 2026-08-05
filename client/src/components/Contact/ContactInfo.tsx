@@ -35,14 +35,14 @@ function ContactInfo() {
             transition={{ duration: 0.6 }}
             className="flex flex-col gap-8 "
           >
-            <h1 className="w-[642px] h-[168px] text-5xl font-medium leading-[1.15] text-white sm:text-5xl">
+            <h1 className="w-full max-w-2xl text-3xl font-medium leading-[1.15] text-white sm:text-4xl lg:text-5xl">
               <span className="text-[#FFC24F]">Tell us</span> what you are
               building. We will help you{" "}
               <span className="text-[#FFC24F]">shape</span> the{" "}
               <span className="text-[#FFC24F]">next</span> move.
             </h1>
 
-            <p className="max-w-md h-[69px] text-[16px] leading-relaxed text-white/70">
+            <p className="max-w-md text-[16px] leading-relaxed text-white/70">
               Whether you need a brand identity, website, app, campaign, or
               full creative system, share the details with us and we will
               help you find the clearest path forward.
@@ -54,7 +54,7 @@ function ContactInfo() {
                 >
             Start your Enquiry
             </button>
-            <p className="max-w-md h-[69px] text-[16px] leading-relaxed text-white/70">
+            <p className="max-w-md text-[16px] leading-relaxed text-white/70">
               Great projects begin with clear conversations. Use the form
               below to tell us about your business, what you need, what you
               are trying to achieve, and where you want the project to go.
@@ -79,7 +79,7 @@ function ContactInfo() {
               <img
                 src="/contactimg/Arror.png"
                 alt=""
-                className="h-[158-px] w-[115px] object-contain"
+                className="h-[158px] w-[115px] object-contain"
               />
             </div>
 
@@ -89,12 +89,12 @@ function ContactInfo() {
                 <div key={i} className="border-b border-white/10 pb-6">
                   <Wrapper
                     {...(detail.href ? { href: detail.href } : {})}
-                    className="flex items-center gap-8 font-[inter] text-[19px] text-white no-underline"
+                    className="flex items-center gap-4 sm:gap-8 font-[inter] text-[19px] text-white no-underline"
                   >
                     <img
                       src={detail.icon}
                       alt=""
-                      className="h-[47px] w-[48px] object-contain"
+                      className="h-[47px] w-[48px] flex-shrink-0 object-contain"
                     />
                     <span className="text-base">{detail.label}</span>
                   </Wrapper>
