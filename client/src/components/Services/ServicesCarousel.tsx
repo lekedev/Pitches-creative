@@ -1,83 +1,125 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const services = [
-  { label: "Service 1", image: "Service.png" },
-  { label: "Brand Design", image: "Branddesign.png" },
-  { label: "App Development", image: "Appdev.png" },
-  { label: "Web Development", image: "Webdev.png" },
+  {
+    title: "Service 1",
+    image: "/Service.png",
+  },
+  {
+    title: "Brand Design",
+    image: "/Branddesign.png",
+  },
+  {
+    title: "App Development",
+    image: "/Appdev.png",
+  },
+  {
+    title: "Web Development",
+    image: "/Webdev.png",
+  },
+  // {
+  //   title: "UI / UX Design",
+  //   image: "/UIDesign.png",
+  // },
 ];
 
-const AUTO_ADVANCE_MS = 4000;
-const VISIBLE_DESKTOP = 3.4; // how many cards show at once (fractional = partial peek)
+const CARD_WIDTH = 305;
+const GAP = 24;
 
 function ServicesCarousel() {
-  const [index, setIndex] = useState(0);
-  const maxIndex = services.length - 1;
+  const [current, setCurrent] = useState(0);
 
-  const goTo = useCallback(
-    (i: number) => setIndex(Math.max(0, Math.min(i, maxIndex))),
-    [maxIndex]
-  );
-  const next = useCallback(() => goTo(index + 1 > maxIndex ? 0 : index + 1), [index, goTo, maxIndex]);
-  const prev = useCallback(() => goTo(index - 1 < 0 ? maxIndex : index - 1), [index, goTo, maxIndex]);
+  const maxSlide = services.length - 4;
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
-    }, AUTO_ADVANCE_MS);
-    return () => clearInterval(timer);
-  }, [index, maxIndex]);
+  const next = () => {
+    if (current < maxSlide) {
+      setCurrent((prev) => prev + 1);
+    }
+  };
+
+  const prev = () => {
+    if (current > 0) {
+      setCurrent((prev) => prev - 1);
+    }
+  };
 
   return (
-    <section className="bg-[#0a0a0a] px-5 pb-20 lg:px-12 lg:pb-28">
-      <div className="relative mx-auto max-w-7xl">
-        <div className="overflow-hidden">
-          <motion.div
-            className="flex gap-4 lg:gap-5"
-            animate={{
-              x: `calc(-${index} * (${100 / VISIBLE_DESKTOP}% + 1.25rem))`,
-            }}
-            transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}
-          >
-            {services.map((service, i) => (
-              <div
-                key={service.label}
-                className="relative aspect-[3/4] w-[70%] flex-shrink-0 overflow-hidden rounded-sm sm:w-[45%] lg:w-[calc(100%/3.4)]"
-              >
-                <img
-                  src={service.image}
-                  alt={service.label}
-                  loading={i < 2 ? "eager" : "lazy"}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-black/60 px-5 py-4 backdrop-blur-sm">
-                  <p className="text-lg font-[36px] font-[Aspekta] text-[#FFC24F] sm:text-xl">
-                    {service.label}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
+    <section className="bg-[#0A0A0A] pb-24 lg:pb-32 overflow-hidden">
+      <div className="overflow-hidden font-[InstrumentSans]">
+        <motion.div
+          animate={{
+            x: -(current * (CARD_WIDTH + GAP)),
+          }}
+          transition={{
+            duration: 0.8,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="flex pl-6 lg:pl-12"
+          style={{ gap: `${GAP}px` }}
+        >
+          {services.map((service, i) => (
+            <motion.div
+              key={service.title}
+              whileHover={{
+                y: -12,
+                scale: 1.02,
+              }}
+              transition={{
+                duration: 0.35,
+              }}
+              className={`
+                relative
+                w-[280px]
+                lg:w-[305px]
+                h-[360px]
+                lg:h-[397px]
+                flex-shrink-0
+                overflow-hidden
+                rounded-sm
+                cursor-pointer
 
-        {/* Arrows */}
-        <div className="mt-8 flex items-center justify-end gap-3">
-          <button
-            onClick={prev}
-            aria-label="Previous service"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#FFC24F] text-white transition-colors hover:bg-[#f1af35] hover:text-black"
-          >
-            ←
-          </button>
-          <button
-            onClick={next}
-            aria-label="Next service"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#FFC24F] text-white transition-colors hover:bg-[#f1af35] hover:text-black"
-          >
-            →
-          </button>
-        </div>
+                ${i === 0 ? "mt-20" : ""}
+                ${i === 1 ? "mt-15" : ""}
+                ${i === 2 ? "mt-10" : ""}
+                ${i === 3 ? "mt-0" : ""}
+                ${i === 4 ? "mt-14" : ""}
+              `}
+            >
+              <img
+                src={service.image}
+                alt={service.title}
+                className="h-full w-full object-cover"
+              />
+
+              <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black via-black/70 to-transparent" />
+
+              <div className="absolute bottom-6 left-6">
+                <h3 className="font-[Aspekta] text-[26px] lg:text-[36px] leading-none text-[#FFC24F]">
+                  {service.title}
+                </h3>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Navigation */}
+
+      <div className="mt-12 flex justify-end gap-4 pr-6 lg:pr-12">
+        <button
+          onClick={prev}
+          className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:bg-[#FFC24F] hover:text-black"
+        >
+          ←
+        </button>
+
+        <button
+          onClick={next}
+          className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:bg-[#FFC24F] hover:text-black"
+        >
+          →
+        </button>
       </div>
     </section>
   );

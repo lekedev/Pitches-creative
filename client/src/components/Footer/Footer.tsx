@@ -4,29 +4,29 @@ import { NavLink } from "react-router-dom";
 const footerLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Work", path: "/work" },
-  { label: "Services", path: "/services" },
+  { label: "Branding", path: "/branding" },
+  { label: "Technology", path: "/technology" },
   { label: "Testimonials", path: "/testimonials" },
-  { label: "Blog", path: "/blog" },
+  { label: "Insights", path: "/insights" },
   { label: "Contact", path: "/contact" },
 ];
 
 const socials = [
-  { label: "Facebook", href: "https://facebook.com", icon: "f" },
+  { label: "Facebook", href: "https://facebook.com", icon: "/icon/facebook.svg" },
   { label: "Twitter", href: "https://twitter.com", icon: "𝕏" },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: "in" },
+  { label: "LinkedIn", href: "https://linkedin.com", icon: "/icon/linkedin.svg" },
 ];
 
 function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#0a0a0a] px-5 pt-10 lg:px-12">
+    <footer className="border-t border-white/10 font-[barlow-regular] bg-[#0a0a0a] px-5 pt-10 lg:px-12">
       {/* Top row: logo, nav, social */}
       <div className="flex flex-col gap-8 pb-10 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
         
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2 no-underline">
           <img
-            src="PitchesCreative.png"
+            src="/icon/PitchesCreativeLogoBlack1.svg"
             alt="Pitches Creative Logo"
             className="h-[79px] w-[201px] flex-shrink-0 object-contain"
           />
@@ -58,23 +58,34 @@ function Footer() {
 
 
         {/* Social */}
-        <div className="flex items-center gap-4 rounded-full border border-white/10 px-5 py-3">
-          <span className="text-sm text-white/80">
+        <div className="flex items-center w-[402px] h-[92px] gap-5 rounded-lg border border-white/10 px-4 py-3">
+          <span className="text-xl  text-white/80">
             Stay Connected
           </span>
 
           <div className="flex items-center gap-2">
-            {socials.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5 text-sm text-orange-400 transition-colors hover:bg-white/10"
-              >
-                {social.icon}
-              </a>
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="
+                      flex h-[64px] w-[64px] items-center justify-center
+                      rounded-md
+                      border border-[#343434]
+                      bg-[linear-gradient(180deg,#242424_0%,rgba(36,36,36,0)_100%)]
+                      transition-all duration-300
+                      hover:bg-[linear-gradient(180deg,#2B2B2B_0%,rgba(43,43,43,0)_100%)]"
+                      
+                >
+                  <img
+                    src={social.icon}
+                    alt={social.label}
+                    className="h-5 w-5 object-contain"
+                  />
+                </a>
             ))}
           </div>
         </div>
@@ -86,31 +97,39 @@ function Footer() {
 
         {/* Contact */}
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+            <a
+              href="mailto:hello@squareup.com"
+              className="flex items-center gap-2 text-sm text-white/80 no-underline transition-colors hover:text-white"
+            >
+              <img
+                src="/icon/mail.svg"
+                alt=""
+                className="h-4 w-5"
+              />
+              hello@squareup.com
+            </a>
 
-          <a
-            href="mailto:hello@squareup.com"
-            className="flex items-center gap-2 text-sm text-white/80 no-underline transition-colors hover:text-white"
-          >
-            <span aria-hidden>✉</span>
-            hello@squareup.com
-          </a>
+            <a
+              href="tel:+919181323209"
+              className="flex items-center gap-2 text-sm text-white/80 no-underline transition-colors hover:text-white"
+            >
+              <img
+                src="/icon/phone.svg"
+                alt=""
+                className="h-4 w-5"
+              />
+              +91 91813 23 2309
+            </a>
 
-
-          <a
-            href="tel:+919181323209"
-            className="flex items-center gap-2 text-sm text-white/80 no-underline transition-colors hover:text-white"
-          >
-            <span aria-hidden>☎</span>
-            +91 91813 23 2309
-          </a>
-
-
-          <span className="flex items-center gap-2 text-sm text-white/80">
-            <span aria-hidden>📍</span>
-            Somewhere in the World
-          </span>
-
-        </div>
+            <span className="flex items-center gap-2 text-sm text-white/80">
+              <img
+                src="/icon/location.svg"
+                alt=""
+                className="h-4 w-5"
+              />
+              Somewhere in the World
+            </span>
+          </div>
 
 
         <p className="text-sm text-white/40">

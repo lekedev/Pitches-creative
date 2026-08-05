@@ -124,16 +124,17 @@ function Hero() {
                     to Stand Out</span>
         </motion.h1>
 
-       
+        {/* Contact button */}
+         
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="text-sm text-white/70 lg:absolute lg:bottom-18 "
         >
-          Based in Nigeria
-          <br />
-          Creating Globally
+          <NavLink to="/contact" className="items-center gap-2 w-[120px] h-[50px] rounded-full border border-white/20 px-6 py-2.5 text-sm font-medium text-white no-underline transition-colors duration-200 hover:bg-white hover:text-black lg:inline-flex">
+           Let's Talk
+          </NavLink>
         </motion.p>
       </div>
     </section>

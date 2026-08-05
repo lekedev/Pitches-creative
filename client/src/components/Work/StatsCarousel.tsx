@@ -31,7 +31,7 @@ function StatsCarousel() {
   return (
     <section className="relative overflow-hidden bg-[#0a0a0a] px-5 py-16 font-[Aspekta] lg:px-12 lg:py-24">
       <img
-        src="/homebg.png"
+        src="/bgAbout.png"
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover"

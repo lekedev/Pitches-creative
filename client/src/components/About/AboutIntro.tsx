@@ -14,8 +14,8 @@ function AboutIntro() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-3"
           >
-            <p className="flex items-center gap-2 text-sm font-[InstrumentSans] font-medium tracking-widest text-white/80">
-              <span className="text-orange-500">//</span> ABOUT
+            <p className="flex items-center gap-2 text-sm font-[InstrumentSans] font-medium tracking-widest text-white">
+              <span className="text-[#CF6702] w-[16px] h-[24px]">//</span> ABOUT
             </p>
           </motion.div>
 
@@ -54,7 +54,7 @@ function AboutIntro() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="flex flex-col items-start gap-8 lg:col-span-5 lg:col-start-8 lg:justify-center"
           >
-            <p className="text-justify text-base leading-relaxed text-white/80">
+            <p className="text-justify font-[Aspekta] text-base leading-relaxed text-white/80">
               Pitches Creative helps ambitious businesses turn ideas into
               powerful brand identities, persuasive marketing systems,
               high-performing websites, and digital products built for
@@ -63,9 +63,9 @@ function AboutIntro() {
 
             <NavLink
               to="/contact"
-              className="inline-flex items-center gap-3 rounded-full bg-white py-2 pl-2 pr-5 text-sm font-medium text-black no-underline"
+              className="inline-flex items-center gap-3 rounded-full bg-white py-2 pl-2 pr-5 text-sm font-medium font-[InstrumentSans] text-black no-underline"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500 text-white">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFC24F] text-blacks">
                 →
               </span>
               Start Your Project

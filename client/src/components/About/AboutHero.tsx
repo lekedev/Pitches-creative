@@ -1,20 +1,24 @@
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import ScrollSpyNav from "./ScrollSpyNav";
+import { useState } from "react";
 import aboutBg from "../../assets/images/bgAbout.png";
 
 function AboutHero() {
+  const [bgLoaded, setBgLoaded] = useState(false);
+
   return (
     <section
       id="about"
-      className="relative min-h-screen font-[Aspekta] overflow-hidden bg-[#0a0a0a] px-5 pb-20 pt-28 lg:px-12 lg:pt-36"
-    >
-      
-      <img
+       className="relative flex h-screen snap-start snap-always items-center overflow-y-auto overflow-x-hidden bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:pr-64"    >
+      <motion.img
         src={aboutBg}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full scale-110 object-cover"
+        onLoad={() => setBgLoaded(true)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: bgLoaded ? 1 : 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="absolute inset-0 h-full w-full object-cover"
       />
 
       {/* Gradient Overlay */}
@@ -42,11 +46,6 @@ function AboutHero() {
             className="aspect-square w-full max-w-md rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm lg:col-span-4"
           >
             {/* Replace this with an image when ready */}
-            {/* <img
-              src={heroImage}
-              alt="Pitches Creative"
-              className="h-full w-full rounded-2xl object-cover"
-            /> */}
           </motion.div>
 
           {/* Paragraph + CTA */}
@@ -56,7 +55,7 @@ function AboutHero() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="flex flex-col gap-6 lg:col-span-5"
           >
-            <p className="text-sm leading-relaxed font-[Aspekta] text-white/80">
+            <p className="text-sm leading-relaxed text-white/80">
               We believe every serious business deserves a brand presence
               that reflects its ambition. That means more than a good logo,
               a beautiful website, or a few social media designs. It means
@@ -80,15 +79,10 @@ function AboutHero() {
             </NavLink>
           </motion.div>
 
-          {/* Scroll Spy Navigation */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="lg:col-span-3"
-          >
-            <ScrollSpyNav />
-          </motion.div>
+          {/* lg:col-span-3 spacer — keeps the grid proportions matching the
+              Figma layout (text column doesn't stretch full width), even
+              though ScrollSpyNav itself now renders once at the page level */}
+          <div className="hidden lg:col-span-3 lg:block" />
         </div>
       </div>
     </section>

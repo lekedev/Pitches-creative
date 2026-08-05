@@ -1,11 +1,9 @@
-
-import ContactHero from '../components/Contact/ContactHero';
+import ContactInfo from '../components/Contact/ContactInfo';
 
 function Contact() {
   return (
     <div>
-      <ContactHero />
-      {/* contact form section goes here next */}
+      <ContactInfo />
     </div>
   );
 }

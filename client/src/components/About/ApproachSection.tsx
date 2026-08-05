@@ -54,7 +54,7 @@ function ApproachSection() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="flex flex-col justify-center gap-8 lg:col-span-5 lg:col-start-8"
           >
-            <div className="flex flex-col gap-4 text-base leading-relaxed text-white/80">
+            <div className="flex flex-col gap-4 text-base leading-relaxed text-[#D9D9D9]">
               <p>
                 Every business has something to say. The challenge is making
                 people care, trust it, and act on it. Pitches Creative helps
@@ -77,12 +77,7 @@ function ApproachSection() {
               >
                 Explore Our Services
               </NavLink>
-              <NavLink
-                to="/work"
-                className="text-sm font-medium text-white/80 no-underline transition-colors hover:text-white"
-              >
-                See How We Work
-              </NavLink>
+              
             </div>
           </motion.div>
         </div>

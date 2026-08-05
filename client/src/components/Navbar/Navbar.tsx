@@ -1,3 +1,4 @@
+// components/Navbar/Navbar.tsx
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -5,28 +6,22 @@ import { AnimatePresence, motion } from "framer-motion";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Work", path: "/work" },
-  { label: "Services", path: "/services" },
-  { label: "Testimonials", path: "/testimonials" },
+  { label: "Branding", path: "/branding" },
+  { label: "Technology", path: "/technology" },
+  { label: "Insight", path: "/insight" },
   { label: "Contact", path: "/contact" },
 ];
-
-const desktopLinks = navLinks.filter((link) => link.path !== "/");
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [isOpen]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <>
@@ -37,43 +32,48 @@ function Navbar() {
           className="text-xl font-semibold tracking-tight text-white no-underline"
         >
           <img
-            src="PitchesCreative.png"
+            src="/PitchesCreative.png"
             alt="Pitches Creative"
             className="h-10 w-auto"
           />
         </NavLink>
 
-        {/* Desktop horizontal nav */}
-        <nav className="hidden items-center gap-10 lg:flex">
-          {desktopLinks.map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              className={({ isActive }) =>
-                `text-sm font-medium tracking-tight no-underline transition-colors duration-200 ${
-                  isActive ? "text-white" : "text-white/60 hover:text-white"
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
+        {/* Desktop: horizontal links, slides in from the right, settles centered within the navbar row */}
+        <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
+          <AnimatePresence>
+            {isOpen && (
+              <motion.nav
+                initial={{ x: 80, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 80, opacity: 0 }}
+                transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
+                className="flex items-center gap-10"
+              >
+                {navLinks.map((link) => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    end={link.path === "/"}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `text-sm font-medium tracking-tight no-underline transition-colors duration-200 whitespace-nowrap ${
+                        isActive ? "text-white" : "text-white/60 hover:text-white"
+                      }`
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
+                ))}
+              </motion.nav>
+            )}
+          </AnimatePresence>
+        </div>
 
-        {/* Desktop CTA pill */}
-        <NavLink
-          to="/contact"
-          className="hidden items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white no-underline transition-colors duration-200 hover:bg-white hover:text-black lg:inline-flex"
-        >
-          Let's talk <span aria-hidden>→</span>
-        </NavLink>
-
-        {/* Mobile hamburger — hidden on desktop */}
         <button
           onClick={() => setIsOpen((prev) => !prev)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
-          className="relative z-[110] flex h-9 w-9 flex-col items-end justify-center gap-1.5 border-none bg-transparent p-0 cursor-pointer lg:hidden"
+          className="relative z-[110] flex h-9 w-9 flex-col items-end justify-center gap-1.5 border-none bg-transparent p-0 cursor-pointer"
         >
           <span
             className={`block h-0.5 rounded bg-white transition-all duration-300 ${
@@ -93,7 +93,7 @@ function Navbar() {
         </button>
       </header>
 
-      {/* Mobile-only full-screen overlay */}
+      {/* Mobile: unchanged, still the centered vertical full-screen fade */}
       <AnimatePresence>
         {isOpen && (
           <motion.nav
@@ -118,7 +118,9 @@ function Navbar() {
                     onClick={() => setIsOpen(false)}
                     className={({ isActive }) =>
                       `block py-3 text-3xl font-semibold tracking-tight no-underline transition-colors duration-300 ${
-                        isActive ? "text-white" : "text-gray-500 hover:text-white"
+                        isActive
+                          ? "text-white"
+                          : "text-gray-500 hover:text-white"
                       }`
                     }
                   >

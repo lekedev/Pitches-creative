@@ -1,56 +1,13 @@
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import { insights } from "../../data/insights";
 
-// Shape mirrors the future MongoDB Post model — swapping this for a
-// real fetch('/api/posts') later won't require changing the JSX below.
-interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  coverImage: string;
-  date: string;
-  author: string;
-  excerpt: string;
-}
+function InsightsTeaser() {
+  const posts = insights.slice(0, 3);
 
-const posts: BlogPost[] = [
-  {
-    id: "1",
-    slug: "color-systems-for-brands",
-    title: "Building Color Systems for Brands",
-    coverImage: "Rectangle 21.png",
-    date: "MAY 2026",
-    author: "Simon Sineq",
-    excerpt:
-      "From identity to interface, campaign to conversion, we build the assets businesses need to show up professionally and grow with confidence.",
-  },
-  {
-    id: "2",
-    slug: "product-launch-playbook",
-    title: "The Product Launch Playbook",
-    coverImage: "Rectangle 19.png",
-    date: "MAY 2026",
-    author: "Simon Sineq",
-    excerpt:
-      "From identity to interface, campaign to conversion, we build the assets businesses need to show up professionally and grow with confidence.",
-  },
-  {
-    id: "3",
-    slug: "pattern-design-in-branding",
-    title: "Pattern Design in Modern Branding",
-    coverImage: "Rectangle 20.png ",
-    date: "MAY 2026",
-    author: "Simon Sineq",
-    excerpt:
-      "From identity to interface, campaign to conversion, we build the assets businesses need to show up professionally and grow with confidence.",
-  },
-];
-
-function BlogTeaser() {
   return (
-    <section className="bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:py-28">
+    <section className="bg-[#0a0a0a] px-5 py-20 font-[Aspekta] lg:px-12 lg:py-28">
       <div className="mx-auto max-w-7xl">
-        {/* Heading row */}
         <div className="mb-12 flex items-center justify-between lg:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -69,15 +26,14 @@ function BlogTeaser() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <NavLink
-              to="/blog"
+              to="/insights"
               className="inline-flex flex-shrink-0 items-center rounded-full border border-orange-400 px-6 py-2.5 text-sm font-medium text-orange-400 no-underline transition-colors hover:bg-orange-400 hover:text-black"
             >
-              Go to Blog
+              Go to Insights
             </NavLink>
           </motion.div>
         </div>
 
-        {/* Post cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {posts.map((post, i) => (
             <motion.article
@@ -107,7 +63,7 @@ function BlogTeaser() {
               </p>
 
               <NavLink
-                to={`/blog/${post.slug}`}
+                to={`/insights/${post.slug}`}
                 className="mt-6 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
               >
                 Read Article
@@ -120,4 +76,4 @@ function BlogTeaser() {
   );
 }
 
-export default BlogTeaser;
+export default InsightsTeaser;

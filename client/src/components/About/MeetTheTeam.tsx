@@ -41,7 +41,7 @@ const team: TeamMember[] = [
 function MeetTheTeam() {
   return (
     <section
-      id="meet-the-team"
+      id="our-team"
       className="relative overflow-hidden bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:pr-64 lg:py-28"
     >
       <img

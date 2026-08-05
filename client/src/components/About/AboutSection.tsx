@@ -1,7 +1,6 @@
-// components/About/AboutSection.tsx
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 interface Card {
   icon: string;
@@ -34,6 +33,7 @@ function AboutSection({
   cards,
   cardsLayout = "bento",
 }: AboutSectionProps) {
+  const [bgLoaded, setBgLoaded] = useState(false);
   const cardBorder = (card: Card) =>
     card.featured ? "border-[#FFC24F]" : "border-white/10";
 
@@ -44,10 +44,14 @@ function AboutSection({
     >
       {backgroundImage && (
         <>
-          <img
+          <motion.img
             src={backgroundImage}
             alt=""
             aria-hidden="true"
+            onLoad={() => setBgLoaded(true)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: bgLoaded ? 1 : 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="absolute inset-0 h-full w-full scale-110 object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/90 via-[#0a0a0a]/80 to-[#0a0a0a]/95" />

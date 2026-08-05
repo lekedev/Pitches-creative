@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import mirror from "../../assets/images/mirror.png";
+import { motion } from "framer-motion";
 
 interface NavItem {
   id: string;
@@ -16,6 +17,7 @@ const sections: NavItem[] = [
 
 function ScrollSpyNav() {
   const [activeId, setActiveId] = useState(sections[0].id);
+  const [mirrorLoaded, setMirrorLoaded] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,10 +66,14 @@ function ScrollSpyNav() {
           ))}
         </nav>
 
-        <img
+        <motion.img
           src={mirror}
           alt=""
           aria-hidden="true"
+           onLoad={() => setMirrorLoaded(true)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: mirrorLoaded ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-[193px] h-[287px] object-contain"
         />
       </div>

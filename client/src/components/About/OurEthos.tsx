@@ -5,6 +5,8 @@ import redDice from "../../assets/images/reddice.png";
 
 function OurEthos() {
   return (
+
+  
     <AboutSection
       id="what-we-represent"
       backgroundImage={aboutBg}
@@ -75,6 +77,7 @@ function OurEthos() {
         },
       ]}
     />
+  
   );
 }
 
