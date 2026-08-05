@@ -58,7 +58,7 @@ function Footer() {
 
 
         {/* Social */}
-        <div className="flex items-center w-[402px] h-[92px] gap-5 rounded-lg border border-white/10 px-4 py-3">
+        <div className="flex w-full flex-wrap items-center gap-5 rounded-lg border border-white/10 px-4 py-3 sm:w-auto sm:min-w-[402px]">
           <span className="text-xl  text-white/80">
             Stay Connected
           </span>
