@@ -1,6 +1,6 @@
 // components/About/MeetTheTeam.tsx
 import { motion } from "framer-motion";
-import aboutBg from "../../assets/images/bgAbout.png";
+import aboutBg from "/bgAbout.png";
 import MacGrace from "../../assets/images/MacGrace.png"
 
 interface TeamMember {

@@ -1,6 +1,6 @@
 
 import AboutSection from "./AboutSection";
-import aboutBg from "../../assets/images/bgAbout.png";
+import aboutBg from "/bgAbout.png";
 import prizm50 from "../../assets/images/prizm50 1.png";
 import prizm45 from "../../assets/images/prizm45 1.png";
 import prizm55 from "../../assets/images/prizm45 1.png";

@@ -1,5 +1,5 @@
 import AboutSection from "./AboutSection";
-import aboutBg from "../../assets/images/bgAbout.png";
+import aboutBg from "/bgAbout.webp";
 import diceSilver from "../../assets/images/dice.png";
 import redDice from "../../assets/images/reddice.png";
 
