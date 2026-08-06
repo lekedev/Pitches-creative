@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 const services = [
   {
     title: "Service 1",
-    image: "/Service.png",
+    image: "/Service.webp",
   },
   {
     title: "Brand Design",
-    image: "/Branddesign.png",
+    image: "/Branddesign.webp",
   },
   {
     title: "App Development",
-    image: "/Appdev.png",
+    image: "/Appdev.webp",
   },
   {
     title: "Web Development",
-    image: "/Webdev.png",
+    image: "/Webdev.webp",
   },
   // {
   //   title: "UI / UX Design",

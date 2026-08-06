@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import homebg from "../../assets/homebg.png";
+import homebg from "/homebg.webp";
 
 function Hero() {
   return (
@@ -50,7 +50,7 @@ function Hero() {
             >
                 // We Transform Concepts into<br />
                 powerful brand stories with impact<br />
-                and clarity
+                and clarity.
             </p>
 
             <NavLink

@@ -40,7 +40,7 @@ function AboutIntro() {
             className="overflow-hidden rounded-sm bg-[#f4f1ea] lg:col-span-7"
           >
             <img
-              src="/Aboutsectionpitches.png"
+              src="/Aboutsectionpitches.webp"
               alt="Pitches Creative studio and brand work"
               loading="lazy"
               className="h-full w-full object-cover"

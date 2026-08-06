@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import aboutBg from "../../assets/images/bgAbout.png";
+import aboutBg from "/bgAbout.webp";
 
 function AboutHero() {
   const [bgLoaded, setBgLoaded] = useState(false);
