@@ -1,6 +1,5 @@
 // components/Services/PortfolioShowcase.tsx
-import { useState, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
 interface Item {
@@ -9,62 +8,40 @@ interface Item {
   image: string;
 }
 
-const initialTopRow: Item[] = [
-  { id: "costco", label: "Costco", image: "Rectangle 10.png" },
-  { id: "coinbase", label: "Coinbase", image: "Rectangle 11.png" },
-  { id: "qoom-1", label: "Qoom Bottles", image: "Rectangle 12.png" },
+const topRow: Item[] = [
+  { id: "costco", label: "Costco", image: "Rectangle 10.webp" },
+  { id: "coinbase", label: "Coinbase", image: "Rectangle 11.webp" },
+  { id: "qoom-1", label: "Qoom Bottles", image: "Rectangle 12.webp" },
 ];
 
-const initialBottomRow: Item[] = [
-  { id: "qoom-2", label: "Qoom Bottles Detail", image: "Rectangle 13.png" },
-  { id: "studio", label: "Studio Setup", image: "Rectangle 14.png" },
-  { id: "drop-app", label: "Drop App", image: "Rectangle 15.png" },
+const bottomRow: Item[] = [
+  { id: "qoom-2", label: "Qoom Bottles Detail", image: "Rectangle 13.webp" },
+  { id: "studio", label: "Studio Setup", image: "Rectangle 14.webp" },
+  { id: "drop-app", label: "Drop App", image: "Rectangle 15.webp" },
 ];
 
-const VISIBLE_COUNT = 3;
+// Duplicated so each row's CSS animation loops seamlessly at -50%
+const loopTopRow = [...topRow, ...topRow];
+const loopBottomRow = [...bottomRow, ...bottomRow];
 
-function PortfolioShowcase() {
-  const [topItems, setTopItems] = useState(initialTopRow);
-  const [bottomItems, setBottomItems] = useState(initialBottomRow);
-
-  // Next: leftmost card fades out and goes to the back of the queue,
-  // remaining cards shift left, next queued card slides in from the right.
-  const next = useCallback(() => {
-    setTopItems((prev) => {
-      const [first, ...rest] = prev;
-      return [...rest, first];
-    });
-    setBottomItems((prev) => {
-      const [first, ...rest] = prev;
-      return [...rest, first];
-    });
-  }, []);
-
-  // Prev: reverse — last-queued card slides back in from the left,
-  // current leftmost card fades out to the back of the queue (on the right).
-  const prev = useCallback(() => {
-    setTopItems((prev) => {
-      const last = prev[prev.length - 1];
-      return [last, ...prev.slice(0, -1)];
-    });
-    setBottomItems((prev) => {
-      const last = prev[prev.length - 1];
-      return [last, ...prev.slice(0, -1)];
-    });
-  }, []);
-
-  const renderRow = (items: Item[]) => (
-    <div className="flex gap-6 overflow-hidden">
-      <AnimatePresence mode="popLayout" initial={false}>
-        {items.slice(0, VISIBLE_COUNT).map((item) => (
-          <motion.div
-            key={item.id}
-            layout
-            initial={{ opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -80 }}
-            transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
-            className="aspect-[4/3] w-[70%] flex-shrink-0 overflow-hidden rounded-sm sm:w-[45%] lg:w-[32%]"
+function MarqueeRow({
+  items,
+  direction,
+}: {
+  items: Item[];
+  direction: "forward" | "reverse";
+}) {
+  return (
+    <div className="overflow-hidden">
+      <div
+        className={`flex w-max flex-shrink-0 gap-6 ${
+          direction === "forward" ? "animate-marquee" : "animate-marquee-reverse"
+        }`}
+      >
+        {items.map((item, i) => (
+          <div
+            key={`${item.id}-${i}`}
+            className="aspect-[4/3] w-[10%] flex-shrink-0 overflow-hidden rounded-sm sm:w-[45%] lg:w-[24rem]"
           >
             <img
               src={item.image}
@@ -72,14 +49,16 @@ function PortfolioShowcase() {
               loading="lazy"
               className="h-full w-full object-cover"
             />
-          </motion.div>
+          </div>
         ))}
-      </AnimatePresence>
+      </div>
     </div>
   );
+}
 
+function PortfolioShowcase() {
   return (
-    <section className="relative bg-[#0a0a0a] px-5 pb-20 pt-24 lg:px-12 lg:pb-28 lg:pt-32">
+    <section className="relative overflow-hidden bg-[#0a0a0a] px-5 pb-20 pt-24 lg:px-12 lg:pb-28 lg:pt-32">
       <div className="mx-auto max-w-7xl">
         {/* Heading row */}
         <div className="mb-10 flex flex-col items-start justify-between gap-6 lg:mb-14 lg:flex-row lg:items-start">
@@ -90,9 +69,12 @@ function PortfolioShowcase() {
             transition={{ duration: 0.6 }}
             className="text-4xl font-medium leading-[1.1] sm:text-5xl lg:text-6xl"
           >
-            <span className="text-white">Where</span> <span className="italic text-[#FFC24F]">Strategy</span>
+            <span className="text-white">Where</span>{" "}
+            <span className="italic text-[#FFC24F]">Strategy</span>
             <br />
-            <span className="text-white pl-48 font-[Aspekta]">Meets Execution.</span>
+            <span className="pl-48 font-[Aspekta] text-white">
+              Meets Execution.
+            </span>
           </motion.h2>
 
           <motion.p
@@ -128,26 +110,10 @@ function PortfolioShowcase() {
         </motion.div>
       </div>
 
-      {/* Two-row queue carousel */}
-      <div className="relative">
-        <div className="pb-6">{renderRow(topItems)}</div>
-        <div className="pl-[6rem] lg:pl-[10rem]">{renderRow(bottomItems)}</div>
-
-        {/* Shared arrows — control both rows together */}
-        <button
-          onClick={prev}
-          aria-label="Previous"
-          className="absolute left-2 top-[22%] z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-orange-400 text-orange-400 transition-colors hover:bg-orange-400 hover:text-black lg:left-4"
-        >
-          ←
-        </button>
-        <button
-          onClick={next}
-          aria-label="Next"
-          className="absolute right-2 top-[78%] z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 text-white transition-colors hover:bg-white/10 lg:right-4"
-        >
-          →
-        </button>
+      {/* Two rows drifting in opposite directions, no manual controls */}
+      <div className="flex flex-col gap-6">
+        <MarqueeRow items={loopTopRow} direction="forward" />
+        <MarqueeRow items={loopBottomRow} direction="reverse" />
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 // App.tsx
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home';
@@ -11,23 +11,75 @@ import Insights from './pages/Insights';
 import InsightsAll from './pages/InsightsAll';
 import Contact from './pages/Contact';
 
-function App() {
+import { AuthProvider } from "./admin/context/AuthContext";
+import { ProtectedRoute } from "./admin/components/ProtectedRoute";
+import { Login } from "./admin/pages/Login"
+import Dashboard from "./admin/pages/Dashboard";
+import InsightForm from "./admin/pages/InsightForm";
+import Messages from "./admin/pages/Messages";
+
+function AppContent() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
     <div className="app">
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
+
       <Routes>
+        {/* Public site */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/work" element={<Work />} /> */}
-        {/* <Route path="/services" element={<Services />} /> */}
-        {/* <Route path="/testimonials" element={<Testimonials />} /> */}
-        {/* <Route path="/blog" element={<Blog />} /> */}
         <Route path="/insights" element={<Insights />} />
         <Route path="/insights/all" element={<InsightsAll />} />
         <Route path="/contact" element={<Contact />} />
+
+        {/* Admin */}
+        <Route path="/admin/login" element={<Login />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/insights/new"
+          element={
+            <ProtectedRoute>
+              <InsightForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/insights/:id/edit"
+          element={
+            <ProtectedRoute>
+              <InsightForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/messages"
+          element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-      <Footer />
+
+      {!isAdminRoute && <Footer />}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
