@@ -1,4 +1,3 @@
-// components/Footer/Footer.tsx
 import { NavLink } from "react-router-dom";
 
 const footerLinks = [
@@ -6,7 +5,7 @@ const footerLinks = [
   { label: "About", path: "/about" },
   { label: "Branding", path: "/branding" },
   { label: "Technology", path: "/technology" },
-  { label: "Testimonials", path: "/testimonials" },
+  // { label: "Testimonials", path: "/testimonials" },
   { label: "Insights", path: "/insights" },
   { label: "Contact", path: "/contact" },
 ];

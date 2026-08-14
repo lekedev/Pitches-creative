@@ -13,7 +13,7 @@ function InsightsHero() {
         then swap the src below to {insightsBg}
       */}
       <motion.img
-        src="/insights/hero-gradient.png"
+        src="/insight/BgInsight.webp"
         alt=""
         aria-hidden="true"
         onLoad={() => setBgLoaded(true)}

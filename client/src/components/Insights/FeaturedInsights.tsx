@@ -19,7 +19,7 @@ const featured: FeaturedPost[] = [
     title: "Why a Strong Brand Is More Than a Logo",
     description:
       "A logo can make you recognizable, but a brand system makes you memorable. Learn why serious businesses need strategy, messaging, visuals, and digital consistency working together...",
-    coverImage: "/insights/featured-1.png",
+    coverImage: "/insight/Rectangle 42 (1).png",
   },
   {
     id: "2",
@@ -27,7 +27,7 @@ const featured: FeaturedPost[] = [
     title: "The Real Cost of Inconsistent Branding",
     description:
       "Every mismatched touchpoint chips away at trust. Here's how fragmented visuals and messaging quietly cost businesses credibility and conversions.",
-    coverImage: "/insights/featured-2.png",
+    coverImage: "/insight/insight2.jpeg",
   },
   {
     id: "3",
@@ -35,7 +35,7 @@ const featured: FeaturedPost[] = [
     title: "What Makes a Website Actually Convert",
     description:
       "Beautiful design isn't enough on its own. We break down the structural and messaging decisions that turn visitors into customers.",
-    coverImage: "/insights/featured-3.png",
+    coverImage: "/insight/insight.jpeg",
   },
 ];
 

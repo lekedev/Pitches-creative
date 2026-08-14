@@ -13,7 +13,7 @@ function InsightsHero() {
         then swap the src below to {insightsBg}
       */}
       <motion.img
-        src="/insights/hero-gradient.png"
+        src="/insight/BgInsight.webp"
         alt=""
         aria-hidden="true"
         onLoad={() => setBgLoaded(true)}
@@ -41,7 +41,7 @@ function InsightsHero() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mt-3 max-w-md text-sm leading-relaxed text-white/80"
         >
-          Ideas on branding, design, marketing, websites, and digital growth.
+          Ideas on branding, design, marketing, websites, and digital growth....
         </motion.p>
       </div>
     </section>
