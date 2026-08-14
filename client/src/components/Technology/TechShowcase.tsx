@@ -1,5 +1,6 @@
+// components/Technology/TechShowcase.tsx
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
 interface ShowcaseItem {
@@ -9,34 +10,45 @@ interface ShowcaseItem {
 }
 
 const items: ShowcaseItem[] = [
-  { id: "1", image: "/technology/showcase-1.png", alt: "Booking dashboard app" },
-  { id: "2", image: "/technology/showcase-2.png", alt: "Analytics dashboard tablet" },
-  { id: "3", image: "/technology/showcase-3.png", alt: "Travel app mobile screens" },
-  { id: "4", image: "/technology/showcase-4.png", alt: "Additional product showcase" },
+  { id: "1", image: "/technology/Rectangle 131.png", alt: "Booking dashboard app" },
+  { id: "2", image: "/technology/Rectangle 110.png", alt: "Analytics dashboard tablet" },
+  { id: "3", image: "/technology/Rectangle 129.png", alt: "Travel app mobile screens" },
+  { id: "4", image: "/technology/Rectangle 132.png", alt: "Product showcase 4" },
+  { id: "5", image: "/technology/Rectangle 133.png", alt: "Product showcase 5" },
+  { id: "6", image: "/technology/Rectangle 134.png", alt: "Product showcase 6" },
+  { id: "7", image: "/technology/Rectangle 135.png", alt: "Product showcase 7" },
+  { id: "8", image: "/technology/Rectangle 136.png", alt: "Product showcase 8" },
+  { id: "9", image: "/technology/Rectangle 137.png", alt: "Product showcase 9" },
+  { id: "10", image: "/technology/Rectangle 138.png", alt: "Product showcase 10" },
+  { id: "11", image: "/technology/Rectangle 139.png", alt: "Product showcase 11" },
+  { id: "12", image: "/technology/Rectangle 140.png", alt: "Product showcase 12" },
 ];
 
 const AUTO_ADVANCE_MS = 3000;
-const VISIBLE_COUNT = 3;
+const PER_PAGE = 3;
+const totalPages = Math.ceil(items.length / PER_PAGE);
 
 function TechShowcase() {
-  const [index, setIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
 
   const goTo = useCallback(
-    (i: number) => setIndex((i + items.length) % items.length),
+    (i: number) => setPageIndex((i + totalPages) % totalPages),
     []
   );
-  const next = useCallback(() => goTo(index + 1), [index, goTo]);
-  const prev = useCallback(() => goTo(index - 1), [index, goTo]);
+  const next = useCallback(() => goTo(pageIndex + 1), [pageIndex, goTo]);
+  const prev = useCallback(() => goTo(pageIndex - 1), [pageIndex, goTo]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % items.length);
+      setPageIndex((prev) => (prev + 1) % totalPages);
     }, AUTO_ADVANCE_MS);
     return () => clearInterval(timer);
-  }, [index]);
+  }, [pageIndex]);
 
-  // Sliding window of VISIBLE_COUNT items starting at `index`, wrapping around
-  const visibleItems = Array.from({ length: VISIBLE_COUNT }, (_, i) => items[(index + i) % items.length]);
+  const currentPageItems = items.slice(
+    pageIndex * PER_PAGE,
+    pageIndex * PER_PAGE + PER_PAGE
+  );
 
   return (
     <section className="px-5 py-20 lg:px-12 lg:py-28">
@@ -76,35 +88,42 @@ function TechShowcase() {
           </motion.div>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {visibleItems.map((item) => (
+        <div className="relative mt-14 overflow-hidden">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={item.id}
-              layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+              key={pageIndex}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
+              className="grid grid-cols-1 gap-6 sm:grid-cols-3"
             >
-              <img
-                src={item.image}
-                alt={item.alt}
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
+              {currentPageItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
             </motion.div>
-          ))}
+          </AnimatePresence>
         </div>
 
         <div className="mt-8 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {items.map((_, i) => (
+            {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
-                aria-label={`Go to item ${i + 1}`}
+                aria-label={`Go to page ${i + 1}`}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
-                  i === index ? "w-2.5 bg-[#FFC24F]" : "w-2.5 bg-white/30"
+                  i === pageIndex ? "w-6 bg-[#FFC24F]" : "w-2.5 bg-white/30"
                 }`}
               />
             ))}

@@ -75,7 +75,7 @@ function TechServicesGrid() {
         src="/technology/crystal.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-6 top-4 hidden h-32 w-32 object-contain opacity-90 lg:block"
+        className="pointer-events-none absolute right-6 -top-6 hidden h-80 w-50 object-contain opacity-90 lg:block"
       />
 
       <div className="mx-auto max-w-4xl text-center">

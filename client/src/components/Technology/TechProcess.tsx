@@ -65,19 +65,19 @@ const steps: ProcessStep[] = [
 
 function TechProcess() {
   return (
-    <section className="relative overflow-hidden px-5 py-20 lg:px-12 lg:py-28">
+    <section className="relative overflow-hidden bg-black px-5 py-20 lg:px-12 lg:py-28">
       {/* Decorative graphics */}
       <img
         src="/technology/prizm22.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-6 top-0 hidden h-28 w-28 object-contain lg:block"
+        className="pointer-events-none absolute right-6 top-0 hidden h-70 w-40 object-contain lg:block"
       />
       <img
         src="/technology/prizm45.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 hidden h-40 w-40 object-contain lg:block"
+        className="pointer-events-none absolute -bottom-35 -left-5 hidden h-70 w-60 object-contain lg:block"
       />
 
       <div className="mx-auto max-w-3xl text-center">
