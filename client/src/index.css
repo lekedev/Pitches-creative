@@ -34,14 +34,14 @@
 
 @font-face {
   font-family: "InstrumentSans";
-  src: url("./assets/fonts/InstrumentSans.woff2") format("woff2");
+  src: url("./assets/fonts/InstrumentSans.ttf") format("woff2");
   font-weight: 100 900;
-  /* font-style: italic; */
+  
 }
 
 @font-face {
   font-family: "Barlow";
-  src: url("./assets/fonts/Barlow.ttf") format("ttf");
+  src: url("./assets/fonts/Barlow-Thin.ttf") format("ttf");
 }
 
 @font-face {
@@ -51,7 +51,7 @@
 
 @font-face {
   font-family: "inter";
-  src: url("./assets/fonts/Inter.otf") format("otf");
+  src: url("./assets/fonts/Inter-Regular.otf") format("otf");
 }
 
 
