@@ -13,10 +13,7 @@ function Technology() {
     <div className="relative bg-[#0a0a0a] font-[Aspekta]">
      <StarfieldBackground />
      <div className="relative z-10">
-      <div
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url(/technology/stars-bg.png)" }}
-      />
+      
 
         <div className="relative z-10">
           <TechHero />

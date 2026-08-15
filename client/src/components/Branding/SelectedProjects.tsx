@@ -7,105 +7,452 @@ const AUTO_ADVANCE_MS = 5000;
 
 function SelectedProjects() {
   const [pageIndex, setPageIndex] = useState(0);
-
-  const goTo = useCallback(
-    (i: number) => setPageIndex((i + brandingProjects.length) % brandingProjects.length),
-    []
-  );
-  const next = useCallback(() => goTo(pageIndex + 1), [pageIndex, goTo]);
-  const prev = useCallback(() => goTo(pageIndex - 1), [pageIndex, goTo]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPageIndex((prev) => (prev + 1) % brandingProjects.length);
-    }, AUTO_ADVANCE_MS);
-    return () => clearInterval(timer);
-  }, [pageIndex]);
+  const [isPaused, setIsPaused] = useState(false);
 
   const currentProject = brandingProjects[pageIndex];
 
+  // ----------------------------------------
+  // GO TO PROJECT
+  // ----------------------------------------
+  const goTo = useCallback((index: number) => {
+    setPageIndex(
+      (index + brandingProjects.length) % brandingProjects.length
+    );
+  }, []);
+
+  // ----------------------------------------
+  // NEXT PROJECT
+  // ----------------------------------------
+  const next = useCallback(() => {
+    setPageIndex((prev) => (prev + 1) % brandingProjects.length);
+  }, []);
+
+  // ----------------------------------------
+  // PREVIOUS PROJECT
+  // ----------------------------------------
+  const prev = useCallback(() => {
+    setPageIndex(
+      (prev) =>
+        (prev - 1 + brandingProjects.length) %
+        brandingProjects.length
+    );
+  }, []);
+
+  // ----------------------------------------
+  // AUTO SLIDE
+  // ----------------------------------------
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setPageIndex((prev) => {
+        return (prev + 1) % brandingProjects.length;
+      });
+    }, AUTO_ADVANCE_MS);
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  // ----------------------------------------
+  // SAFETY CHECK
+  // ----------------------------------------
+  if (!currentProject) {
+    return null;
+  }
+
   return (
-    <section className="px-5 py-16 lg:px-12 lg:py-20">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-10 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-          <h2 className="text-3xl font-medium text-white sm:text-3xl">
-            Selected <span className="text-[#FFC24F]">Projects</span>
+    <section className="relative w-full overflow-hidden px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+      <div className="mx-auto w-full max-w-7xl">
+
+        {/* =====================================================
+            HEADER
+        ===================================================== */}
+        <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between lg:mb-9">
+
+          {/* TITLE */}
+          <h2 className="font-medium leading-none tracking-[-0.03em] text-white text-3xl sm:text-4xl lg:text-[40px]">
+            Selected{" "}
+            <span className="text-[#FFC24F]">
+              Projects
+            </span>
           </h2>
-          <p className="max-w-sm text-sm text-[#FFFBF4]">
-            Explore selected branding projects created to help businesses
-            improve recognition, build trust, and show up with stronger
-            visual confidence.
+
+          {/* DESCRIPTION */}
+          <p className="max-w-[300px] text-[11px] leading-[1.55] text-white/75 sm:text-xs lg:max-w-[285px]">
+            Explore selected branding projects created to help
+            businesses improve recognition, build trust, and show
+            up with stronger visual confidence.
           </p>
+
         </div>
 
-        <div className="relative overflow-hidden">
+        {/* =====================================================
+            PROJECT GALLERY
+        ===================================================== */}
+        <div
+          className="relative w-full"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+
           <AnimatePresence mode="wait">
+
             <motion.div
               key={currentProject.id}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+              initial={{
+                opacity: 0,
+                x: 35,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              exit={{
+                opacity: 0,
+                x: -35,
+              }}
+              transition={{
+                duration: 0.5,
+                ease: [0.65, 0, 0.35, 1],
+              }}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-6"
             >
-              {currentProject.coverImages.map((image, i) => (
-                <NavLink
-                  key={`${currentProject.id}-${i}`}
-                  to={`/projects/${currentProject.slug}`}
-                  className="group relative block aspect-[4/3] overflow-hidden rounded-2xl no-underline"
-                >
-                  <img
-                    src={image}
-                    alt={currentProject.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
 
-                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/85 via-black/30 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <h3 className="text-base font-medium text-white">
-                      {currentProject.title}
-                    </h3>
-                    <p className="mt-1 text-xs text-white/70">
-                      {currentProject.client} · {currentProject.year}
-                    </p>
+              {/* =================================================
+                  IMAGE 1
+                  LARGE — 4 COLUMNS
+              ================================================= */}
+              {currentProject.gallery?.[0] && (
+                <NavLink
+                  to={`/projects/${currentProject.slug}`}
+                  className="
+                    group
+                    relative
+                    col-span-1
+                    block
+                    overflow-hidden
+                    rounded-[14px]
+                    border
+                    border-white/10
+                    bg-black
+                    sm:col-span-4
+                  "
+                >
+                  <div className="aspect-[1.65/1] w-full overflow-hidden">
+                    <img
+                      src={currentProject.gallery[0]}
+                      alt={`${currentProject.title} project`}
+                      className="
+                        h-full
+                        w-full
+                        object-cover
+                        transition-transform
+                        duration-700
+                        ease-out
+                        group-hover:scale-[1.025]
+                      "
+                    />
                   </div>
+
+                  {/* Hover overlay */}
+                  <div
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      bg-gradient-to-t
+                      from-black/60
+                      via-transparent
+                      to-transparent
+                      opacity-0
+                      transition-opacity
+                      duration-300
+                      group-hover:opacity-100
+                    "
+                  />
                 </NavLink>
-              ))}
+              )}
+
+              {/* =================================================
+                  IMAGE 2
+                  SMALL — 2 COLUMNS
+              ================================================= */}
+              {currentProject.gallery?.[1] && (
+                <NavLink
+                  to={`/projects/${currentProject.slug}`}
+                  className="
+                    group
+                    relative
+                    col-span-1
+                    block
+                    overflow-hidden
+                    rounded-[14px]
+                    border
+                    border-white/10
+                    bg-black
+                    sm:col-span-2
+                  "
+                >
+                  <div className="aspect-[1/1] h-full min-h-[220px] w-full overflow-hidden sm:min-h-0">
+                    <img
+                      src={currentProject.gallery[1]}
+                      alt={`${currentProject.title} project`}
+                      className="
+                        h-full
+                        w-full
+                        object-cover
+                        transition-transform
+                        duration-700
+                        ease-out
+                        group-hover:scale-[1.025]
+                      "
+                    />
+                  </div>
+
+                  <div
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      bg-gradient-to-t
+                      from-black/60
+                      via-transparent
+                      to-transparent
+                      opacity-0
+                      transition-opacity
+                      duration-300
+                      group-hover:opacity-100
+                    "
+                  />
+                </NavLink>
+              )}
+
+              {/* =================================================
+                  IMAGE 3
+                  HALF WIDTH — 3 COLUMNS
+              ================================================= */}
+              {currentProject.gallery?.[2] && (
+                <NavLink
+                  to={`/projects/${currentProject.slug}`}
+                  className="
+                    group
+                    relative
+                    col-span-1
+                    block
+                    overflow-hidden
+                    rounded-[14px]
+                    border
+                    border-white/10
+                    bg-black
+                    sm:col-span-3
+                  "
+                >
+                  <div className="aspect-[1.42/1] w-full overflow-hidden">
+                    <img
+                      src={currentProject.gallery[2]}
+                      alt={`${currentProject.title} project`}
+                      className="
+                        h-full
+                        w-full
+                        object-cover
+                        transition-transform
+                        duration-700
+                        ease-out
+                        group-hover:scale-[1.025]
+                      "
+                    />
+                  </div>
+
+                  <div
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      bg-gradient-to-t
+                      from-black/60
+                      via-transparent
+                      to-transparent
+                      opacity-0
+                      transition-opacity
+                      duration-300
+                      group-hover:opacity-100
+                    "
+                  />
+                </NavLink>
+              )}
+
+              {/* =================================================
+                  IMAGE 4
+                  HALF WIDTH — 3 COLUMNS
+              ================================================= */}
+              {currentProject.gallery?.[3] && (
+                <NavLink
+                  to={`/projects/${currentProject.slug}`}
+                  className="
+                    group
+                    relative
+                    col-span-1
+                    block
+                    overflow-hidden
+                    rounded-[14px]
+                    border
+                    border-white/10
+                    bg-black
+                    sm:col-span-3
+                  "
+                >
+                  <div className="aspect-[1.42/1] w-full overflow-hidden">
+                    <img
+                      src={currentProject.gallery[3]}
+                      alt={`${currentProject.title} project`}
+                      className="
+                        h-full
+                        w-full
+                        object-cover
+                        transition-transform
+                        duration-700
+                        ease-out
+                        group-hover:scale-[1.025]
+                      "
+                    />
+                  </div>
+
+                  <div
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      bg-gradient-to-t
+                      from-black/60
+                      via-transparent
+                      to-transparent
+                      opacity-0
+                      transition-opacity
+                      duration-300
+                      group-hover:opacity-100
+                    "
+                  />
+                </NavLink>
+              )}
+
             </motion.div>
+
           </AnimatePresence>
         </div>
 
-        <div className="mt-8 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {brandingProjects.map((_, i) => (
+        {/* =====================================================
+            BOTTOM CONTROLS
+        ===================================================== */}
+        <div className="mt-7 flex items-center justify-between sm:mt-8">
+
+          {/* -----------------------------------------------------
+              PAGINATION DOTS
+          ----------------------------------------------------- */}
+          <div className="flex items-center gap-[5px]">
+
+            {brandingProjects.map((project, index) => (
               <button
-                key={i}
-                onClick={() => goTo(i)}
-                aria-label={`Go to project ${i + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  i === pageIndex ? "w-6 bg-[#FFC24F]" : "w-2 bg-white/30"
-                }`}
-              />
+                key={project.id}
+                type="button"
+                onClick={() => goTo(index)}
+                aria-label={`Go to ${project.title}`}
+                aria-current={
+                  index === pageIndex ? "true" : undefined
+                }
+                className="
+                  flex
+                  h-4
+                  w-4
+                  items-center
+                  justify-center
+                "
+              >
+                <span
+                  className={`
+                    block
+                    rounded-full
+                    transition-all
+                    duration-300
+                    ${
+                      index === pageIndex
+                        ? "h-[7px] w-[7px] bg-[#FFC24F]"
+                        : "h-[7px] w-[7px] bg-white/40"
+                    }
+                  `}
+                />
+              </button>
             ))}
+
           </div>
 
+          {/* -----------------------------------------------------
+              ARROWS
+          ----------------------------------------------------- */}
           <div className="flex items-center gap-3">
+
+            {/* PREVIOUS */}
             <button
+              type="button"
               onClick={prev}
               aria-label="Previous project"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 text-white transition-colors hover:bg-white/10"
+              className="
+                flex
+                h-9
+                w-9
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-[#FFC24F]/70
+                text-[18px]
+                leading-none
+                text-white
+                transition-all
+                duration-300
+                hover:bg-[#FFC24F]
+                hover:text-black
+                sm:h-10
+                sm:w-10
+              "
             >
-              ←
+              <span className="-translate-x-[1px]">
+                ←
+              </span>
             </button>
+
+            {/* NEXT */}
             <button
+              type="button"
               onClick={next}
               aria-label="Next project"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-colors hover:bg-[#FFC24F] hover:text-black"
+              className="
+                flex
+                h-9
+                w-9
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-[#FFC24F]
+                text-[18px]
+                leading-none
+                text-[#FFC24F]
+                transition-all
+                duration-300
+                hover:bg-[#FFC24F]
+                hover:text-black
+                sm:h-10
+                sm:w-10
+              "
             >
-              →
+              <span className="translate-x-[1px]">
+                →
+              </span>
             </button>
+
           </div>
         </div>
+
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 function NewsletterSignup() {
   return (
-    <section className="bg-[#0a0a0a] px-5 pb-20 font-[Aspekta] lg:px-12 lg:pb-28">
+    <section className=" px-5 pb-20 font-[Aspekta] lg:px-12 lg:pb-28">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
