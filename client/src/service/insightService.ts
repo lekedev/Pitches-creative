@@ -30,16 +30,25 @@ export interface Comment {
 }
 
 interface RawInsight {
-  _id: string;
+ _id: string;
   title: string;
   slug: string;
   excerpt: string;
   content: string;
-  coverImage?: { url: string; publicId: string };
+  coverImage?: {
+    url: string;
+    publicId: string;
+  };
   category: string;
   author: string;
   tags: string[];
   createdAt: string;
+
+  // Engagement settings
+  likes?: number;
+  enableSharing?: boolean;
+  enableComments?: boolean;
+  enableLikes?: boolean;
 }
 
 const FALLBACK_IMAGE = "/insight/insight.jpeg";
@@ -58,7 +67,8 @@ const mapInsight = (raw: RawInsight): Post => ({
   }),
   author: raw.author || "Pitches Creative",
   category: raw.category,
-   content: raw.content,
+  content: raw.content,
+
   likes: raw.likes ?? 0,
   enableSharing: raw.enableSharing ?? true,
   enableComments: raw.enableComments ?? true,
