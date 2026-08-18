@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes";
 import insightRoutes from "./routes/insightRoutes";
 import contactRoutes from "./routes/contactRoutes";
 import { errorHandler } from "./middleware/errorHandler";
+import commentRoutes from "./routes/commentRoutes";
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use("/api/contact", contactRoutes);
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 app.use(errorHandler);
+app.use("/api/comments", commentRoutes);
 
 export default app;

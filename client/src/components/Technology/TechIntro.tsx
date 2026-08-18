@@ -29,7 +29,7 @@ const features: Feature[] = [
 
 function TechIntro() {
   return (
-    <section className="px-5 py-10 font-[aspekta] lg:px-12">
+    <section className="px-5 py-3 font-[aspekta] lg:px-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

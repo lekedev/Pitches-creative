@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import { insights, categories } from "../../data/insights";
+import { getInsights, getCategories } from "../../service/insightService";
+import type { Post } from "../../service/insightService";
+
 
 function LatestInsights() {
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>("");
+  const [loading, setLoading] = useState(true);
 
-  const posts = insights
+  useEffect(() => {
+    getInsights().then((posts) => {
+      setAllPosts(posts);
+      const cats = getCategories(posts);
+      setCategories(cats);
+      setActiveCategory(cats[0] || "");
+      setLoading(false);
+    });
+  }, []);
+
+  const posts = allPosts
     .filter((post) => post.category === activeCategory)
     .slice(0, 3);
+
+  if (loading) return null;
+  if (categories.length === 0) return null; // no published insights yet
 
   return (
     <section className="bg-[#0a0a0a] px-5 py-16 font-[Aspekta] lg:px-12 lg:py-20">

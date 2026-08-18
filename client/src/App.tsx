@@ -16,7 +16,7 @@ const ProjectDetail = lazy(() => import('./pages/ProjectDetails'));
 const Contact = lazy(() => import('./pages/Contact'));
 
 // Admin
-const Login = lazy(() => import('./admin/pages/Login').then((m) => ({ default: m.Login })));
+const Login = lazy(() => import('./admin/pages/Login'));
 const Dashboard = lazy(() => import('./admin/pages/Dashboard'));
 const InsightForm = lazy(() => import('./admin/pages/InsightForm'));
 const Messages = lazy(() => import('./admin/pages/Messages'));
@@ -40,6 +40,9 @@ function AppContent() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/branding" element={<Branding />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
+          <Route path="admin/dashboard" element={<Dashboard />} />
+          <Route path="admin/insights/new" element={<InsightForm />} />
+          <Route path="admin/messages" element={<Messages />} />
 
           {/* Admin */}
           <Route path="/admin/login" element={<Login />} />

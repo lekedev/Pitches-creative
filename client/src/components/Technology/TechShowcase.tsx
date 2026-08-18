@@ -51,7 +51,7 @@ function TechShowcase() {
   );
 
   return (
-    <section className="px-5 py-20 lg:px-12 lg:py-28">
+    <section className="px-5 bg-[#151414] py-20 lg:px-12 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-12">
           <motion.h2

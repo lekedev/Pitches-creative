@@ -1,6 +1,7 @@
 import { useParams, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { insights } from "../data/insights";
+import PostEngagement from "../components/Insights/PostEngagement";
 
 function InsightDetail() {
   const { slug } = useParams();
@@ -58,6 +59,7 @@ function InsightDetail() {
         >
           ← Back to All Insights
         </NavLink>
+        <PostEngagement post={post} />
       </motion.div>
     </article>
   );

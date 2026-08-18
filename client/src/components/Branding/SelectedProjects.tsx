@@ -78,7 +78,7 @@ function SelectedProjects() {
           </h2>
 
           {/* DESCRIPTION */}
-          <p className="max-w-[300px] text-[11px] leading-[1.55] text-white/75 sm:text-xs lg:max-w-[285px]">
+          <p className="max-w-[401px] text-[16px] leading-[1.55] text-[#FFFBF4] sm:text-xs lg:max-w-[285px]">
             Explore selected branding projects created to help
             businesses improve recognition, build trust, and show
             up with stronger visual confidence.

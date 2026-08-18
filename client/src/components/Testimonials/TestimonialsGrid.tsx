@@ -11,7 +11,7 @@ interface Testimonial {
 const testimonials: Testimonial[] = Array.from({ length: 6 }, () => ({
   quote:
     "From identity to interface, campaign to conversion, we build the assets businesses need to show up professionally and grow with confidence.",
-  name: "Mark Thompson",
+  name: "Pink Perfection",
   title: "CEO of EventMasters",
   avatar: "Profile.png",
 }));
@@ -20,7 +20,7 @@ function TestimonialsGrid() {
   return (
     <section className="bg-[#0a0a0a] px-5 pb-24 lg:px-12 lg:pb-32">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-sm border border-white/10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-[#181717] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => {
             const col = i % 3;
             const isFirstRowOnLg = i < 3;

@@ -25,7 +25,7 @@ function BrandingHero() {
           className="text-6xl font-medium leading-[1.2] sm:text-4xl lg:text-5xl"
         >
           <span className="text-[#FFC24F]">Brands</span>{" "}
-          <span className="text-white">People Understand, Remember, </span>
+          <span className="text-white">People Understand,<br /> Remember, </span>
           <span className="text-[#FFC24F]">And Trust.</span>
         </motion.h1>
 

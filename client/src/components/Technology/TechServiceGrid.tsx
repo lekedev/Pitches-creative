@@ -69,34 +69,96 @@ const services: ServiceCard[] = [
 
 function TechServicesGrid() {
   return (
-    <section className="relative bg-black px-5 py-20 lg:px-12 lg:py-28">
-      {/* Decorative crystal graphic */}
-      <img
+    <section
+      className="
+        relative
+        overflow-visible
+        bg-black
+        px-5
+        py-20
+        lg:px-12
+        lg:py-28
+      "
+    >
+      {/* =====================================================
+          DECORATIVE CRYSTAL
+          ===================================================== */}
+      <motion.img
         src="/technology/crystal.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-6 -top-6 hidden h-80 w-50 object-contain opacity-90 lg:block"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+        }}
+        className="
+          pointer-events-none
+          absolute
+          z-20
+          hidden
+          h-[227px]
+          w-[199px]
+          object-contain
+          opacity-100
+
+          lg:right-[-40px]
+          lg:top-[-50px]
+          lg:block
+
+          xl:right-[-50px]
+          xl:top-[-75px]
+        "
       />
 
-      <div className="mx-auto max-w-4xl text-center">
+      {/* =====================================================
+          SECTION INTRO
+          ===================================================== */}
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl font-medium leading-[1.2] sm:text-4xl"
+          className="
+            font-[Aspekta]
+            text-3xl
+            font-medium
+            leading-[1.2]
+            sm:text-4xl
+          "
         >
           <span className="text-white">We Help Businesses </span>
-          <span className="text-[#FFC24F]">Turn Technology Ideas</span>
-          <span className="text-white"> Into Usable Digital Products.</span>
+
+          <span className="text-[#FFC24F]">
+            Turn Technology Ideas
+          </span>
+
+          <span className="text-white">
+            {" "}
+            Into Usable Digital Products.
+          </span>
         </motion.h2>
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/60"
+          transition={{
+            duration: 0.5,
+            delay: 0.15,
+          }}
+          className="
+            mx-auto
+            mt-4
+            max-w-lg
+            font-[Aspekta]
+            text-sm
+            leading-relaxed
+            text-white/60
+          "
         >
           We design and develop technology-based products including SaaS
           platforms, native apps, web applications, dashboards, portals, and
@@ -104,16 +166,54 @@ function TechServicesGrid() {
         </motion.p>
       </div>
 
-      <div className="mx-auto mt-14 grid max-w-7xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {/* =====================================================
+          SERVICES GRID
+          ===================================================== */}
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          mt-14
+          grid
+          max-w-7xl
+          grid-cols-1
+          gap-5
+          sm:grid-cols-2
+          lg:grid-cols-4
+        "
+      >
         {services.map((service, i) => (
           <motion.div
             key={service.highlight}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: (i % 4) * 0.08 }}
-            className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-sm"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: (i % 4) * 0.08,
+            }}
+            className="
+              flex
+              flex-col
+              gap-4
+              rounded-2xl
+              border
+              border-white/10
+              bg-black/40
+              p-6
+              backdrop-blur-sm
+            "
           >
+            {/* Icon */}
             <div className="flex h-11 w-11 items-center justify-center rounded-lg">
               <img
                 src={service.icon}
@@ -121,26 +221,74 @@ function TechServicesGrid() {
                 className="h-full w-full object-contain"
               />
             </div>
-            <h3 className="text-base font-medium text-white">
-              {service.title} <span className="text-[#FFC24F]">{service.highlight}</span>
+
+            {/* Title */}
+            <h3
+              className="
+                font-[Aspekta]
+                text-base
+                font-medium
+                text-white
+              "
+            >
+              {service.title}{" "}
+              <span className="text-[#FFC24F]">
+                {service.highlight}
+              </span>
             </h3>
-            <p className="text-sm leading-relaxed text-white/60">
+
+            {/* Description */}
+            <p
+              className="
+                font-[Aspekta]
+                text-sm
+                leading-relaxed
+                text-white/60
+              "
+            >
               {service.description}
             </p>
           </motion.div>
         ))}
       </div>
 
+      {/* =====================================================
+          CTA
+          ===================================================== */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="mt-14 flex justify-center"
+        transition={{
+          duration: 0.5,
+          delay: 0.3,
+        }}
+        className="
+          relative
+          z-10
+          mt-14
+          flex
+          justify-center
+        "
       >
         <NavLink
           to="/contact"
-          className="inline-flex items-center rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-white/10"
+          className="
+            inline-flex
+            items-center
+            rounded-full
+            border
+            border-white/30
+            px-6
+            py-3
+            font-[Aspekta]
+            text-sm
+            font-medium
+            text-white
+            no-underline
+            transition-colors
+            hover:bg-white/10
+          "
         >
           Start a Technology Project
         </NavLink>

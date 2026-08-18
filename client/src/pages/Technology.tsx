@@ -12,10 +12,11 @@ function Technology() {
   return (
     <div className="relative bg-[#0a0a0a] font-[Aspekta]">
      <StarfieldBackground />
-     <div className="relative z-10">
+     
       
 
         <div className="relative z-10">
+          
           <TechHero />
           <TechIntro />
           <TechServicesGrid />
@@ -25,8 +26,9 @@ function Technology() {
           <NewsletterSignup />
           <Footer />
         </div>
+       
       </div>
-    </div>
+   
   );
 }
 

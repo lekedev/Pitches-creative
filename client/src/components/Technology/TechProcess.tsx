@@ -65,41 +65,144 @@ const steps: ProcessStep[] = [
 
 function TechProcess() {
   return (
-    <section className="relative overflow-hidden bg-black px-5 py-20 lg:px-12 lg:py-28">
-      {/* Decorative graphics */}
-      <img
+    <section
+      className="
+        relative
+        overflow-hidden
+        bg-black
+        px-5
+        py-20
+        lg:px-12
+        lg:py-28
+      "
+    >
+      {/* =====================================================
+          TOP RIGHT DECORATIVE IMAGE
+          ===================================================== */}
+      <motion.img
         src="/technology/prizm22.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-6 top-0 hidden h-70 w-40 object-contain lg:block"
+        initial={{ opacity: 0, x: 30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+        }}
+        className="
+          pointer-events-none
+          absolute
+          right-[-55px]
+          top-[-20px]
+          z-0
+          hidden
+          h-[230px]
+          w-[230px]
+          object-contain
+          lg:block
+          xl:right-[-45px]
+          xl:top-[-15px]
+          xl:h-[250px]
+          xl:w-[250px]
+        "
       />
-      <img
+
+      {/* =====================================================
+          BOTTOM LEFT DECORATIVE IMAGE
+          ===================================================== */}
+      <motion.img
         src="/technology/prizm45.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-35 -left-5 hidden h-70 w-60 object-contain lg:block"
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 0.9,
+          delay: 0.1,
+          ease: "easeOut",
+        }}
+        className="
+          pointer-events-none
+          absolute
+          bottom-[-65px]
+          left-[-45px]
+          z-0
+          hidden
+          h-[280px]
+          w-[280px]
+          object-contain
+          lg:block
+          xl:bottom-[-75px]
+          xl:left-[-50px]
+          xl:h-[300px]
+          xl:w-[300px]
+        "
       />
 
-      <div className="mx-auto max-w-3xl text-center">
+      {/* =====================================================
+          HEADER
+          ===================================================== */}
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          max-w-3xl
+          text-center
+        "
+      >
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl font-medium leading-[1.2] sm:text-4xl"
+          transition={{
+            duration: 0.6,
+          }}
+          className="
+            font-[Aspekta]
+            text-3xl
+            font-medium
+            leading-[1.2]
+            sm:text-4xl
+          "
         >
-          <span className="text-white">From </span>
-          <span className="text-[#FFC24F]">Product</span>
-          <span className="text-white"> Thinking To Development </span>
-          <span className="text-[#FFC24F]">Execution.</span>
+          <span className="text-white">
+            From{" "}
+          </span>
+
+          <span className="text-[#FFC24F]">
+            Product
+          </span>
+
+          <span className="text-white">
+            {" "}
+            Thinking To Development{" "}
+          </span>
+
+          <span className="text-[#FFC24F]">
+            Execution.
+          </span>
         </motion.h2>
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/60"
+          transition={{
+            duration: 0.5,
+            delay: 0.15,
+          }}
+          className="
+            mx-auto
+            mt-4
+            max-w-xl
+            font-[Aspekta]
+            text-sm
+            leading-relaxed
+            text-white/60
+          "
         >
           We support technology projects across the full product journey,
           from early concept and user flow planning to interface design,
@@ -107,23 +210,85 @@ function TechProcess() {
         </motion.p>
       </div>
 
-      <div className="relative z-10 mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      {/* =====================================================
+          PROCESS GRID
+          ===================================================== */}
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          mt-10
+          grid
+          max-w-4xl
+          grid-cols-1
+          gap-x-12
+          gap-y-16
+          sm:grid-cols-2
+          lg:grid-cols-3
+        "
+      >
         {steps.map((step, i) => (
           <motion.div
             key={step.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-            className="border-l-2 border-[#FFC24F] pl-4"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: (i % 3) * 0.08,
+            }}
+            className="
+              relative
+              border-l-2
+              border-[#FFC24F]
+              pl-4
+            "
           >
-            <div className="mb-2 flex items-center gap-2">
-              <img src={step.icon} alt="" className="h-5 w-5 object-contain" />
-              <h3 className="text-base font-medium text-[#FFC24F]">
+            {/* Title */}
+            <div className="mb-2 flex items-center gap-3">
+              <img
+                src={step.icon}
+                alt=""
+                className="
+                  h-7
+                  w-7
+                  shrink-0
+                  object-contain
+                "
+              />
+
+              <h3
+                className="
+                  font-[Aspekta]
+                  text-base
+                  font-medium
+                  text-[#FFC24F]
+                  sm:text-lg
+                "
+              >
                 {step.title}
               </h3>
             </div>
-            <p className="text-sm leading-relaxed text-white/60">
+
+            {/* Description */}
+            <p
+              className="
+                max-w-[260px]
+                font-[Aspekta]
+                text-sm
+                leading-relaxed
+                text-white/70
+              "
+            >
               {step.description}
             </p>
           </motion.div>

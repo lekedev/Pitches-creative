@@ -1,60 +1,34 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
-
-interface FeaturedPost {
-  id: string;
-  slug: string;
-  title: ReactPart;
-  description: string;
-  coverImage: string;
-}
-
-type ReactPart = string;
-
-const featured: FeaturedPost[] = [
-  {
-    id: "1",
-    slug: "why-a-strong-brand-is-more-than-a-logo",
-    title: "Why a Strong Brand Is More Than a Logo",
-    description:
-      "A logo can make you recognizable, but a brand system makes you memorable. Learn why serious businesses need strategy, messaging, visuals, and digital consistency working together...",
-    coverImage: "/insight/Rectangle 42 (1).png",
-  },
-  {
-    id: "2",
-    slug: "the-real-cost-of-inconsistent-branding",
-    title: "The Real Cost of Inconsistent Branding",
-    description:
-      "Every mismatched touchpoint chips away at trust. Here's how fragmented visuals and messaging quietly cost businesses credibility and conversions.",
-    coverImage: "/insight/insight2.jpeg",
-  },
-  {
-    id: "3",
-    slug: "what-makes-a-website-actually-convert",
-    title: "What Makes a Website Actually Convert",
-    description:
-      "Beautiful design isn't enough on its own. We break down the structural and messaging decisions that turn visitors into customers.",
-    coverImage: "/insight/insight.jpeg",
-  },
-];
+import { getInsights } from "../../service/insightService";
+import type { Post } from "../../service/insightService";
 
 function FeaturedInsights() {
+  const [featured, setFeatured] = useState<Post[]>([]);
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getInsights()
+      .then((posts) => setFeatured(posts.slice(0, 3)))
+      .finally(() => setLoading(false));
+  }, []);
 
   const goTo = useCallback(
     (i: number) => setIndex((i + featured.length) % featured.length),
-    []
+    [featured.length]
   );
 
-  // Auto-slide every 5 seconds
   useEffect(() => {
+    if (featured.length === 0) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % featured.length);
     }, 5000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [featured.length]);
+
+  if (loading || featured.length === 0) return null; // avoids empty flash / broken slider
 
   const current = featured[index];
 
@@ -95,20 +69,10 @@ function FeaturedInsights() {
 
               <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-8 lg:max-w-xl">
                 <h2 className="text-2xl font-medium text-white lg:text-3xl">
-                  {current.title.split(" ").map((word, i) =>
-                    i === 2 || i === 3 ? (
-                      <span key={i} className="text-[#FFC24F]">
-                        {word}{" "}
-                      </span>
-                    ) : (
-                      <span key={i}>{word} </span>
-                    )
-                  )}
+                  {current.title}
                 </h2>
 
-                <p className="text-sm text-white/80">
-                  {current.description}
-                </p>
+                <p className="text-sm text-white/80">{current.description}</p>
 
                 <NavLink
                   to={`/insights/${current.slug}`}

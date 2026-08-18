@@ -1,9 +1,17 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import { insights } from "../../data/insights";
+import { getInsights } from "../../service/insightService";
+import type { Post } from "../../service/insightService";
 
 function InsightsTeaser() {
-  const posts = insights.slice(0, 3);
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    getInsights().then((data) => setPosts(data.slice(0, 3)));
+  }, []);
+
+  if (posts.length === 0) return null;
 
   return (
     <section className="bg-[#0a0a0a] px-5 py-20 font-[Aspekta] lg:px-12 lg:py-28">

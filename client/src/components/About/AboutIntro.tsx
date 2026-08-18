@@ -24,14 +24,14 @@ function AboutIntro() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl font-[Aspekta] leading-[1.05] text-white sm:text-5xl lg:col-span-9 lg:text-6xl"
+            className="text-4xl font-[Aspekta] text-right leading-[1.05] text-white sm:text-5xl lg:col-span-9 lg:text-6xl"
           >
-            Bold Minds, Brave Work.
+            <span className="text-[#FFC24F]">Bold</span> Minds,  <span className="text-[#FFC24F]">Brave</span> Work.
           </motion.h2>
         </div>
 
         {/* Image + text row */}
-        <div className="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-12 lg:gap-8">
+        <div className="mt-12 grid grid-cols-1 gap-12 lg:mt-16 lg:grid-cols-12 lg:gap-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ function AboutIntro() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex flex-col items-start gap-8 lg:col-span-5 lg:col-start-8 lg:justify-center"
+            className="flex flex-col items-start gap-10 lg:col-span-5 lg:col-start-8 lg:justify-start"
           >
             <p className="text-justify font-[Aspekta] text-base leading-relaxed text-white/80">
               Pitches Creative helps ambitious businesses turn ideas into

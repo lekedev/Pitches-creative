@@ -4,7 +4,7 @@ import AboutIntro from '../components/About/AboutIntro';
 import ApproachSection from '../components/About/ApproachSection';
 import StatsCarousel from '../components/Work/StatsCarousel';
 import ServicesIntro from '../components/Services/ServicesIntro';
-import ServicesCarousel from '../components/Services/ServicesCarousel';
+// import ServicesCarousel from '../components/Services/ServicesCarousel';
 import PortfolioShowcase from '../components/Services/PortfolioShowcase';
 import TestimonialsIntro from '../components/Testimonials/TestimonialsIntro';
 import TestimonialsGrid from '../components/Testimonials/TestimonialsGrid';
@@ -22,7 +22,7 @@ function Home() {
       <LogoMarquee />
       
       <ServicesIntro />
-      <ServicesCarousel />
+      {/* <ServicesCarousel /> */}
       <PortfolioShowcase />
       <TestimonialsIntro />
       <TestimonialsGrid />

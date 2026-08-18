@@ -21,11 +21,11 @@ function TechIndustries() {
           transition={{ duration: 0.6 }}
           className="flex flex-col gap-6"
         >
-          <h2 className="text-3xl font-medium leading-[1.2] sm:text-4xl lg:text-5xl">
+          <h2 className="text-3xl whitespace-nowrap font-medium leading-[1.2] sm:text-4xl lg:text-5xl">
             <span className="text-[#FFC24F]">Digital Products</span>{" "}
-            <span className="text-white">For Different </span>
+            <span className="text-white">For<br></br> Different </span>
             <span className="text-[#FFC24F]">Industries</span>
-            <span className="text-white">, Users, And Business Models.</span>
+            <span className="text-white">, Users,<br></br> And Business Models.</span>
           </h2>
 
           <p className="max-w-md text-sm leading-relaxed text-white/60">
@@ -43,7 +43,7 @@ function TechIndustries() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.06 }}
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-5 py-3 text-sm text-white backdrop-blur-sm"
+                className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/40 px-5 py-3 text-sm text-white backdrop-blur-sm"
               >
                 <img
                   src="/technology/prizm50.png"

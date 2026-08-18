@@ -3,18 +3,58 @@ import { NavLink } from "react-router-dom";
 
 function TechHero() {
   return (
-    <section className="relative min-h-screen overflow-hidden px-5 pb-20 pt-32 lg:px-12 lg:pt-40">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
+    <section
+      className="
+        relative
+        overflow-visible
+       
+        px-5
+        pt-28
+        lg:px-12
+        lg:pt-32
+      "
+    >
+      {/* Hero content */}
+      <div
+        className="
+          relative
+          mx-auto
+          max-w-7xl
+          lg:min-h-[520px]
+        "
+      >
+        {/* ================= LEFT CONTENT ================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-start gap-6"
+          className="
+            relative
+            z-20
+            flex
+            max-w-[560px]
+            flex-col
+            items-start
+            gap-6
+          "
         >
-          <h1 className="max-w-xl font-[aspekta] text-3xl font-medium leading-[1.15] sm:text-5xl lg:text-6xl">
-            <span className="text-[#FFC24F]">Digital Products</span>{" "}
-            <span className="text-white">Built For Real Users, Real</span>{" "}
-            <span className="text-[#FFC24F]">Businesses,</span>{" "}
+          <h1
+            className="
+            whitespace-nowrap
+              max-w-xl
+              font-[aspekta]
+              text-2xl
+              font-normal
+              leading-[1.05]
+              sm:text-5xl
+              lg:text-6xl
+          "
+          >
+            <span className="text-[#FFC24F] ">Digital Products</span>{" "}
+            <span className="text-white">
+              Built For <br></br> Real Users, Real
+            </span>{" "}
+            <span className="text-[#FFC24F]">Businesses,<br></br></span>{" "}
             <span className="text-white">And</span>{" "}
             <span className="text-[#FFC24F]">Real Growth.</span>
           </h1>
@@ -29,29 +69,82 @@ function TechHero() {
           <div className="flex flex-wrap items-center gap-4">
             <NavLink
               to="/contact"
-              className="inline-flex items-center rounded-full border border-white/40 bg-white/5 px-6 py-3 text-sm font-medium text-white no-underline backdrop-blur-sm transition-colors hover:bg-white hover:text-black"
+              className="
+                inline-flex
+                items-center
+                rounded-full
+                border
+                border-white/40
+                bg-white/5
+                px-6
+                py-3
+                text-sm
+                font-medium
+                text-white
+                no-underline
+                backdrop-blur-sm
+                transition-colors
+                hover:bg-white
+                hover:text-black
+              "
             >
               Start a Technology Project
             </NavLink>
+
             <NavLink
               to="/work"
-              className="inline-flex items-center rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-white/10"
+              className="
+                inline-flex
+                items-center
+                rounded-full
+                border
+                border-white/30
+                px-6
+                py-3
+                text-sm
+                font-medium
+                text-white
+                no-underline
+                transition-colors
+                hover:bg-white/10
+              "
             >
               View Tech Case Studies
             </NavLink>
           </div>
         </motion.div>
 
+        {/* ================= DASHBOARD ================= */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="relative lg:-mr-12 lg:translate-x-16 xl:-mr-2 xl:translate-x-24"
+          transition={{
+            duration: 0.8,
+            delay: 0.2,
+            ease: "easeOut",
+          }}
+          className="
+            pointer-events-none
+            absolute
+            bottom-0
+            right-[-8%]
+            z-10
+            w-[68%]
+            lg:right-[-10%]
+            lg:w-[70%]
+            xl:right-[-20%]
+            xl:w-[68%]
+          "
         >
           <img
             src="/technology/dashboard.png"
             alt="Client dashboard product mockup"
-            className="w-full max-w-[745px] object-contain"
+            className="
+              block
+              h-auto
+              w-[650px]
+              object-contain
+            "
           />
         </motion.div>
       </div>
