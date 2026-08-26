@@ -31,19 +31,22 @@ export const getInsightByIdAdmin = asyncHandler(async (req: AuthRequest, res: Re
 });
 
 export const createInsight = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const { title, excerpt, content, category, tags, published, author } = req.body;
+  const {
+    title,
+    excerpt,
+    content,
+    category,
+    tags,
+    published,
+    author,
+    enableSharing,
+    enableComments,
+    enableLikes,
+  } = req.body;
 
   if (!title || !excerpt || !content || !category) {
     return res.status(400).json({ message: "Title, excerpt, content, and category are required" });
   }
-  if (enableSharing !== undefined) insight.enableSharing = enableSharing !== "false";
-  if (enableComments !== undefined) insight.enableComments = enableComments !== "false";
-  if (enableLikes !== undefined) insight.enableLikes = enableLikes !== "false";
-
-  // updateInsight — add:
-  if (enableSharing !== undefined) insight.enableSharing = enableSharing !== "false";
-  if (enableComments !== undefined) insight.enableComments = enableComments !== "false";
-  if (enableLikes !== undefined) insight.enableLikes = enableLikes !== "false";
 
   const insight = await Insight.create({
     title,
@@ -54,6 +57,9 @@ export const createInsight = asyncHandler(async (req: AuthRequest, res: Response
     author: author || "Pitches Creative",
     tags: tags ? JSON.parse(tags) : [],
     published: published !== "false",
+    enableSharing: enableSharing !== "false",
+    enableComments: enableComments !== "false",
+    enableLikes: enableLikes !== "false",
     coverImage: req.file
       ? { url: (req.file as any).location, publicId: (req.file as any).key }
       : undefined,
@@ -66,7 +72,18 @@ export const updateInsight = asyncHandler(async (req: AuthRequest, res: Response
   const insight = await Insight.findById(req.params.id);
   if (!insight) return res.status(404).json({ message: "Insight not found" });
 
-  const { title, excerpt, content, category, tags, published, author } = req.body;
+  const {
+    title,
+    excerpt,
+    content,
+    category,
+    tags,
+    published,
+    author,
+    enableSharing,
+    enableComments,
+    enableLikes,
+  } = req.body;
 
   if (title) {
     insight.title = title;
@@ -78,6 +95,9 @@ export const updateInsight = asyncHandler(async (req: AuthRequest, res: Response
   if (author) insight.author = author;
   if (tags) insight.tags = JSON.parse(tags);
   if (published !== undefined) insight.published = published !== "false";
+  if (enableSharing !== undefined) insight.enableSharing = enableSharing !== "false";
+  if (enableComments !== undefined) insight.enableComments = enableComments !== "false";
+  if (enableLikes !== undefined) insight.enableLikes = enableLikes !== "false";
 
   if (req.file) {
     // Old image cleanup happens via S3 DeleteObjectCommand, wired in once your AWS credentials are live

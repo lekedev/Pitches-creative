@@ -22,10 +22,10 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/insights", insightRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/comments", commentRoutes);
 
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 app.use(errorHandler);
-app.use("/api/comments", commentRoutes);
 
 export default app;
