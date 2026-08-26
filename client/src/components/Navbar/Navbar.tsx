@@ -14,6 +14,7 @@ const navLinks = [
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -23,9 +24,22 @@ function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-5 py-5 lg:px-12 lg:py-6">
+      <header
+        className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-5 py-5 transition-colors duration-300 lg:px-12 lg:py-6 ${
+          isScrolled
+            ? "bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
         <NavLink
           to="/"
           end

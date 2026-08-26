@@ -45,7 +45,7 @@ function LogoMarquee() {
               src={logos.src}
               alt={logos.name}
               className="
-                w-[180px]
+                w-[100px]
                 text-white
                 h-auto
                 object-contain

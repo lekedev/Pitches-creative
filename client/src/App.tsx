@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import { AuthProvider } from './admin/context/AuthContext';
 import { ProtectedRoute } from './admin/components/ProtectedRoute';
+import ScrollToTop from './components/shared/ScrollToTop';
 
 // Public site
 const Home = lazy(() => import('./pages/Home'));
@@ -27,6 +28,7 @@ function AppContent() {
 
   return (
     <div className="app">
+      <ScrollToTop />
       {!isAdminRoute && <Navbar />}
 
       <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>

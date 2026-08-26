@@ -47,7 +47,7 @@ function MarqueeRow({
               src={item.image}
               alt={item.label}
               loading="lazy"
-              className="h-full w-full object-cover"
+              className="h-[237px] w-[449px] object-cover"
             />
           </div>
         ))}
