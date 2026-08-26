@@ -47,6 +47,17 @@ export default function InsightForm() {
   const submit = async (e: FormEvent, publish: boolean) => {
     e.preventDefault();
     setError("");
+
+    const missing = [
+      !title.trim() && "title",
+      !excerpt.trim() && "excerpt (the short summary field)",
+      !content.trim() && "content",
+    ].filter(Boolean);
+    if (missing.length > 0) {
+      setError(`Missing required field(s): ${missing.join(", ")}.`);
+      return;
+    }
+
     setSaving(true);
 
     const formData = new FormData();
@@ -71,8 +82,10 @@ export default function InsightForm() {
         await api.post(`/insights`, formData);
       }
       navigate("/admin/dashboard");
-    } catch {
-      setError("Something went wrong saving this insight. Check required fields and try again.");
+    } catch (err) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(message || "Something went wrong saving this insight. Check required fields and try again.");
     } finally {
       setSaving(false);
     }
