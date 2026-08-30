@@ -162,7 +162,7 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="text-sm text-white/70 lg:absolute lg:bottom-18 "
         >
-          <NavLink to="/contact" className="inline-flex items-center gap-2 w-[120px] h-[50px] justify-center rounded-full bg-white/10 px-6 py-2.5 text-sm font-medium text-white no-underline backdrop-blur-sm transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black">
+          <NavLink to="/contact" className="inline-flex items-center gap-2 w-[120px] h-[50px] justify-center rounded-full border border-white/15 bg-black/20 px-6 py-2.5 text-sm font-medium text-white no-underline backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),0_4px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:scale-[1.03] hover:border-white/25 hover:bg-black/30 active:scale-95">
            Let's Talk
           </NavLink>
         </motion.p>

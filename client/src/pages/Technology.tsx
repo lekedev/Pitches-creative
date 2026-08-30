@@ -1,4 +1,3 @@
-import Footer from '../components/Footer/Footer';
 import NewsletterSignup from '../components/Insights/NewsletterSignup';
 import TechHero from '../components/Technology/TechHero';
 import TechIndustries from '../components/Technology/TechIndustries';
@@ -24,7 +23,6 @@ function Technology() {
           <TechProcess />
           <TechShowcase />
           <NewsletterSignup />
-          <Footer />
         </div>
        
       </div>

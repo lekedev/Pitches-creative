@@ -24,7 +24,7 @@ export const brandingProjects: BrandingProject[] = [
       "Your brand is more than your logo. It is how your business looks, speaks, feels, and shows up across every touchpoint. We help you shape a brand that communicates clearly, looks credible, and gives people a reason to choose you.",
     coverImages: [
       "/branding/Rectangle 96.png",
-      "/branding/project-107.png",
+      "/branding/Rectangle 107.png",
     ],
     gallery: [
       "/branding/project-1-gallery-1.png",
@@ -58,7 +58,7 @@ export const brandingProjects: BrandingProject[] = [
   },
   {
     id: "3",
-    slug: "style-baba-packaging",
+    slug: "style-baba-packaging-2",
     title: "A Bold Identity For A Modern Packaging Brand.",
     client: "Baba Foods",
     service: "Brand Identity & Packaging",
@@ -79,7 +79,7 @@ export const brandingProjects: BrandingProject[] = [
   },
   {
     id: "4",
-    slug: "style-baba-packaging",
+    slug: "style-baba-packaging-3",
     title: "A Bold Identity For A Modern Packaging Brand.",
     client: "Baba Foods",
     service: "Brand Identity & Packaging",
@@ -100,8 +100,8 @@ export const brandingProjects: BrandingProject[] = [
   },
 
   {
-    id: "2",
-    slug: "style-baba-packaging",
+    id: "5",
+    slug: "style-baba-packaging-4",
     title: "A Bold Identity For A Modern Packaging Brand.",
     client: "Baba Foods",
     service: "Brand Identity & Packaging",

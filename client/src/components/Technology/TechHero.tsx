@@ -74,20 +74,21 @@ function TechHero() {
                 items-center
                 rounded-full
                 border
-                border-white/40
-                bg-white/5
+                border-white/15
+                bg-black/20
                 px-6
                 py-3
                 text-sm
                 font-medium
                 text-white
                 no-underline
-                backdrop-blur-sm
+                backdrop-blur-md
+                shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),0_4px_20px_rgba(0,0,0,0.35)]
                 transition-all
                 hover:scale-[1.03]
                 active:scale-95
-                hover:bg-white
-                hover:text-black
+                hover:border-white/25
+                hover:bg-black/30
               "
             >
               Start a Technology Project

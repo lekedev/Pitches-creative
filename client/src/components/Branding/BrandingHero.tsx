@@ -1,4 +1,3 @@
-// components/Branding/BrandingHero.tsx
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
@@ -10,6 +9,7 @@ const categories = [
   "Positioning",
   "Design",
 ];
+ const loopCategories = [...categories, ...categories];
 
 // Duplicated so the marquee loops seamlessly at -50%
 // const loopCategories = [...categories, ...categories];
@@ -49,7 +49,7 @@ function BrandingHero() {
         >
           <NavLink
             to="/contact"
-            className="inline-flex items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
+            className="inline-flex items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
           >
             Start a Branding Project
           </NavLink>
@@ -64,28 +64,36 @@ function BrandingHero() {
 
       
       {/* Category row — static, full width */}
+      
+
         <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="relative left-1/2 right-1/2 -mx-[50vw] mt-14 w-screen border-y border-white/15 bg-black/40 py-5 backdrop-blur-sm"
-            >
-            <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-3 px-5 lg:px-12">
-                {categories.map((cat) => (
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="relative left-1/2 right-1/2 -mx-[50vw] mt-14 w-screen overflow-hidden border-y border-white/15 bg-black/40 py-5 backdrop-blur-sm"
+        >
+          {/* Fade edges so the loop point isn't visually abrupt */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black/70 to-transparent lg:w-32" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black/70 to-transparent lg:w-32" />
+
+          <div className="flex overflow-hidden">
+            <div className="animate-marquee flex flex-shrink-0 items-center gap-10 pr-10">
+              {loopCategories.map((cat, i) => (
                 <span
-                    key={cat}
-                    className="flex items-center gap-6  text-[16px] text-white"
+                  key={`${cat}-${i}`}
+                  className="flex flex-shrink-0 items-center gap-6 text-[16px] text-white"
                 >
-                    <img
+                  <img
                     src="/branding/crystalbranding.png"
                     alt=""
                     className="h-8 w-14 object-contain"
-                    />
-                    {cat}
+                  />
+                  {cat}
                 </span>
-                ))}
+              ))}
             </div>
+          </div>
         </motion.div>
     </section>
   );

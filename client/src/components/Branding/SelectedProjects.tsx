@@ -1,665 +1,166 @@
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { brandingProjects } from "../../data/brandingProjects";
 
-const AUTO_ADVANCE_MS = 5000;
-
 function SelectedProjects() {
-  const [pageIndex, setPageIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const currentProject = brandingProjects[pageIndex];
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // ----------------------------------------
-  // GO TO PROJECT
-  // ----------------------------------------
-  const goTo = useCallback((index: number) => {
-    setPageIndex(
-      (index + brandingProjects.length) % brandingProjects.length
-    );
-  }, []);
+  const goTo = (index: number) => {
+    const clamped =
+      (index + brandingProjects.length) % brandingProjects.length;
 
-  // ----------------------------------------
-  // NEXT PROJECT
-  // ----------------------------------------
-  const next = useCallback(() => {
-    setPageIndex((prev) => (prev + 1) % brandingProjects.length);
-  }, []);
+    rowRefs.current[clamped]?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
 
-  // ----------------------------------------
-  // PREVIOUS PROJECT
-  // ----------------------------------------
-  const prev = useCallback(() => {
-    setPageIndex(
-      (prev) =>
-        (prev - 1 + brandingProjects.length) %
-        brandingProjects.length
-    );
-  }, []);
+  const next = () => {
+    goTo(activeIndex + 1);
+  };
 
-  // ----------------------------------------
-  // AUTO SLIDE
-  // ----------------------------------------
+  const prev = () => {
+    goTo(activeIndex - 1);
+  };
+
   useEffect(() => {
-    if (isPaused) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute("data-index"));
+            setActiveIndex(index);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
 
-    const timer = setInterval(() => {
-      setPageIndex((prev) => {
-        return (prev + 1) % brandingProjects.length;
-      });
-    }, AUTO_ADVANCE_MS);
+    rowRefs.current.forEach((element) => {
+      if (element) observer.observe(element);
+    });
 
-    return () => clearInterval(timer);
-  }, [isPaused]);
-
-  // ----------------------------------------
-  // SAFETY CHECK
-  // ----------------------------------------
-  if (!currentProject) {
-    return null;
-  }
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="relative w-full overflow-hidden px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
       <div className="mx-auto w-full max-w-7xl">
-
-        {/* =====================================================
-            HEADER
-        ===================================================== */}
+        {/* HEADER */}
         <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between lg:mb-9">
-
-          {/* TITLE */}
-          <h2 className="font-medium leading-none tracking-[-0.03em] text-white text-3xl sm:text-4xl lg:text-[40px]">
-            Selected{" "}
-            <span className="text-[#FFC24F]">
-              Projects
-            </span>
+          <h2 className="text-3xl font-medium leading-none tracking-[-0.03em] text-white sm:text-4xl lg:text-[40px]">
+            Selected <span className="text-[#FFC24F]">Projects</span>
           </h2>
 
-          {/* DESCRIPTION */}
           <p className="max-w-[401px] text-[16px] leading-[1.55] text-[#FFFBF4] sm:text-xs lg:max-w-[285px]">
-            Explore selected branding projects created to help
-            businesses improve recognition, build trust, and show
-            up with stronger visual confidence.
+            Explore selected branding projects created to help businesses
+            improve recognition, build trust, and show up with stronger
+            visual confidence.
           </p>
-
         </div>
 
-        {/* =====================================================
-            PROJECT GALLERY
-        ===================================================== */}
-        <div
-          className="relative mx-auto w-full max-w-4xl"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+        {/* PROJECT GRID */}
+        <div className="mx-auto w-full lg:max-w-[1068px]">
+          {brandingProjects.map((project, index) => {
+            /*
+              Alternate the actual column track widths per row:
+              even rows: 648px | 404px
+              odd rows:  404px | 648px
 
-          {/* PREVIOUS — side edge, vertically centered */}
-          <button
-            type="button"
-            onClick={prev}
-            aria-label="Previous project"
-            className="
-              absolute
-              left-2
-              top-1/2
-              sm:top-3/4
-              z-20
-              -translate-y-1/2
-              flex
-              h-9
-              w-9
-              items-center
-              justify-center
-              rounded-full
-              border
-              border-[#FFC24F]/70
-              bg-black/60
-              text-[18px]
-              leading-none
-              text-white
-              backdrop-blur-sm
-              transition-all
-              duration-300
-              hover:scale-[1.03]
-              active:scale-95
-              hover:bg-[#FFC24F]
-              hover:text-black
-              sm:h-10
-              sm:w-10
-            "
-          >
-            <span className="-translate-x-[1px]">
-              ←
-            </span>
-          </button>
+              Images stay in their natural order — only the column
+              template flips, not which image sits where.
+            */
+            const gridTemplate =
+              index % 2 === 0
+                ? "lg:grid-cols-[648px_404px]"
+                : "lg:grid-cols-[404px_648px]";
 
-          {/* NEXT — side edge, vertically centered */}
-          <button
-            type="button"
-            onClick={next}
-            aria-label="Next project"
-            className="
-              absolute
-              right-2
-              top-1/2
-              sm:top-1/4
-              z-20
-              -translate-y-1/2
-              flex
-              h-9
-              w-9
-              items-center
-              justify-center
-              rounded-full
-              border
-              border-[#FFC24F]
-              bg-black/60
-              text-[18px]
-              leading-none
-              text-[#FFC24F]
-              backdrop-blur-sm
-              transition-all
-              duration-300
-              hover:scale-[1.03]
-              active:scale-95
-              hover:bg-[#FFC24F]
-              hover:text-black
-              sm:h-10
-              sm:w-10
-            "
-          >
-            <span className="translate-x-[1px]">
-              →
-            </span>
-          </button>
-
-          <AnimatePresence mode="wait">
-
-            <motion.div
-              key={currentProject.id}
-              initial={{
-                opacity: 0,
-                x: 35,
-              }}
-              animate={{
-                opacity: 1,
-                x: 0,
-              }}
-              exit={{
-                opacity: 0,
-                x: -35,
-              }}
-              transition={{
-                duration: 0.5,
-                ease: [0.65, 0, 0.35, 1],
-              }}
-              className="grid grid-cols-1 gap-4 sm:aspect-[929/588] sm:grid-cols-[repeat(24,minmax(0,1fr))] sm:grid-rows-2"
-            >
-
-              {/* =================================================
-                  IMAGE 1 — ROW 1, SLOT A (6 / 24 COLUMNS)
-              ================================================= */}
-              {currentProject.gallery?.[0] && (
-                <NavLink
-                  to={`/projects/${currentProject.slug}`}
-                  className="
-                    group
-                    relative
-                    col-span-1
-                    block
-                    h-full
-                    overflow-hidden
-                    rounded-[14px]
-                    border
-                    border-white/10
-                    bg-black
-                    transition-all
-                    duration-200
-                    hover:scale-[1.03]
-                    active:scale-95
-                    sm:col-span-6
-                  "
-                >
-                  <div className="aspect-[4/5] h-full w-full overflow-hidden sm:aspect-auto">
+            return (
+              <motion.div
+                key={`${project.id}-${index}`}
+                ref={(element) => {
+                  rowRefs.current[index] = element;
+                }}
+                data-index={index}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
+                className={`mb-4 grid w-full grid-cols-1 gap-4 ${gridTemplate}`}
+              >
+                {project.coverImages.map((image, imageIndex) => (
+                  <NavLink
+                    key={`${project.id}-${index}-${imageIndex}`}
+                    to={`/projects/${project.slug}`}
+                    className="group relative block h-[220px] overflow-hidden rounded-[14px] border border-white/10 bg-black sm:h-[260px] lg:h-[300px]"
+                  >
                     <img
-                      src={currentProject.gallery[0]}
-                      alt={`${currentProject.title} project`}
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        ease-out
-                        group-hover:scale-[1.025]
-                      "
+                      src={image}
+                      alt={`${project.title} project`}
+                      className="h-full w-full object-cover transition-transform duration-[6000ms] ease-out group-hover:scale-110"
                     />
-                  </div>
 
-                  {/* Hover overlay */}
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      bg-gradient-to-t
-                      from-black/60
-                      via-transparent
-                      to-transparent
-                      opacity-0
-                      transition-opacity
-                      duration-300
-                      group-hover:opacity-100
-                    "
-                  />
-                </NavLink>
-              )}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-              {/* =================================================
-                  IMAGE 2 — ROW 1, SLOT B (9 / 24 COLUMNS)
-              ================================================= */}
-              {currentProject.gallery?.[1] && (
-                <NavLink
-                  to={`/projects/${currentProject.slug}`}
-                  className="
-                    group
-                    relative
-                    col-span-1
-                    block
-                    h-full
-                    overflow-hidden
-                    rounded-[14px]
-                    border
-                    border-white/10
-                    bg-black
-                    transition-all
-                    duration-200
-                    hover:scale-[1.03]
-                    active:scale-95
-                    sm:col-span-9
-                  "
-                >
-                  <div className="aspect-[6/5] h-full min-h-[220px] w-full overflow-hidden sm:min-h-0 sm:aspect-auto">
-                    <img
-                      src={currentProject.gallery[1]}
-                      alt={`${currentProject.title} project`}
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        ease-out
-                        group-hover:scale-[1.025]
-                      "
-                    />
-                  </div>
-
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      bg-gradient-to-t
-                      from-black/60
-                      via-transparent
-                      to-transparent
-                      opacity-0
-                      transition-opacity
-                      duration-300
-                      group-hover:opacity-100
-                    "
-                  />
-                </NavLink>
-              )}
-
-              {/* =================================================
-                  IMAGE 3 — ROW 1, SLOT C (9 / 24 COLUMNS)
-              ================================================= */}
-              {currentProject.gallery?.[2] && (
-                <NavLink
-                  to={`/projects/${currentProject.slug}`}
-                  className="
-                    group
-                    relative
-                    col-span-1
-                    block
-                    h-full
-                    overflow-hidden
-                    rounded-[14px]
-                    border
-                    border-white/10
-                    bg-black
-                    transition-all
-                    duration-200
-                    hover:scale-[1.03]
-                    active:scale-95
-                    sm:col-span-9
-                  "
-                >
-                  <div className="aspect-[6/5] h-full w-full overflow-hidden sm:aspect-auto">
-                    <img
-                      src={currentProject.gallery[2]}
-                      alt={`${currentProject.title} project`}
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        ease-out
-                        group-hover:scale-[1.025]
-                      "
-                    />
-                  </div>
-
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      bg-gradient-to-t
-                      from-black/60
-                      via-transparent
-                      to-transparent
-                      opacity-0
-                      transition-opacity
-                      duration-300
-                      group-hover:opacity-100
-                    "
-                  />
-                </NavLink>
-              )}
-
-              {/* =================================================
-                  IMAGE 4 — ROW 2, SLOT D (4 / 24 COLUMNS)
-              ================================================= */}
-              {currentProject.gallery?.[3] && (
-                <NavLink
-                  to={`/projects/${currentProject.slug}`}
-                  className="
-                    group
-                    relative
-                    col-span-1
-                    block
-                    h-full
-                    overflow-hidden
-                    rounded-[14px]
-                    border
-                    border-white/10
-                    bg-black
-                    transition-all
-                    duration-200
-                    hover:scale-[1.03]
-                    active:scale-95
-                    sm:col-span-4
-                  "
-                >
-                  <div className="aspect-[4/3] h-full w-full overflow-hidden sm:aspect-auto">
-                    <img
-                      src={currentProject.gallery[3]}
-                      alt={`${currentProject.title} project`}
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        ease-out
-                        group-hover:scale-[1.025]
-                      "
-                    />
-                  </div>
-
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      bg-gradient-to-t
-                      from-black/60
-                      via-transparent
-                      to-transparent
-                      opacity-0
-                      transition-opacity
-                      duration-300
-                      group-hover:opacity-100
-                    "
-                  />
-                </NavLink>
-              )}
-
-              {/* =================================================
-                  IMAGE 5 — ROW 2, SLOT E (4 / 24 COLUMNS)
-              ================================================= */}
-              {currentProject.gallery?.[4] && (
-                <NavLink
-                  to={`/projects/${currentProject.slug}`}
-                  className="
-                    group
-                    relative
-                    col-span-1
-                    block
-                    h-full
-                    overflow-hidden
-                    rounded-[14px]
-                    border
-                    border-white/10
-                    bg-black
-                    transition-all
-                    duration-200
-                    hover:scale-[1.03]
-                    active:scale-95
-                    sm:col-span-4
-                  "
-                >
-                  <div className="aspect-[4/3] h-full w-full overflow-hidden sm:aspect-auto">
-                    <img
-                      src={currentProject.gallery[4]}
-                      alt={`${currentProject.title} project`}
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        ease-out
-                        group-hover:scale-[1.025]
-                      "
-                    />
-                  </div>
-
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      bg-gradient-to-t
-                      from-black/60
-                      via-transparent
-                      to-transparent
-                      opacity-0
-                      transition-opacity
-                      duration-300
-                      group-hover:opacity-100
-                    "
-                  />
-                </NavLink>
-              )}
-
-              {/* =================================================
-                  IMAGE 6 — ROW 2, SLOT F (8 / 24 COLUMNS)
-              ================================================= */}
-              {currentProject.gallery?.[5] && (
-                <NavLink
-                  to={`/projects/${currentProject.slug}`}
-                  className="
-                    group
-                    relative
-                    col-span-1
-                    block
-                    h-full
-                    overflow-hidden
-                    rounded-[14px]
-                    border
-                    border-white/10
-                    bg-black
-                    transition-all
-                    duration-200
-                    hover:scale-[1.03]
-                    active:scale-95
-                    sm:col-span-8
-                  "
-                >
-                  <div className="aspect-[3/2] h-full w-full overflow-hidden sm:aspect-auto">
-                    <img
-                      src={currentProject.gallery[5]}
-                      alt={`${currentProject.title} project`}
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        ease-out
-                        group-hover:scale-[1.025]
-                      "
-                    />
-                  </div>
-
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      bg-gradient-to-t
-                      from-black/60
-                      via-transparent
-                      to-transparent
-                      opacity-0
-                      transition-opacity
-                      duration-300
-                      group-hover:opacity-100
-                    "
-                  />
-                </NavLink>
-              )}
-
-              {/* =================================================
-                  IMAGE 7 — ROW 2, SLOT G (8 / 24 COLUMNS)
-              ================================================= */}
-              {currentProject.gallery?.[6] && (
-                <NavLink
-                  to={`/projects/${currentProject.slug}`}
-                  className="
-                    group
-                    relative
-                    col-span-1
-                    block
-                    h-full
-                    overflow-hidden
-                    rounded-[14px]
-                    border
-                    border-white/10
-                    bg-black
-                    transition-all
-                    duration-200
-                    hover:scale-[1.03]
-                    active:scale-95
-                    sm:col-span-8
-                  "
-                >
-                  <div className="aspect-[3/2] h-full w-full overflow-hidden sm:aspect-auto">
-                    <img
-                      src={currentProject.gallery[6]}
-                      alt={`${currentProject.title} project`}
-                      className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-700
-                        ease-out
-                        group-hover:scale-[1.025]
-                      "
-                    />
-                  </div>
-
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      bg-gradient-to-t
-                      from-black/60
-                      via-transparent
-                      to-transparent
-                      opacity-0
-                      transition-opacity
-                      duration-300
-                      group-hover:opacity-100
-                    "
-                  />
-                </NavLink>
-              )}
-
-            </motion.div>
-
-          </AnimatePresence>
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-3 p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      <p className="text-sm font-medium text-white sm:text-base">
+                        {project.title}
+                      </p>
+                      <p className="mt-0.5 text-xs text-white/70">
+                        {project.client}
+                      </p>
+                    </div>
+                  </NavLink>
+                ))}
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* =====================================================
-            BOTTOM CONTROLS
-        ===================================================== */}
-        <div className="mt-7 flex items-center justify-center sm:mt-8">
-
-          {/* -----------------------------------------------------
-              PAGINATION DOTS
-          ----------------------------------------------------- */}
+        {/* BOTTOM CONTROLS */}
+        <div className="mx-auto mt-7 flex w-full items-center justify-between sm:mt-8 lg:max-w-[1068px]">
           <div className="flex items-center gap-[5px]">
-
             {brandingProjects.map((project, index) => (
               <button
-                key={project.id}
+                key={`${project.id}-${index}`}
                 type="button"
                 onClick={() => goTo(index)}
                 aria-label={`Go to ${project.title}`}
-                aria-current={
-                  index === pageIndex ? "true" : undefined
-                }
-                className="
-                  flex
-                  h-4
-                  w-4
-                  items-center
-                  justify-center
-                  transition-all
-                  duration-200
-                  hover:scale-[1.03]
-                  active:scale-95
-                "
+                aria-current={index === activeIndex ? "true" : undefined}
+                className="flex h-4 w-4 items-center justify-center transition-all duration-200 hover:scale-[1.03] active:scale-95"
               >
                 <span
-                  className={`
-                    block
-                    rounded-full
-                    transition-all
-                    duration-300
-                    ${
-                      index === pageIndex
-                        ? "h-[7px] w-[7px] bg-[#FFC24F]"
-                        : "h-[7px] w-[7px] bg-white/40"
-                    }
-                  `}
+                  className={`block h-[7px] w-[7px] rounded-full transition-all duration-300 ${
+                    index === activeIndex ? "bg-[#FFC24F]" : "bg-white/40"
+                  }`}
                 />
               </button>
             ))}
+          </div>
 
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous project"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#FFC24F]/70 text-[18px] leading-none text-white transition-all duration-300 hover:bg-[#FFC24F] hover:text-black sm:h-10 sm:w-10"
+            >
+              <span className="-translate-x-[1px]">←</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next project"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#FFC24F] text-[18px] leading-none text-[#FFC24F] transition-all duration-300 hover:bg-[#FFC24F] hover:text-black sm:h-10 sm:w-10"
+            >
+              <span className="translate-x-[1px]">→</span>
+            </button>
           </div>
         </div>
-
       </div>
     </section>
   );

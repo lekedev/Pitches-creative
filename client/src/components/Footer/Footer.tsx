@@ -18,7 +18,7 @@ const socials = [
 
 function Footer() {
   return (
-    <footer className="border-t border-white/10 font-[barlow-regular] bg-[#0a0a0a] px-5 pt-10 lg:px-12">
+    <footer className="relative z-10 border-t border-white/10 font-[barlow-regular] bg-[#0a0a0a] px-5 pt-10 lg:px-12">
       {/* Top row: logo, nav, social */}
       <div className="flex flex-col gap-8 pb-10 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
         

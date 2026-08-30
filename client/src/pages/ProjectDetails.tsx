@@ -2,6 +2,31 @@ import { useParams, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { brandingProjects } from "../data/brandingProjects";
 import NewsletterSignup from "../components/Insights/NewsletterSignup";
+import StarfieldBackground from "../components/shared/StarfieldBackground";
+
+function HighlightedTitle({ title }: { title: string }) {
+  const words = title.trim().split(" ");
+  if (words.length < 2) {
+    return <span className="text-[#FFC24F]">{title}</span>;
+  }
+  const [first, ...rest] = words;
+  const last = rest.pop();
+  return (
+    <>
+      <span className="text-[#FFC24F]">{first}</span>{" "}
+      {rest.join(" ")} <span className="text-[#FFC24F]">{last}</span>
+    </>
+  );
+}
+
+function FieldLabel({ children }: { children: string }) {
+  return (
+    <p className="text-xs uppercase tracking-wide text-[#FFC24F]">
+      {children}
+      <span className="mt-1 block h-[2px] w-4 bg-[#FFC24F]" />
+    </p>
+  );
+}
 
 function ProjectDetail() {
   const { slug } = useParams();
@@ -26,10 +51,7 @@ function ProjectDetail() {
 
   return (
     <div className="relative bg-[#0a0a0a] font-[Aspekta]">
-      <div
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url(/technology/stars-bg.png)" }}
-      />
+      <StarfieldBackground />
 
       <div className="relative z-10 px-5 pb-20 pt-32 lg:px-12 lg:pt-40">
         <motion.div
@@ -38,46 +60,40 @@ function ProjectDetail() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-7xl rounded-2xl border border-white/10 bg-black/40 p-8 backdrop-blur-md lg:p-10"
         >
-          <h1 className="max-w-2xl text-2xl font-medium text-[#FFC24F] sm:text-3xl">
-            {project.title}
+          <h1 className="max-w-2xl text-2xl font-medium text-white sm:text-3xl">
+            <HighlightedTitle title={project.title} />
           </h1>
 
-          <div className="mt-8 grid grid-cols-2 gap-6 border-t border-white/10 pt-6 sm:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
             <div>
-              <p className="text-xs uppercase tracking-wide text-white/40">
-                Client
-              </p>
-              <p className="mt-1 text-sm text-white">{project.client}</p>
+              <FieldLabel>Client</FieldLabel>
+              <p className="mt-2 text-sm text-white">{project.client}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-white/40">
-                Service
-              </p>
-              <p className="mt-1 text-sm text-white">{project.service}</p>
+              <FieldLabel>Sector</FieldLabel>
+              <p className="mt-2 text-sm text-white">{project.service}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-white/40">
-                Scope Of Work
-              </p>
-              <p className="mt-1 text-sm text-white">
+              <FieldLabel>Scope Of Work</FieldLabel>
+              <p className="mt-2 text-sm text-white">
                 {project.scopeOfWork}
               </p>
             </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-white/40">
-                Year
-              </p>
-              <p className="mt-1 text-sm text-white">{project.year}</p>
-            </div>
           </div>
 
-          <div className="mt-6 border-t border-white/10 pt-6">
-            <p className="text-xs uppercase tracking-wide text-[#FFC24F]">
-              Description
-            </p>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/70">
-              {project.description}
-            </p>
+          <div className="mt-6 grid grid-cols-1 gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
+            <div className="sm:col-span-2">
+              <FieldLabel>Description</FieldLabel>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/70">
+                {project.description}
+              </p>
+            </div>
+            <div>
+              <FieldLabel>Year</FieldLabel>
+              <p className="mt-2 text-sm tracking-[0.3em] text-white">
+                {project.year}
+              </p>
+            </div>
           </div>
         </motion.div>
 
@@ -89,7 +105,7 @@ function ProjectDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 4) * 0.08 }}
-              className="aspect-[4/3] overflow-hidden rounded-2xl"
+              className="aspect-[8/5] overflow-hidden rounded-[14px] border border-white/10"
             >
               <img
                 src={image}
@@ -104,7 +120,7 @@ function ProjectDetail() {
         <div className="mx-auto mt-10 flex max-w-7xl justify-end">
           <NavLink
             to={`/projects/${nextProject.slug}`}
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
           >
             Next project →
           </NavLink>
