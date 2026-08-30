@@ -124,7 +124,7 @@ function InsightsAll() {
                     </p>
                     <NavLink
                       to={`/insights/${post.slug}`}
-                      className="mt-4 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+                      className="mt-4 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
                     >
                       Read More
                     </NavLink>
@@ -139,7 +139,7 @@ function InsightsAll() {
                 onClick={() => goToPage(page - 1)}
                 disabled={page === 1}
                 aria-label="Previous page"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 text-white transition-colors hover:bg-white/10 disabled:opacity-30"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 text-white transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10 disabled:opacity-30"
               >
                 ←
               </button>
@@ -148,7 +148,7 @@ function InsightsAll() {
                 <button
                   key={p}
                   onClick={() => goToPage(p)}
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-colors ${
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-all hover:scale-[1.03] active:scale-95 ${
                     page === p
                       ? "border-[#FFC24F] bg-[#FFC24F] text-black"
                       : "border-white/30 text-white hover:bg-white/10"
@@ -162,7 +162,7 @@ function InsightsAll() {
                 onClick={() => goToPage(page + 1)}
                 disabled={page === totalPages}
                 aria-label="Next page"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-colors hover:bg-[#FFC24F] hover:text-black disabled:opacity-30"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all hover:scale-[1.03] active:scale-95 hover:bg-[#FFC24F] hover:text-black disabled:opacity-30"
               >
                 →
               </button>
@@ -177,7 +177,7 @@ function InsightsAll() {
                   setSortBy("newest");
                   setPage(1);
                 }}
-                className="rounded-md px-3 py-2 text-left text-sm text-white/70 transition-colors hover:text-white"
+                className="rounded-md px-3 py-2 text-left text-sm text-white/70 transition-all hover:scale-[1.03] active:scale-95 hover:text-white"
               >
                 Sort By
               </button>
@@ -190,7 +190,7 @@ function InsightsAll() {
                   setActiveCategory(null);
                   setPage(1);
                 }}
-                className={`rounded-md px-3 py-2 text-left text-sm transition-colors ${
+                className={`rounded-md px-3 py-2 text-left text-sm transition-all hover:scale-[1.03] active:scale-95 ${
                   activeCategory === null
                     ? "bg-white/10 font-medium text-white"
                     : "text-white/60 hover:text-white"
@@ -205,7 +205,7 @@ function InsightsAll() {
                     setActiveCategory(cat);
                     setPage(1);
                   }}
-                  className={`rounded-md px-3 py-2 text-left text-sm transition-colors ${
+                  className={`rounded-md px-3 py-2 text-left text-sm transition-all hover:scale-[1.03] active:scale-95 ${
                     activeCategory === cat
                       ? "bg-white/10 font-medium text-white"
                       : "text-white/60 hover:text-white"
@@ -218,14 +218,14 @@ function InsightsAll() {
               <p className="mt-3 px-3 text-xs font-medium uppercase tracking-wide text-white/40">
                 Author
               </p>
-              <button className="rounded-md px-3 py-2 text-left text-sm text-white/60 transition-colors hover:text-white">
+              <button className="rounded-md px-3 py-2 text-left text-sm text-white/60 transition-all hover:scale-[1.03] active:scale-95 hover:text-white">
                 Simon Sineq
               </button>
 
               <p className="mt-3 px-3 text-xs font-medium uppercase tracking-wide text-white/40">
                 Date
               </p>
-              <button className="rounded-md px-3 py-2 text-left text-sm text-white/60 transition-colors hover:text-white">
+              <button className="rounded-md px-3 py-2 text-left text-sm text-white/60 transition-all hover:scale-[1.03] active:scale-95 hover:text-white">
                 MAY 2026
               </button>
             </div>

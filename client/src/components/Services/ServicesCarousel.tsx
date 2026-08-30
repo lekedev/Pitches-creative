@@ -109,14 +109,14 @@ function ServicesCarousel() {
       <div className="mt-12 flex justify-end gap-4 pr-6 lg:pr-12">
         <button
           onClick={prev}
-          className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:bg-[#FFC24F] hover:text-black"
+          className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:scale-[1.03] active:scale-95 hover:bg-[#FFC24F] hover:text-black"
         >
           ←
         </button>
 
         <button
           onClick={next}
-          className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:bg-[#FFC24F] hover:text-black"
+          className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:scale-[1.03] active:scale-95 hover:bg-[#FFC24F] hover:text-black"
         >
           →
         </button>

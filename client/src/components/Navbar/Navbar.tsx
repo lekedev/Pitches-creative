@@ -43,7 +43,7 @@ function Navbar() {
         <NavLink
           to="/"
           end
-          className="text-xl font-semibold tracking-tight text-white no-underline"
+          className="text-xl font-semibold tracking-tight text-white no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95"
         >
           <img
             src="/PitchesCreative.png"
@@ -70,7 +70,7 @@ function Navbar() {
                     end={link.path === "/"}
                     onClick={() => setIsOpen(false)}
                     className={({ isActive }) =>
-                      `text-sm font-medium tracking-tight no-underline transition-colors duration-200 whitespace-nowrap ${
+                      `text-sm font-medium tracking-tight no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95 whitespace-nowrap ${
                         isActive ? "text-white" : "text-white/60 hover:text-white"
                       }`
                     }
@@ -87,7 +87,7 @@ function Navbar() {
           onClick={() => setIsOpen((prev) => !prev)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
-          className="relative z-[110] flex h-9 w-9 flex-col items-end justify-center gap-1.5 border-none bg-transparent p-0 cursor-pointer"
+          className="relative z-[110] flex h-9 w-9 flex-col items-end justify-center gap-1.5 border-none bg-transparent p-0 cursor-pointer transition-all duration-200 hover:scale-[1.03] active:scale-95"
         >
           <span
             className={`block h-0.5 rounded bg-white transition-all duration-300 ${
@@ -131,7 +131,7 @@ function Navbar() {
                     end={link.path === "/"}
                     onClick={() => setIsOpen(false)}
                     className={({ isActive }) =>
-                      `block py-3 text-3xl font-semibold tracking-tight no-underline transition-colors duration-300 ${
+                      `block py-3 text-3xl font-semibold tracking-tight no-underline transition-all duration-300 hover:scale-[1.03] active:scale-95 ${
                         isActive
                           ? "text-white"
                           : "text-gray-500 hover:text-white"

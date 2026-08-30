@@ -83,7 +83,9 @@ function TechHero() {
                 text-white
                 no-underline
                 backdrop-blur-sm
-                transition-colors
+                transition-all
+                hover:scale-[1.03]
+                active:scale-95
                 hover:bg-white
                 hover:text-black
               "
@@ -105,7 +107,9 @@ function TechHero() {
                 font-medium
                 text-white
                 no-underline
-                transition-colors
+                transition-all
+                hover:scale-[1.03]
+                active:scale-95
                 hover:bg-white/10
               "
             >

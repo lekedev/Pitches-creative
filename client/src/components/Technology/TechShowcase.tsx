@@ -81,7 +81,7 @@ function TechShowcase() {
             </p>
             <NavLink
               to="/contact"
-              className="inline-flex w-fit items-center rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-white/10"
+              className="inline-flex w-fit items-center rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
             >
               Start a project
             </NavLink>
@@ -122,7 +122,7 @@ function TechShowcase() {
                 key={i}
                 onClick={() => goTo(i)}
                 aria-label={`Go to page ${i + 1}`}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
+                className={`h-2.5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-95 ${
                   i === pageIndex ? "w-6 bg-[#FFC24F]" : "w-2.5 bg-white/30"
                 }`}
               />
@@ -133,14 +133,14 @@ function TechShowcase() {
             <button
               onClick={prev}
               aria-label="Previous"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-white transition-colors hover:bg-white/10"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-white transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
             >
               ←
             </button>
             <button
               onClick={next}
               aria-label="Next"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-colors hover:bg-[#FFC24F] hover:text-black"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all hover:scale-[1.03] active:scale-95 hover:bg-[#FFC24F] hover:text-black"
             >
               →
             </button>

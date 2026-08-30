@@ -27,31 +27,40 @@
 
 @font-face {
   font-family: "Aspekta";
-  src: url("./assets/fonts/AspektaVF.woff2") format("woff2");
+  src:
+    url("./assets/fonts/AspektaVF.woff2") format("woff2"),
+    url("./assets/fonts/AspektaVF.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: "InstrumentSans";
-  src: url("./assets/fonts/InstrumentSans.ttf") format("woff2");
+  src:
+    url("./assets/fonts/InstrumentSans.woff2") format("woff2"),
+    url("./assets/fonts/InstrumentSans.ttf") format("truetype");
   font-weight: 100 900;
-  
 }
 
 @font-face {
   font-family: "Barlow";
-  src: url("./assets/fonts/Barlow-Thin.ttf") format("ttf");
+  src:
+    url("./assets/fonts/Barlow-Thin.woff2") format("woff2"),
+    url("./assets/fonts/Barlow-Thin.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "barlow-regular";
-  src: url("./assets/fonts/Barlow-Regular.ttf") format("ttf");
+  src:
+    url("./assets/fonts/Barlow-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Barlow-Regular.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "inter";
-  src: url("./assets/fonts/Inter-Regular.otf") format("otf");
+  src:
+    url("./assets/fonts/Inter-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Inter-Regular.otf") format("opentype");
 }
 
 
@@ -87,6 +96,19 @@
     }
     to {
       transform: translateX(0);
+    }
+  }
+}
+
+@theme {
+  --animate-ken-burns: ken-burns 9s ease-out forwards;
+
+  @keyframes ken-burns {
+    from {
+      transform: scale(1) translate(0, 0);
+    }
+    to {
+      transform: scale(1.12) translate(-2%, -1%);
     }
   }
 }

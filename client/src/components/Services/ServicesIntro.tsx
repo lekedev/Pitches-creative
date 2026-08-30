@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
@@ -57,6 +57,8 @@ const STEP_COUNT = STEP_POSITIONS.length;
 
 function ServicesSection() {
   const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [autoplayNonce, setAutoplayNonce] = useState(0);
 
   const next = () => {
     setCurrent((prev) => (prev + 1) % services.length);
@@ -66,8 +68,24 @@ function ServicesSection() {
     setCurrent((prev) => (prev - 1 + services.length) % services.length);
   };
 
+  // Manual nav resets the 3s timer so it doesn't double-advance right after a click.
+  const handleManualNav = (action: () => void) => {
+    action();
+    setAutoplayNonce((n) => n + 1);
+  };
+
+  useEffect(() => {
+    if (isPaused) return;
+    const id = setInterval(next, 3000);
+    return () => clearInterval(id);
+  }, [isPaused, autoplayNonce]);
+
   return (
-    <section className="relative overflow-hidden bg-black px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
+    <section
+      className="relative overflow-hidden bg-black px-4 py-12 sm:px-6 lg:px-8 lg:py-20"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {/* Main Figma Panel */}
       <div className="relative mx-auto min-h-[760px] w-full max-w-[1299px] overflow-hidden rounded-2xl bg-[#181717] px-6 pb-8 pt-16 sm:px-10 lg:min-h-[680px] lg:px-16 lg:pt-20">
 
@@ -102,14 +120,14 @@ function ServicesSection() {
             <div className="mt-7 flex flex-wrap items-center gap-6">
               <NavLink
                 to="/services"
-                className="inline-flex items-center rounded-full bg-[#FFC24F] px-6 py-3 text-sm font-medium text-black no-underline transition-colors duration-300 hover:bg-orange-300"
+                className="inline-flex items-center rounded-full bg-[#FFC24F] px-6 py-3 text-sm font-medium text-black no-underline transition-all duration-300 hover:scale-[1.03] active:scale-95 hover:bg-orange-300"
               >
                 Explore Our Services
               </NavLink>
 
               <NavLink
                 to="/work"
-                className="text-sm font-medium text-white/80 no-underline transition-colors duration-300 hover:text-white"
+                className="text-sm font-medium text-white/80 no-underline transition-all duration-300 hover:scale-[1.03] active:scale-95 hover:text-white"
               >
                 See How We Work
               </NavLink>
@@ -289,18 +307,18 @@ function ServicesSection() {
         <div className="absolute bottom-6 right-6 z-30 flex items-center gap-3 lg:right-6">
           <button
             type="button"
-            onClick={prev}
+            onClick={() => handleManualNav(prev)}
             aria-label="Previous service"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:bg-[#FFC24F] hover:text-black"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:scale-[1.03] active:scale-95 hover:bg-[#FFC24F] hover:text-black"
           >
             ←
           </button>
 
           <button
             type="button"
-            onClick={next}
+            onClick={() => handleManualNav(next)}
             aria-label="Next service"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:bg-[#FFC24F] hover:text-black"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFC24F] text-[#FFC24F] transition-all duration-300 hover:scale-[1.03] active:scale-95 hover:bg-[#FFC24F] hover:text-black"
           >
             →
           </button>

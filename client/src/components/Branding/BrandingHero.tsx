@@ -49,13 +49,13 @@ function BrandingHero() {
         >
           <NavLink
             to="/contact"
-            className="inline-flex items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+            className="inline-flex items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
           >
             Start a Branding Project
           </NavLink>
           <NavLink
             to="/work"
-            className="inline-flex items-center rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-white/10"
+            className="inline-flex items-center rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
           >
             View Branding Work
           </NavLink>

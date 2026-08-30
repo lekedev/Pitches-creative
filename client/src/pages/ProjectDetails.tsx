@@ -16,7 +16,7 @@ function ProjectDetail() {
         <p className="text-xl">Project not found.</p>
         <NavLink
           to="/branding"
-          className="rounded-full border border-white/30 px-5 py-2 text-sm text-white no-underline"
+          className="rounded-full border border-white/30 px-5 py-2 text-sm text-white no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95"
         >
           Back to Branding
         </NavLink>
@@ -104,7 +104,7 @@ function ProjectDetail() {
         <div className="mx-auto mt-10 flex max-w-7xl justify-end">
           <NavLink
             to={`/projects/${nextProject.slug}`}
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
           >
             Next project →
           </NavLink>

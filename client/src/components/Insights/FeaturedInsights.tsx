@@ -43,7 +43,7 @@ function FeaturedInsights() {
 
           <NavLink
             to="/insights/all"
-            className="rounded-full border border-white/30 px-5 py-2 text-xs font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+            className="rounded-full border border-white/30 px-5 py-2 text-xs font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
           >
             See All Insights
           </NavLink>
@@ -76,7 +76,7 @@ function FeaturedInsights() {
 
                 <NavLink
                   to={`/insights/${current.slug}`}
-                  className="mt-2 inline-flex w-fit items-center rounded-full border border-white/40 px-5 py-2 text-sm font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+                  className="mt-2 inline-flex w-fit items-center rounded-full border border-white/40 px-5 py-2 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
                 >
                   Read More
                 </NavLink>
@@ -91,7 +91,7 @@ function FeaturedInsights() {
               key={i}
               onClick={() => goTo(i)}
               aria-label={`Go to featured post ${i + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-95 ${
                 i === index ? "w-6 bg-[#FFC24F]" : "w-2 bg-white/30"
               }`}
             />

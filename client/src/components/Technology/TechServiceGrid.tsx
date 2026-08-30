@@ -286,7 +286,9 @@ function TechServicesGrid() {
             font-medium
             text-white
             no-underline
-            transition-colors
+            transition-all
+            hover:scale-[1.03]
+            active:scale-95
             hover:bg-white/10
           "
         >

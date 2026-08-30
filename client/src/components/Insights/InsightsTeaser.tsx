@@ -35,7 +35,7 @@ function InsightsTeaser() {
           >
             <NavLink
               to="/insights"
-              className="inline-flex flex-shrink-0 items-center rounded-full border border-orange-400 px-6 py-2.5 text-sm font-medium text-orange-400 no-underline transition-colors hover:bg-orange-400 hover:text-black"
+              className="inline-flex flex-shrink-0 items-center rounded-full border border-orange-400 px-6 py-2.5 text-sm font-medium text-orange-400 no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-orange-400 hover:text-black"
             >
               Go to Insights
             </NavLink>
@@ -72,7 +72,7 @@ function InsightsTeaser() {
 
               <NavLink
                 to={`/insights/${post.slug}`}
-                className="mt-6 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+                className="mt-6 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
               >
                 Read Article
               </NavLink>

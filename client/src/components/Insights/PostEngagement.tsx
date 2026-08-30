@@ -118,7 +118,7 @@ export default function PostEngagement({
           <button
             onClick={handleLike}
             disabled={liked}
-            className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors ${
+            className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-all hover:scale-[1.03] active:scale-95 ${
               liked
                 ? "border-[#FFC24F] bg-[#FFC24F]/10 text-[#FFC24F]"
                 : "border-white/20 text-white/70 hover:text-white"
@@ -136,21 +136,21 @@ export default function PostEngagement({
 
             <button
               onClick={() => handleShare("twitter")}
-              className="text-sm text-white/60 hover:text-white"
+              className="text-sm text-white/60 transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:text-white"
             >
               Twitter
             </button>
 
             <button
               onClick={() => handleShare("linkedin")}
-              className="text-sm text-white/60 hover:text-white"
+              className="text-sm text-white/60 transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:text-white"
             >
               LinkedIn
             </button>
 
             <button
               onClick={() => handleShare("copy")}
-              className="text-sm text-white/60 hover:text-white"
+              className="text-sm text-white/60 transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:text-white"
             >
               Copy Link
             </button>
@@ -191,7 +191,7 @@ export default function PostEngagement({
             <button
               type="submit"
               disabled={submitting}
-              className="w-fit rounded-full bg-[#FFC24F] px-5 py-2 text-sm font-medium text-black transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="w-fit rounded-full bg-[#FFC24F] px-5 py-2 text-sm font-medium text-black transition-all hover:scale-[1.03] active:scale-95 hover:opacity-90 disabled:opacity-50"
             >
               {submitting
                 ? "Posting..."

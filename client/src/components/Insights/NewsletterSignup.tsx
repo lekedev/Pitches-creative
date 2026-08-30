@@ -29,7 +29,7 @@ function NewsletterSignup() {
             />
             <button
               type="submit"
-              className="inline-flex w-fit items-center rounded-full bg-[#FFC24F] px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-[#ffb84f]"
+              className="inline-flex w-fit items-center rounded-full bg-[#FFC24F] px-6 py-3 text-sm font-medium text-black transition-all hover:scale-[1.03] active:scale-95 hover:bg-[#ffb84f]"
             >
               Join the List
             </button>

@@ -102,14 +102,14 @@ export default function InsightForm() {
             <button
               onClick={(e) => submit(e, false)}
               disabled={saving}
-              className="rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-black disabled:opacity-50"
+              className="rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black disabled:opacity-50"
             >
               Save as Draft
             </button>
             <button
               onClick={(e) => submit(e, true)}
               disabled={saving}
-              className="rounded-full bg-[#FFC24F] px-5 py-2 text-sm font-medium text-black transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="rounded-full bg-[#FFC24F] px-5 py-2 text-sm font-medium text-black transition-all hover:scale-[1.03] active:scale-95 hover:opacity-90 disabled:opacity-50"
             >
               {saving ? "Saving..." : "Publish"}
             </button>
@@ -208,7 +208,7 @@ export default function InsightForm() {
       <button
         type="button"
         onClick={() => set(!value)}
-        className={`h-5 w-9 rounded-full transition-colors ${value ? "bg-[#FFC24F]" : "bg-white/20"}`}
+        className={`h-5 w-9 rounded-full transition-all hover:scale-[1.03] active:scale-95 ${value ? "bg-[#FFC24F]" : "bg-white/20"}`}
       >
         <span
           className={`block h-4 w-4 rounded-full bg-white transition-transform ${

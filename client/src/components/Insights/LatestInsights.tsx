@@ -41,7 +41,7 @@ function LatestInsights() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`rounded-full border px-4 py-2 text-xs font-medium transition-colors ${
+              className={`rounded-full border px-4 py-2 text-xs font-medium transition-all hover:scale-[1.03] active:scale-95 ${
                 activeCategory === cat
                   ? "border-[#FFC24F] bg-[#FFC24F] text-black"
                   : "border-white/20 text-white/70 hover:text-white"
@@ -83,7 +83,7 @@ function LatestInsights() {
                 </p>
                 <NavLink
                   to={`/insights/${post.slug}`}
-                  className="mt-4 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+                  className="mt-4 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
                 >
                   Read More
                 </NavLink>
@@ -95,7 +95,7 @@ function LatestInsights() {
         <div className="mt-10 flex items-center justify-between">
           <NavLink
             to="/insights/all"
-            className="rounded-full border border-white/30 px-5 py-2 text-xs font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+            className="rounded-full border border-white/30 px-5 py-2 text-xs font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
           >
             See All Insights
           </NavLink>

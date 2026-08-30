@@ -40,13 +40,13 @@ export default function Dashboard() {
           <div className="flex gap-3">
             <Link
               to="/admin/messages"
-              className="rounded-full border border-white/30 px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+              className="rounded-full border border-white/30 px-5 py-2 text-sm text-white transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
             >
               Messages
             </Link>
             <Link
               to="/admin/insights/new"
-              className="rounded-full bg-[#FFC24F] px-5 py-2 text-sm font-medium text-black transition-opacity hover:opacity-90"
+              className="rounded-full bg-[#FFC24F] px-5 py-2 text-sm font-medium text-black transition-all hover:scale-[1.03] active:scale-95 hover:opacity-90"
             >
               + New Insight
             </Link>
@@ -91,13 +91,13 @@ export default function Dashboard() {
                     <td className="px-4 py-3 text-right">
                       <Link
                         to={`/admin/insights/${i._id}/edit`}
-                        className="mr-4 text-[#FFC24F] hover:underline"
+                        className="mr-4 text-[#FFC24F] transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:underline"
                       >
                         Edit
                       </Link>
                       <button
                         onClick={() => handleDelete(i._id)}
-                        className="text-red-400 hover:underline"
+                        className="text-red-400 transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:underline"
                       >
                         Delete
                       </button>

@@ -50,7 +50,7 @@ function ContactInfo() {
 
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex w-fit items-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white backdrop-blur-md transition-colors hover:bg-white/20"
+                className="inline-flex w-fit items-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white backdrop-blur-md transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/20"
                 >
             Start your Enquiry
             </button>
@@ -62,7 +62,7 @@ function ContactInfo() {
 
             <NavLink
               to="/services"
-              className="inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+              className="inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
             >
               Explore Our Services
             </NavLink>

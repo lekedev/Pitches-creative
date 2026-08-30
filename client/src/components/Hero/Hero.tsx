@@ -1,8 +1,28 @@
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import homebg from "/homebg.webp";
 
+const ARROW_SIZE = 36;
+const ARROW_LEFT_INSET = 8; // pl-2
+
 function Hero() {
+  const navigate = useNavigate();
+  const startProjectRef = useRef<HTMLAnchorElement>(null);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [slideDistance, setSlideDistance] = useState(0);
+
+  const handleStartProject = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isNavigating) return;
+
+    const el = startProjectRef.current;
+    if (el) {
+      setSlideDistance(el.offsetWidth - ARROW_SIZE - ARROW_LEFT_INSET * 2);
+    }
+    setIsNavigating(true);
+  };
+
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-black">
       {/* Background image — LCP element, load eager + high priority */}
@@ -11,7 +31,7 @@ function Hero() {
         alt=""
         loading="eager"
         fetchPriority="high"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full origin-center object-cover animate-ken-burns will-change-transform motion-reduce:animate-none"
       />
 
       {/* Legibility overlay, stronger at bottom where text sits */}
@@ -54,7 +74,9 @@ function Hero() {
             </p>
 
             <NavLink
+                ref={startProjectRef}
                 to="/contact"
+                onClick={handleStartProject}
                 className="
                     group
                     inline-flex
@@ -71,11 +93,19 @@ function Hero() {
                     no-underline
                     transition-all
                     duration-300
+                    hover:scale-[1.03]
+                    active:scale-95
                     hover:bg-black
                     hover:text-white
                 "
                 >
-                <span
+                <motion.span
+                    animate={isNavigating ? { x: slideDistance } : { x: 0 }}
+                    whileHover={!isNavigating ? { x: 4 } : undefined}
+                    transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
+                    onAnimationComplete={() => {
+                        if (isNavigating) navigate("/contact");
+                    }}
                     className="
                     flex
                     h-[36px]
@@ -85,13 +115,13 @@ function Hero() {
                     rounded-full
                     bg-[#FFC24F]
                     text-black
-                    transition-transform
+                    transition-colors
                     duration-300
-                    group-hover:translate-x-1
+                    group-hover:bg-white
                     "
                 >
                     →
-                </span>
+                </motion.span>
 
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                     Start Your Project
@@ -104,21 +134,21 @@ function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="text-[15vw] w-[646px] h-[177px]  font-[Aspekta] font-bold leading-[0.95] text-white sm:text-7xl lg:absolute lg:bottom-10 lg:left-12 lg:text-[6.5vw] lg:leading-[0.95]"
+          className="text-[15vw] w-[92vw] h-49.25 font-[Aspekta] font-bold leading-[0.95] text-white sm:text-7xl lg:absolute lg:bottom-10 lg:left-12 lg:w-[90vw] lg:text-[9vw] lg:leading-[0.95]"
         >
           Ideas Built
           <br />
-          
+
           <span className="block  flex
                 flex-col
                 items-start
                 gap-6
-                w-[772px]
-                h-[138px]
+                w-[92vw]
 
                 lg:absolute
                 lg:left-70
                 lg:top-[78%]
+                lg:w-[85vw]
                 lg:-translate-y-1/2
                 lg:text-left">
                     to Stand Out</span>
@@ -132,7 +162,7 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="text-sm text-white/70 lg:absolute lg:bottom-18 "
         >
-          <NavLink to="/contact" className="items-center gap-2 w-[120px] h-[50px] rounded-full border border-white/20 px-6 py-2.5 text-sm font-medium text-white no-underline transition-colors duration-200 hover:bg-white hover:text-black lg:inline-flex">
+          <NavLink to="/contact" className="inline-flex items-center gap-2 w-[120px] h-[50px] justify-center rounded-full bg-white/10 px-6 py-2.5 text-sm font-medium text-white no-underline backdrop-blur-sm transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black">
            Let's Talk
           </NavLink>
         </motion.p>

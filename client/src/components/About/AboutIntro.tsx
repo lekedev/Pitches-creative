@@ -63,9 +63,9 @@ function AboutIntro() {
 
             <NavLink
               to="/contact"
-              className="inline-flex items-center gap-3 rounded-full bg-white py-2 pl-2 pr-5 text-sm font-medium font-[InstrumentSans] text-black no-underline"
+              className="group inline-flex items-center gap-3 rounded-full bg-white py-2 pl-2 pr-5 text-sm font-medium font-[InstrumentSans] text-black no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:bg-black hover:text-white"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFC24F] text-blacks">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFC24F] text-black transition-colors duration-300 group-hover:bg-white">
                 →
               </span>
               Start Your Project

@@ -68,7 +68,7 @@ function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
               <button
                 onClick={onClose}
                 aria-label="Close"
-                className="text-xl text-white/50 transition-colors hover:text-white"
+                className="text-xl text-white/50 transition-all hover:scale-[1.03] active:scale-95 hover:text-white"
               >
                 ✕
               </button>
@@ -149,7 +149,7 @@ function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
 
               <button
                 type="submit"
-                className="mt-2 inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-black"
+                className="mt-2 inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-2.5 text-sm font-medium text-white transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
               >
                 Submit Enquiry
               </button>

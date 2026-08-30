@@ -68,7 +68,7 @@ function ApproachSection() {
     <div className="flex flex-wrap items-center gap-6">
       <NavLink
         to="/contact"
-        className="inline-flex items-center rounded-full bg-[#FFC24F] px-9 py-4 text-sm font-medium text-black no-underline transition-colors hover:bg-orange-300"
+        className="inline-flex items-center rounded-full bg-[#FFC24F] px-9 py-4 text-sm font-medium text-black no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-orange-300"
       >
         Explore Our Services
       </NavLink>

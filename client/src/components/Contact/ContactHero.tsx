@@ -93,6 +93,8 @@ function ContactHero() {
               transition-all
               duration-300
               hover:-translate-y-1
+              hover:scale-[1.03]
+              active:scale-95
               hover:bg-[#FFD166]
             "
           >
@@ -114,7 +116,7 @@ function ContactHero() {
             pointer-events-none
             absolute
             right-[-2%]
-            top-[-20%]
+            top-[10%]
             z-10
             
             sm:right-[-1%]
@@ -133,7 +135,7 @@ function ContactHero() {
             alt=""
             aria-hidden="true"
             loading="eager"
-            className="block h-[392px] w-full object-contain"
+            className="block  w-full object-contain"
           />
         </motion.div>
       </div>

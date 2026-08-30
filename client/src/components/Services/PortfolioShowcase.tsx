@@ -103,7 +103,7 @@ function PortfolioShowcase() {
           </p>
           <NavLink
             to="/services"
-            className="inline-flex flex-shrink-0 items-center rounded-full bg-[#FFC24F] px-6 py-3 text-sm font-medium text-black no-underline transition-colors hover:bg-orange-300"
+            className="inline-flex flex-shrink-0 items-center rounded-full bg-[#FFC24F] px-6 py-3 text-sm font-medium text-black no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-orange-300"
           >
             Explore Our Services
           </NavLink>

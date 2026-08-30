@@ -73,7 +73,7 @@ function AboutHero() {
 
             <NavLink
               to="/contact"
-              className="inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-white hover:text-black"
+              className="inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
             >
               Let's Talk
             </NavLink>
