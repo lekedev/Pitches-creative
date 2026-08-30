@@ -123,10 +123,10 @@ function ContactHero() {
             sm:top-[-24%]
             sm:w-[48%]
             lg:right-[-1%]
-            lg:top-[-32%]
-            lg:w-[48%]
-            xl:right-[-2%]
-            xl:top-[-38%]
+            lg:top-[-1%]
+            lg:w-[18%]
+            xl:right-[-12%]
+            xl:top-[-18%]
             xl:w-[49%]
           "
         >
@@ -135,7 +135,7 @@ function ContactHero() {
             alt=""
             aria-hidden="true"
             loading="eager"
-            className="block  w-full object-contain"
+            className="block   object-contain"
           />
         </motion.div>
       </div>
