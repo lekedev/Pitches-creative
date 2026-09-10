@@ -1,9 +1,11 @@
 import starBg from "../../assets/images/starsbg.webp";
 
-function StarfieldBackground() {
+function StarfieldBackground({ blur = false }: { blur?: boolean }) {
   return (
     <div
-      className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
+      className={`fixed z-0 bg-cover bg-center bg-no-repeat ${
+        blur ? "-inset-4 blur-[3px]" : "inset-0"
+      }`}
       style={{ backgroundImage: `url(${starBg})` }}
     />
   );

@@ -18,6 +18,33 @@ function WhoWeAre() {
         ]}
         ctaLabel="Lets Talk"
         ctaTo="/contact"
+        cardsLayout="quad"
+        cards={[
+          {
+            icon: "/about/icon-diamond.png",
+            heading: "Strategy-Led",
+            description:
+              "Every project begins with understanding your business, audience, goals, and market position.",
+          },
+          {
+            icon: "/about/icon-diamond.png",
+            heading: "Design-Driven",
+            description:
+              "We create visual systems that feel polished, consistent, modern, and built for professional presentation.",
+          },
+          {
+            icon: "/about/icon-diamond.png",
+            heading: "Digitally Focused",
+            description:
+              "We design for the platforms where your audience actually experiences your brand.",
+          },
+          {
+            icon: "/about/icon-diamond.png",
+            heading: "Built for Growth",
+            description:
+              "Our goal is to help your business communicate better, attract better, and convert better.",
+          },
+        ]}
       />
   
   );

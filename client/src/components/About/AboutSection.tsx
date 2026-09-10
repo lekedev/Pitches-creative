@@ -19,7 +19,7 @@ interface AboutSectionProps {
   ctaLabel?: string;
   ctaTo?: string;
   cards?: Card[];
-  cardsLayout?: "bento" | "uniform"; // bento = 2 top (custom sizes) + rest below; uniform = equal 3-col grid
+  cardsLayout?: "bento" | "uniform" | "quad"; // bento = 3 top (equal) + rest below; uniform = equal 3-col grid; quad = single row of 4
 }
 
 function AboutSection({
@@ -116,22 +116,18 @@ function AboutSection({
           <>
             {cardsLayout === "bento" ? (
               <div className="mt-20 space-y-6 lg:mt-28">
-                {/* Top row: 2 custom-sized cards */}
+                {/* Top row: 3 equal-width cards */}
                 <div className="flex flex-col gap-6 lg:flex-row">
-                  {cards.slice(0, 2).map((card, i) => (
+                  {cards.slice(0, 3).map((card, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: i * 0.1 }}
-                      className={`flex flex-col rounded-2xl border bg-transparent p-8 backdrop-blur-md ${cardBorder(
+                      className={`flex flex-col rounded-2xl border bg-transparent p-8 backdrop-blur-md lg:h-[320px] lg:flex-1 ${cardBorder(
                         card
-                      )} ${
-                        i === 0
-                          ? "lg:h-[321px] lg:w-[382px]"
-                          : "lg:h-[319px] lg:w-[290px]"
-                      }`}
+                      )}`}
                     >
                       <img
                         src={card.icon}
@@ -150,13 +146,13 @@ function AboutSection({
 
                 {/* Bottom row: remaining cards, equal size */}
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {cards.slice(2).map((card, i) => (
+                  {cards.slice(3).map((card, i) => (
                     <motion.div
-                      key={i + 2}
+                      key={i + 3}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: (i + 2) * 0.1 }}
+                      transition={{ duration: 0.5, delay: (i + 3) * 0.1 }}
                       className={`flex flex-col rounded-2xl border bg-transparent p-8 backdrop-blur-md lg:h-[284px] ${cardBorder(
                         card
                       )}`}
@@ -175,6 +171,34 @@ function AboutSection({
                     </motion.div>
                   ))}
                 </div>
+              </div>
+            ) : cardsLayout === "quad" ? (
+              /* Quad: single row of 4 equal cards */
+              <div className="mt-20 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-28 lg:grid-cols-4">
+                {cards.map((card, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    className={`flex flex-col rounded-2xl border bg-transparent p-6 backdrop-blur-md ${cardBorder(
+                      card
+                    )}`}
+                  >
+                    <img
+                      src={card.icon}
+                      alt=""
+                      className="mb-4 h-10 w-10 object-contain"
+                    />
+                    <h3 className="mb-2 text-base font-medium text-[#FFC24F]">
+                      {card.heading}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/70">
+                      {card.description}
+                    </p>
+                  </motion.div>
+                ))}
               </div>
             ) : (
               /* Uniform: equal-size cards, plain wrapping grid */

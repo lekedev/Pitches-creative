@@ -11,6 +11,7 @@ const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Insights = lazy(() => import('./pages/Insights'));
 const InsightsAll = lazy(() => import('./pages/InsightsAll'));
+const InsightDetail = lazy(() => import('./pages/InsightDetail'));
 const Technology = lazy(() => import('./pages/Technology'));
 const Branding = lazy(() => import('./pages/Branding'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetails'));
@@ -38,6 +39,7 @@ function AppContent() {
           <Route path="/about/*" element={<About />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/insights/all" element={<InsightsAll />} />
+          <Route path="/insights/:slug" element={<InsightDetail />} />
           <Route path="/technology/" element={<Technology />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/branding" element={<Branding />} />

@@ -10,7 +10,7 @@ import StarfieldBackground from '../components/shared/StarfieldBackground';
 function Technology() {
   return (
     <div className="relative bg-[#0a0a0a] font-[Aspekta]">
-     <StarfieldBackground />
+     <StarfieldBackground blur />
      
       
 

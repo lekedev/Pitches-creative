@@ -6,7 +6,7 @@ import StarfieldBackground from '../components/shared/StarfieldBackground';
 function Branding() {
   return (
     <div className="relative  font-[Aspekta]">
-       <StarfieldBackground />
+       <StarfieldBackground blur />
 
       <div className="relative z-10">
         <BrandingHero />

@@ -147,7 +147,7 @@ function Hero() {
 
                 lg:absolute
                 lg:left-70
-                lg:top-[78%]
+                lg:top-[75%]
                 lg:w-[85vw]
                 lg:-translate-y-1/2
                 lg:text-left">
@@ -160,7 +160,7 @@ function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-sm text-white/70 lg:absolute lg:bottom-18 "
+          className="text-sm text-white/70 lg:absolute lg:bottom-12 lg:left-12 "
         >
           <NavLink to="/contact" className="liquid-glass-btn inline-flex items-center gap-2 w-[120px] h-[50px] justify-center rounded-full px-6 py-2.5 text-sm font-medium text-white no-underline transition-transform duration-200 hover:scale-[1.03] active:scale-95">
            Let's Talk

@@ -1,13 +1,31 @@
+import { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { insights } from "../data/insights";
+import { getInsightBySlug } from "../service/insightService";
+import type { Post } from "../service/insightService";
 import PostEngagement from "../components/Insights/PostEngagement";
 
 function InsightDetail() {
   const { slug } = useParams();
-  const post = insights.find((p) => p.slug === slug);
+  const [post, setPost] = useState<Post | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  if (!post) {
+  useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+    setNotFound(false);
+    getInsightBySlug(slug)
+      .then(setPost)
+      .catch(() => setNotFound(true))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
+    return <div className="min-h-screen bg-[#0a0a0a]" />;
+  }
+
+  if (notFound || !post) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#0a0a0a] px-5 text-center text-white">
         <p className="text-xl">Insight not found.</p>

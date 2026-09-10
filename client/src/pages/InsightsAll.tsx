@@ -1,22 +1,61 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import { insights, categories } from "../data/insights";
+import { getInsights, getCategories } from "../service/insightService";
+import type { Post } from "../service/insightService";
 import NewsletterSignup from "../components/Insights/NewsletterSignup";
 
 const POSTS_PER_PAGE = 9;
 
 function InsightsAll() {
+  const [insights, setInsights] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeAuthor, setActiveAuthor] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
   const [page, setPage] = useState(1);
+
+  const [sortMenuOpen, setSortMenuOpen] = useState(false);
+  const [openSection, setOpenSection] = useState<
+    "sort" | "categories" | "author" | null
+  >(null);
+  const sortMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    getInsights()
+      .then(setInsights)
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (
+        sortMenuRef.current &&
+        !sortMenuRef.current.contains(e.target as Node)
+      ) {
+        setSortMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const categories = useMemo(() => getCategories(insights), [insights]);
+  const authors = useMemo(
+    () => Array.from(new Set(insights.map((p) => p.author))),
+    [insights]
+  );
 
   const filtered = useMemo(() => {
     let result = [...insights];
 
     if (activeCategory) {
       result = result.filter((post) => post.category === activeCategory);
+    }
+
+    if (activeAuthor) {
+      result = result.filter((post) => post.author === activeAuthor);
     }
 
     if (search.trim()) {
@@ -31,7 +70,7 @@ function InsightsAll() {
     }
 
     return result;
-  }, [search, activeCategory, sortBy]);
+  }, [insights, search, activeCategory, activeAuthor, sortBy]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
   const currentPosts = filtered.slice(
@@ -48,7 +87,7 @@ function InsightsAll() {
     <div>
       <section className="relative overflow-hidden bg-[#0a0a0a] px-5 pb-10 pt-32 font-[Aspekta] lg:px-12 lg:pt-40">
         <img
-          src="/insights/hero-gradient.png"
+          src="/insight/BgInsight.webp"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
@@ -63,9 +102,8 @@ function InsightsAll() {
       </section>
 
       <section className="bg-[#0a0a0a] px-5 py-10 font-[Aspekta] lg:px-12">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:gap-10">
-          {/* Main content */}
-          <div className="flex-1">
+        <div className="mx-auto max-w-7xl">
+          <div>
             {/* Search + sort row */}
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <input
@@ -79,21 +117,165 @@ function InsightsAll() {
                 className="w-full max-w-xs rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-sm text-white outline-none placeholder:text-white/40"
               />
 
-              <select
-                value={sortBy}
-                onChange={(e) => {
-                  setSortBy(e.target.value as "newest" | "oldest");
-                  setPage(1);
-                }}
-                className="w-fit rounded-full border border-white/20 bg-[#0a0a0a] px-5 py-2.5 text-sm text-white outline-none"
-              >
-                <option value="newest">Sort By: Newest</option>
-                <option value="oldest">Sort By: Oldest</option>
-              </select>
+              <div className="relative" ref={sortMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => setSortMenuOpen((o) => !o)}
+                  className="flex w-fit items-center gap-2 rounded-full border border-white/20 bg-[#0a0a0a] px-5 py-2.5 text-sm text-white transition-all hover:scale-[1.03] active:scale-95"
+                >
+                  Sort By
+                  <span
+                    className={`text-xs transition-transform duration-200 ${
+                      sortMenuOpen ? "rotate-180" : ""
+                    }`}
+                  >
+                    ⌄
+                  </span>
+                </button>
+
+                {sortMenuOpen && (
+                  <div className="absolute right-0 top-[calc(100%+8px)] z-30 w-56 rounded-2xl border border-white/10 bg-[#151414] p-2 shadow-xl">
+                    {/* Sort By */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenSection((s) => (s === "sort" ? null : "sort"))
+                      }
+                      className="w-full rounded-lg px-3 py-2.5 text-left text-sm text-white transition-all hover:bg-white/5"
+                    >
+                      Sort By
+                    </button>
+                    {openSection === "sort" && (
+                      <div className="mb-1 ml-2 flex flex-col border-l border-white/10 pl-3">
+                        {(["newest", "oldest"] as const).map((opt) => (
+                          <button
+                            key={opt}
+                            type="button"
+                            onClick={() => {
+                              setSortBy(opt);
+                              setPage(1);
+                            }}
+                            className={`rounded-md px-3 py-1.5 text-left text-sm capitalize transition-all hover:text-white ${
+                              sortBy === opt
+                                ? "font-medium text-[#FFC24F]"
+                                : "text-white/60"
+                            }`}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Categories */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenSection((s) =>
+                          s === "categories" ? null : "categories"
+                        )
+                      }
+                      className="w-full rounded-lg px-3 py-2.5 text-left text-sm text-white transition-all hover:bg-white/5"
+                    >
+                      Categories
+                    </button>
+                    {openSection === "categories" && (
+                      <div className="mb-1 ml-2 flex max-h-40 flex-col overflow-y-auto border-l border-white/10 pl-3">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveCategory(null);
+                            setPage(1);
+                          }}
+                          className={`rounded-md px-3 py-1.5 text-left text-sm transition-all hover:text-white ${
+                            activeCategory === null
+                              ? "font-medium text-[#FFC24F]"
+                              : "text-white/60"
+                          }`}
+                        >
+                          All
+                        </button>
+                        {categories.map((cat) => (
+                          <button
+                            key={cat}
+                            type="button"
+                            onClick={() => {
+                              setActiveCategory(cat);
+                              setPage(1);
+                            }}
+                            className={`rounded-md px-3 py-1.5 text-left text-sm transition-all hover:text-white ${
+                              activeCategory === cat
+                                ? "font-medium text-[#FFC24F]"
+                                : "text-white/60"
+                            }`}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Author */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenSection((s) =>
+                          s === "author" ? null : "author"
+                        )
+                      }
+                      className="w-full rounded-lg px-3 py-2.5 text-left text-sm text-white transition-all hover:bg-white/5"
+                    >
+                      Author
+                    </button>
+                    {openSection === "author" && (
+                      <div className="mb-1 ml-2 flex max-h-40 flex-col overflow-y-auto border-l border-white/10 pl-3">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveAuthor(null);
+                            setPage(1);
+                          }}
+                          className={`rounded-md px-3 py-1.5 text-left text-sm transition-all hover:text-white ${
+                            activeAuthor === null
+                              ? "font-medium text-[#FFC24F]"
+                              : "text-white/60"
+                          }`}
+                        >
+                          All
+                        </button>
+                        {authors.map((author) => (
+                          <button
+                            key={author}
+                            type="button"
+                            onClick={() => {
+                              setActiveAuthor(author);
+                              setPage(1);
+                            }}
+                            className={`rounded-md px-3 py-1.5 text-left text-sm transition-all hover:text-white ${
+                              activeAuthor === author
+                                ? "font-medium text-[#FFC24F]"
+                                : "text-white/60"
+                            }`}
+                          >
+                            {author}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Date */}
+                    <div className="w-full rounded-lg px-3 py-2.5 text-left text-sm text-white/40">
+                      Date
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Grid */}
-            {currentPosts.length === 0 ? (
+            {loading ? (
+              <p className="py-20 text-center text-white/50">Loading...</p>
+            ) : currentPosts.length === 0 ? (
               <p className="py-20 text-center text-white/50">
                 No insights match your search.
               </p>
@@ -168,68 +350,6 @@ function InsightsAll() {
               </button>
             </div>
           </div>
-
-          {/* Sidebar */}
-          <aside className="h-fit w-full flex-shrink-0 rounded-xl border border-white/10 bg-white/5 p-5 lg:w-56">
-            <div className="flex flex-col gap-1">
-              <button
-                onClick={() => {
-                  setSortBy("newest");
-                  setPage(1);
-                }}
-                className="rounded-md px-3 py-2 text-left text-sm text-white/70 transition-all hover:scale-[1.03] active:scale-95 hover:text-white"
-              >
-                Sort By
-              </button>
-
-              <p className="mt-3 px-3 text-xs font-medium uppercase tracking-wide text-white/40">
-                Categories
-              </p>
-              <button
-                onClick={() => {
-                  setActiveCategory(null);
-                  setPage(1);
-                }}
-                className={`rounded-md px-3 py-2 text-left text-sm transition-all hover:scale-[1.03] active:scale-95 ${
-                  activeCategory === null
-                    ? "bg-white/10 font-medium text-white"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                All
-              </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => {
-                    setActiveCategory(cat);
-                    setPage(1);
-                  }}
-                  className={`rounded-md px-3 py-2 text-left text-sm transition-all hover:scale-[1.03] active:scale-95 ${
-                    activeCategory === cat
-                      ? "bg-white/10 font-medium text-white"
-                      : "text-white/60 hover:text-white"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-
-              <p className="mt-3 px-3 text-xs font-medium uppercase tracking-wide text-white/40">
-                Author
-              </p>
-              <button className="rounded-md px-3 py-2 text-left text-sm text-white/60 transition-all hover:scale-[1.03] active:scale-95 hover:text-white">
-                Simon Sineq
-              </button>
-
-              <p className="mt-3 px-3 text-xs font-medium uppercase tracking-wide text-white/40">
-                Date
-              </p>
-              <button className="rounded-md px-3 py-2 text-left text-sm text-white/60 transition-all hover:scale-[1.03] active:scale-95 hover:text-white">
-                MAY 2026
-              </button>
-            </div>
-          </aside>
         </div>
       </section>
 
