@@ -1,5 +1,6 @@
 // components/Services/PortfolioShowcase.tsx
-import { motion } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
+import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
 interface Item {
@@ -20,23 +21,96 @@ const bottomRow: Item[] = [
   { id: "drop-app", label: "Drop App", image: "Rectangle 15.webp" },
 ];
 
-// Duplicated so each row's CSS animation loops seamlessly at -50%
+// Duplicated so each row's loop wraps seamlessly once it scrolls past one full set
 const loopTopRow = [...topRow, ...topRow];
 const loopBottomRow = [...bottomRow, ...bottomRow];
+
+const GAP_PX = 24; // gap-6
+const LOOP_DURATION_S = 30; // matches the previous CSS marquee timing
+const FADE_ZONE_PX = 220; // width of the reserved arrow/fade zone
+const ARROW_INSET_PX = 130; // how far the arrow sits inside that zone, toward the image edge
 
 function MarqueeRow({
   items,
   direction,
+  arrowSide,
 }: {
   items: Item[];
   direction: "forward" | "reverse";
+  arrowSide: "left" | "right";
 }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const loopWidthRef = useRef(0);
+  const speedRef = useRef(0);
+  const isManualRef = useRef(false);
+
+  // Measure the width of one full set of items (half the duplicated track)
+  // so the auto-scroll speed and wrap point match the row's actual layout.
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const measure = () => {
+      const loopWidth = track.scrollWidth / 2;
+      loopWidthRef.current = loopWidth;
+      speedRef.current = loopWidth / LOOP_DURATION_S;
+      if (direction === "reverse" && x.get() === 0) {
+        x.set(-loopWidth);
+      }
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, [direction, x]);
+
+  useAnimationFrame((_, delta) => {
+    if (isManualRef.current) return;
+    const loopWidth = loopWidthRef.current;
+    if (!loopWidth) return;
+
+    const dir = direction === "forward" ? -1 : 1;
+    let next = x.get() + dir * speedRef.current * (delta / 1000);
+
+    if (direction === "forward" && next <= -loopWidth) next += loopWidth;
+    if (direction === "reverse" && next >= 0) next -= loopWidth;
+
+    x.set(next);
+  });
+
+  const handleArrowClick = () => {
+    const track = trackRef.current;
+    const loopWidth = loopWidthRef.current;
+    if (!track || !loopWidth) return;
+
+    const firstItem = track.firstElementChild as HTMLElement | null;
+    const step = (firstItem?.offsetWidth ?? 300) + GAP_PX;
+    const dir = direction === "forward" ? -1 : 1;
+
+    isManualRef.current = true;
+    animate(x, x.get() + dir * step, {
+      duration: 0.5,
+      ease: [0.65, 0, 0.35, 1],
+      onComplete: () => {
+        let val = x.get();
+        if (direction === "forward" && val <= -loopWidth) val += loopWidth;
+        if (direction === "reverse" && val >= 0) val -= loopWidth;
+        x.set(val);
+        isManualRef.current = false;
+      },
+    });
+  };
+
+  const isLeftArrow = arrowSide === "left";
+
   return (
-    <div className="overflow-hidden">
-      <div
-        className={`flex w-max flex-shrink-0 gap-6 ${
-          direction === "forward" ? "animate-marquee" : "animate-marquee-reverse"
-        }`}
+    <div className="relative overflow-hidden">
+      <motion.div
+        ref={trackRef}
+        style={{ x }}
+        className="relative z-0 flex w-max flex-shrink-0 gap-6"
       >
         {items.map((item, i) => (
           <div
@@ -51,7 +125,31 @@ function MarqueeRow({
             />
           </div>
         ))}
-      </div>
+      </motion.div>
+
+      {/* Reserves the arrow's space: solid for most of the zone, fading only right at the image edge */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-y-0 z-10 ${
+          isLeftArrow ? "left-0" : "right-0"
+        }`}
+        style={{
+          width: FADE_ZONE_PX,
+          background: isLeftArrow
+            ? "linear-gradient(to right, #0a0a0a 0%, #0a0a0a 70%, transparent 100%)"
+            : "linear-gradient(to left, #0a0a0a 0%, #0a0a0a 70%, transparent 100%)",
+        }}
+      />
+
+      <button
+        type="button"
+        onClick={handleArrowClick}
+        aria-label={isLeftArrow ? "Scroll gallery left" : "Scroll gallery right"}
+        className="absolute top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#FFC24F] bg-transparent text-white transition-colors duration-300 hover:bg-[#FFC24F] hover:text-black"
+        style={isLeftArrow ? { left: ARROW_INSET_PX } : { right: ARROW_INSET_PX }}
+      >
+        {isLeftArrow ? "←" : "→"}
+      </button>
     </div>
   );
 }
@@ -94,7 +192,7 @@ function PortfolioShowcase() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-16 flex flex-col items-start gap-6 lg:mb-20 lg:flex-row lg:items-center lg:justify-between"
+          className="mb-16 flex flex-col gap-6 lg:mb-20 lg:flex-row lg:items-center"
         >
           <p className="max-w-md text-justify text-sm leading-relaxed text-white/80">
             Pitches Creative helps ambitious businesses turn ideas into
@@ -110,10 +208,10 @@ function PortfolioShowcase() {
         </motion.div>
       </div>
 
-      {/* Two rows drifting in opposite directions, no manual controls */}
+      {/* Two rows drifting in opposite directions, each with a manual nudge control */}
       <div className="flex flex-col gap-6">
-        <MarqueeRow items={loopTopRow} direction="forward" />
-        <MarqueeRow items={loopBottomRow} direction="reverse" />
+        <MarqueeRow items={loopTopRow} direction="forward" arrowSide="left" />
+        <MarqueeRow items={loopBottomRow} direction="reverse" arrowSide="right" />
       </div>
     </section>
   );

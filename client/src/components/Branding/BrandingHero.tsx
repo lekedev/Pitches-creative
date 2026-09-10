@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
 const categories = [
-  "Identity",
-  "Strategy",
-  "Communications",
-  "Visualization",
-  "Positioning",
-  "Design",
+  "IDENTITY",
+  "STRATEGY",
+  "COMMUNICATIONS",
+  "VISUALIZATION",
+  "POSITIONING",
+  "DESIGN",
 ];
  const loopCategories = [...categories, ...categories];
 
@@ -49,13 +49,13 @@ function BrandingHero() {
         >
           <NavLink
             to="/contact"
-            className="inline-flex items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
+            className="inline-flex items-center rounded-full bg-[#FFC24F] px-6 py-3 text-sm font-medium text-black no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-orange-300"
           >
             Start a Branding Project
           </NavLink>
           <NavLink
             to="/work"
-            className="inline-flex items-center rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white/10"
+            className="liquid-glass-btn inline-flex items-center rounded-full px-6 py-3 text-sm font-medium text-white no-underline transition-transform hover:scale-[1.03] active:scale-95"
           >
             View Branding Work
           </NavLink>

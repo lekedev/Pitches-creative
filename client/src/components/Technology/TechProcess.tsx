@@ -69,6 +69,7 @@ function TechProcess() {
       className="
         relative
         overflow-hidden
+        bottom-[-9]
         bg-black
         px-5
         py-20
@@ -126,9 +127,9 @@ function TechProcess() {
         className="
           pointer-events-none
           absolute
-          bottom-[-65px]
-          left-[-45px]
-          z-0
+          -bottom-5
+          -left-11.25
+          z-20
           hidden
           h-[280px]
           w-[280px]

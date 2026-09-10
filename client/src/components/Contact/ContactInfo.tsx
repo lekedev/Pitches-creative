@@ -50,7 +50,7 @@ function ContactInfo() {
 
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex w-fit items-center rounded-full border border-white/15 bg-black/20 px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),0_4px_20px_rgba(0,0,0,0.35)] transition-all hover:scale-[1.03] hover:border-white/25 hover:bg-black/30 active:scale-95"
+                className="liquid-glass-btn inline-flex w-fit items-center rounded-full px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white transition-transform hover:scale-[1.03] active:scale-95"
                 >
             Start your Enquiry
             </button>
@@ -62,7 +62,7 @@ function ContactInfo() {
 
             <NavLink
               to="/services"
-              className="inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
+              className="liquid-glass-btn inline-flex w-fit items-center rounded-full px-6 py-3 text-sm my-3 lg:my-0 font-medium text-white no-underline transition-transform hover:scale-[1.03] active:scale-95"
             >
               Explore Our Services
             </NavLink>

@@ -2,6 +2,7 @@ import { Response } from "express";
 import Insight from "../models/Insight";
 import { asyncHandler } from "../utils/asyncHandler";
 import { AuthRequest } from "../middleware/auth";
+import cloudinary from "../config/cloudinary";
 
 const slugify = (title: string) =>
   title.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
@@ -61,7 +62,7 @@ export const createInsight = asyncHandler(async (req: AuthRequest, res: Response
     enableComments: enableComments !== "false",
     enableLikes: enableLikes !== "false",
     coverImage: req.file
-      ? { url: (req.file as any).location, publicId: (req.file as any).key }
+      ? { url: req.file.path, publicId: req.file.filename }
       : undefined,
   });
 
@@ -100,8 +101,10 @@ export const updateInsight = asyncHandler(async (req: AuthRequest, res: Response
   if (enableLikes !== undefined) insight.enableLikes = enableLikes !== "false";
 
   if (req.file) {
-    // Old image cleanup happens via S3 DeleteObjectCommand, wired in once your AWS credentials are live
-    insight.coverImage = { url: (req.file as any).location, publicId: (req.file as any).key };
+    if (insight.coverImage?.publicId) {
+      await cloudinary.uploader.destroy(insight.coverImage.publicId);
+    }
+    insight.coverImage = { url: req.file.path, publicId: req.file.filename };
   }
 
   await insight.save();
@@ -111,6 +114,10 @@ export const updateInsight = asyncHandler(async (req: AuthRequest, res: Response
 export const deleteInsight = asyncHandler(async (req: AuthRequest, res: Response) => {
   const insight = await Insight.findById(req.params.id);
   if (!insight) return res.status(404).json({ message: "Insight not found" });
+
+  if (insight.coverImage?.publicId) {
+    await cloudinary.uploader.destroy(insight.coverImage.publicId);
+  }
 
   await insight.deleteOne();
   res.json({ message: "Insight deleted" });

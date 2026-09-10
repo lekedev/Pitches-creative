@@ -73,7 +73,7 @@ function TechIntro() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="flex items-start gap-5"
             >
-              <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-white/5">
+              <div className="liquid-glass-btn flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl">
                 <img
                   src={feature.icon}
                   alt=""

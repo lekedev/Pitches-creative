@@ -274,11 +274,10 @@ function TechServicesGrid() {
         <NavLink
           to="/contact"
           className="
+            liquid-glass-btn
             inline-flex
             items-center
             rounded-full
-            border
-            border-white/30
             px-6
             py-3
             font-[Aspekta]
@@ -286,10 +285,9 @@ function TechServicesGrid() {
             font-medium
             text-white
             no-underline
-            transition-all
+            transition-transform
             hover:scale-[1.03]
             active:scale-95
-            hover:bg-white/10
           "
         >
           Start a Technology Project

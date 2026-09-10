@@ -1,23 +1,28 @@
-// src/types/multer-storage-cloudinary.d.ts
 declare module "multer-storage-cloudinary" {
   import { StorageEngine } from "multer";
-  import { ConfigOptions } from "cloudinary";
+  import { Request } from "express";
+
+  type OptionCallback<T> = (req: Request, file: Express.Multer.File) => T | Promise<T>;
 
   export interface Params {
-    folder?: string;
-    allowed_formats?: string[];
-    transformation?: any[];
-    [key: string]: any;
+    folder?: string | OptionCallback<string>;
+    public_id?: string | OptionCallback<string>;
+    format?: string | OptionCallback<string>;
+    [key: string]: unknown;
   }
 
   export interface CloudinaryStorageOptions {
-    cloudinary: any;
-    params?: Params | ((req: any, file: any) => Promise<Params> | Params);
+    cloudinary: unknown;
+    params?: Params | OptionCallback<Params>;
   }
 
   export class CloudinaryStorage implements StorageEngine {
     constructor(options: CloudinaryStorageOptions);
-    _handleFile(req: any, file: any, cb: (error?: any, info?: any) => void): void;
-    _removeFile(req: any, file: any, cb: (error: any) => void): void;
+    _handleFile(
+      req: Request,
+      file: Express.Multer.File,
+      callback: (error?: Error | null, info?: Partial<Express.Multer.File>) => void
+    ): void;
+    _removeFile(req: Request, file: Express.Multer.File, callback: (error: Error | null) => void): void;
   }
 }

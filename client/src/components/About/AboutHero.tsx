@@ -9,7 +9,8 @@ function AboutHero() {
   return (
     <section
       id="about"
-       className="relative flex h-screen snap-start snap-always items-center overflow-y-auto overflow-x-hidden bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:pr-64"    >
+      className="relative flex min-h-screen items-center overflow-x-hidden bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:pr-64"
+    >
       <motion.img
         src={aboutBg}
         alt=""
@@ -73,7 +74,7 @@ function AboutHero() {
 
             <NavLink
               to="/contact"
-              className="inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
+              className="liquid-glass-btn inline-flex w-fit items-center rounded-full px-6 py-3 text-sm font-medium text-white no-underline transition-transform hover:scale-[1.03] active:scale-95"
             >
               Let's Talk
             </NavLink>
@@ -81,7 +82,7 @@ function AboutHero() {
 
           {/* lg:col-span-3 spacer — keeps the grid proportions matching the
               Figma layout (text column doesn't stretch full width), even
-              though ScrollSpyNav itself now renders once at the page level */}
+              though AboutNav itself now renders once at the layout level */}
           <div className="hidden lg:col-span-3 lg:block" />
         </div>
       </div>

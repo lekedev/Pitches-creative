@@ -40,7 +40,7 @@ function AboutSection({
   return (
     <section
       id={id}
-      className="relative overflow-hidden bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:pr-64 lg:py-28"
+      className="relative min-h-screen w-full overflow-x-hidden bg-[#0a0a0a] px-5 py-20 lg:px-12 lg:pr-64 lg:py-28"
     >
       {backgroundImage && (
         <>
@@ -86,7 +86,7 @@ function AboutSection({
             {ctaLabel && ctaTo && (
               <NavLink
                 to={ctaTo}
-                className="inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
+                className="liquid-glass-btn inline-flex w-fit items-center rounded-full px-6 py-3 text-sm font-medium text-white no-underline transition-transform hover:scale-[1.03] active:scale-95"
               >
                 {ctaLabel}
               </NavLink>

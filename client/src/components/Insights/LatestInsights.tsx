@@ -83,7 +83,7 @@ function LatestInsights() {
                 </p>
                 <NavLink
                   to={`/insights/${post.slug}`}
-                  className="mt-4 inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
+                  className="liquid-glass-btn mt-4 inline-flex w-fit items-center rounded-full px-5 py-2 text-sm font-medium text-white no-underline transition-transform hover:scale-[1.03] active:scale-95"
                 >
                   Read More
                 </NavLink>
@@ -95,7 +95,7 @@ function LatestInsights() {
         <div className="mt-10 flex items-center justify-between">
           <NavLink
             to="/insights/all"
-            className="rounded-full border border-white/30 px-5 py-2 text-xs font-medium text-white no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
+            className="liquid-glass-btn rounded-full px-5 py-2 text-xs font-medium text-white no-underline transition-transform hover:scale-[1.03] active:scale-95"
           >
             See All Insights
           </NavLink>

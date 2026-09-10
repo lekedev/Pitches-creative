@@ -57,24 +57,23 @@ function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
             transition={{ duration: 0.3, ease: [0.65, 0, 0.35, 1] }}
             role="dialog"
             aria-modal="true"
-            className="fixed left-1/2 top-1/2 z-[201] w-[92%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/10 bg-[#0a0a0a] p-8 font-[Aspekta]"
+            className="fixed left-1/2 top-1/2 z-[201] w-[92%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/10 bg-[#0a0a0a] font-[Aspekta]"
           >
-            <div className="mb-6 flex items-start justify-between">
-              <img
-                src="/contact/paper-plane-small.png"
-                alt=""
-                className="h-10 w-10 object-contain"
-              />
-              <button
-                onClick={onClose}
-                aria-label="Close"
-                className="text-xl text-white/50 transition-all hover:scale-[1.03] active:scale-95 hover:text-white"
-              >
-                ✕
-              </button>
-            </div>
+            <img
+              src="/contactimg/Arror.png"
+              alt=""
+              className="pointer-events-none absolute -top-10 -right-6 h-32 w-24 object-contain sm:-top-12 sm:h-36 sm:w-28"
+            />
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute right-4 top-4 z-10 text-xl text-white/50 transition-all hover:scale-[1.03] active:scale-95 hover:text-white"
+            >
+              ✕
+            </button>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-8 pt-14">
               <div className="border-b border-white/20 pb-2">
                 <label className="mb-1 block text-xs text-white/50">
                   Your Full Name
@@ -149,7 +148,7 @@ function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
 
               <button
                 type="submit"
-                className="mt-2 inline-flex w-fit items-center rounded-full border border-white/40 px-6 py-2.5 text-sm font-medium text-white transition-all hover:scale-[1.03] active:scale-95 hover:bg-white hover:text-black"
+                className="liquid-glass-btn mt-2 inline-flex w-fit items-center rounded-full px-6 py-2.5 text-sm font-medium text-white transition-transform hover:scale-[1.03] active:scale-95"
               >
                 Submit Enquiry
               </button>

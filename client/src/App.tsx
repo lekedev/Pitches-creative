@@ -35,7 +35,7 @@ function AppContent() {
         <Routes>
           {/* Public site */}
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about/*" element={<About />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/insights/all" element={<InsightsAll />} />
           <Route path="/technology/" element={<Technology />} />

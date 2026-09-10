@@ -70,25 +70,19 @@ function TechHero() {
             <NavLink
               to="/contact"
               className="
+                liquid-glass-btn
                 inline-flex
                 items-center
                 rounded-full
-                border
-                border-white/15
-                bg-black/20
                 px-6
                 py-3
                 text-sm
                 font-medium
                 text-white
                 no-underline
-                backdrop-blur-md
-                shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),0_4px_20px_rgba(0,0,0,0.35)]
-                transition-all
+                transition-transform
                 hover:scale-[1.03]
                 active:scale-95
-                hover:border-white/25
-                hover:bg-black/30
               "
             >
               Start a Technology Project
@@ -97,21 +91,19 @@ function TechHero() {
             <NavLink
               to="/work"
               className="
+                liquid-glass-btn
                 inline-flex
                 items-center
                 rounded-full
-                border
-                border-white/30
                 px-6
                 py-3
                 text-sm
                 font-medium
                 text-white
                 no-underline
-                transition-all
+                transition-transform
                 hover:scale-[1.03]
                 active:scale-95
-                hover:bg-white/10
               "
             >
               View Tech Case Studies
@@ -131,7 +123,7 @@ function TechHero() {
           className="
             pointer-events-none
             absolute
-            bottom-0
+            bottom-[-3%]
             right-[-8%]
             z-10
             w-[68%]
