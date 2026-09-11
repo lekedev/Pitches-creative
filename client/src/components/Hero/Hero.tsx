@@ -134,7 +134,7 @@ function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="text-[15vw] w-[92vw] h-49.25 font-[Aspekta] font-bold leading-[0.95] text-white sm:text-7xl lg:absolute lg:bottom-10 lg:left-12 lg:w-[90vw] lg:text-[9vw] lg:leading-[0.95]"
+          className="text-[15vw] w-[92vw] h-49.25 font-[Aspekta] font-bold leading-[0.95] text-white sm:text-7xl lg:absolute lg:bottom-10 lg:left-12 lg:w-[90vw] lg:text-[clamp(3.5rem,9vw,6.25rem)] lg:leading-[0.95]"
         >
           Ideas Built
           <br />
