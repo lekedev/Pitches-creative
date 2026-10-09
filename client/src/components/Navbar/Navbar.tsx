@@ -1,14 +1,10 @@
-// components/Navbar/Navbar.tsx
-import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 const navLinks = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Branding", path: "/branding" },
-  { label: "Technology", path: "/technology" },
-  { label: "Insight", path: "/insight" },
+  { label: "Company", path: "/about" },
+  { label: "Our approach", path: "/#approach" },
   { label: "Contact", path: "/contact" },
 ];
 
@@ -17,132 +13,80 @@ function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    const onScroll = () => setIsScrolled(window.scrollY > 18);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    `text-sm transition-colors no-underline ${isActive ? "text-white" : "text-white/60 hover:text-white"}`;
+
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-5 py-5 transition-colors duration-300 lg:px-12 lg:py-6 ${
-          isScrolled
-            ? "bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10"
-            : "bg-transparent border-b border-transparent"
-        }`}
-      >
-        <NavLink
-          to="/"
-          end
-          className="text-xl font-semibold tracking-tight text-white no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95"
-        >
-          <img
-            src="/PitchesCreative.png"
-            alt="Pitches Creative"
-            className="h-10 w-auto"
-          />
-        </NavLink>
+      <header className={`fixed inset-x-0 top-0 z-[100] flex items-center justify-between px-5 py-4 transition-all duration-300 sm:px-8 lg:px-16 lg:py-5 ${isScrolled ? "border-b border-white/10 bg-[#081326]/90 backdrop-blur-xl" : "border-b border-transparent bg-[#081326]/30"}`}>
+        <Link to="/" aria-label="The Stable Company home" onClick={() => setIsOpen(false)} className="group flex items-center gap-3 text-white no-underline">
+          <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center border border-[#d5b77c]/70 text-lg font-serif text-[#d5b77c] transition-colors group-hover:bg-[#d5b77c] group-hover:text-[#081326]">S</span>
+          <span className="flex flex-col leading-tight">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] sm:text-xs">The Stable Company</span>
+            <span className="mt-1 text-[8px] uppercase tracking-[0.32em] text-white/45">Limited</span>
+          </span>
+        </Link>
 
-        {/* Desktop: horizontal links, slides in from the right, settles centered within the navbar row */}
-        <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
-          <AnimatePresence>
-            {isOpen && (
-              <motion.nav
-                initial={{ x: 80, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 80, opacity: 0 }}
-                transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
-                className="flex items-center gap-10"
-              >
-                {navLinks.map((link) => (
-                  <NavLink
-                    key={link.path}
-                    to={link.path}
-                    end={link.path === "/"}
-                    onClick={() => setIsOpen(false)}
-                    className={({ isActive }) =>
-                      `text-sm font-medium tracking-tight no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95 whitespace-nowrap ${
-                        isActive ? "text-white" : "text-white/60 hover:text-white"
-                      }`
-                    }
-                  >
-                    {link.label}
-                  </NavLink>
-                ))}
-              </motion.nav>
-            )}
-          </AnimatePresence>
-        </div>
+        <nav aria-label="Main navigation" className="hidden items-center gap-9 lg:flex">
+          {navLinks.map((link) => (
+            link.path.startsWith("/#") ? (
+              <a key={link.path} href={link.path} className="text-sm text-white/60 no-underline transition-colors hover:text-white">{link.label}</a>
+            ) : (
+              <NavLink key={link.path} to={link.path} className={linkClass}>{link.label}</NavLink>
+            )
+          ))}
+          <Link to="/contact" className="inline-flex items-center gap-3 border border-[#d5b77c]/60 px-4 py-3 text-xs text-[#e4ca97] no-underline transition-colors hover:bg-[#d5b77c] hover:text-[#081326]">
+            Start a conversation <span>↗</span>
+          </Link>
+        </nav>
 
         <button
-          onClick={() => setIsOpen((prev) => !prev)}
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
-          className="relative z-[110] flex h-9 w-9 flex-col items-end justify-center gap-1.5 border-none bg-transparent p-0 cursor-pointer transition-all duration-200 hover:scale-[1.03] active:scale-95"
+          className="relative z-[120] flex h-10 w-10 flex-col items-center justify-center gap-1.5 border border-white/20 bg-transparent lg:hidden"
         >
-          <span
-            className={`block h-0.5 rounded bg-white transition-all duration-300 ${
-              isOpen ? "w-6 translate-y-2 rotate-45" : "w-6"
-            }`}
-          />
-          <span
-            className={`block h-0.5 rounded bg-white transition-all duration-300 ${
-              isOpen ? "w-6 opacity-0" : "w-[18px]"
-            }`}
-          />
-          <span
-            className={`block h-0.5 rounded bg-white transition-all duration-300 ${
-              isOpen ? "w-6 -translate-y-2 -rotate-45" : "w-6"
-            }`}
-          />
+          <span className={`h-px w-5 bg-white transition-transform ${isOpen ? "translate-y-[4px] rotate-45" : ""}`} />
+          <span className={`h-px w-5 bg-white transition-opacity ${isOpen ? "opacity-0" : ""}`} />
+          <span className={`h-px w-5 bg-white transition-transform ${isOpen ? "-translate-y-[6px] -rotate-45" : ""}`} />
         </button>
       </header>
 
-      {/* Mobile: unchanged, still the centered vertical full-screen fade */}
       <AnimatePresence>
         {isOpen && (
           <motion.nav
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[105] flex items-center justify-center bg-[#0a0a0a] lg:hidden"
+            aria-label="Mobile navigation"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[110] flex flex-col justify-center gap-7 bg-[#081326] px-8 lg:hidden"
           >
-            <ul className="m-0 list-none p-0 text-center">
-              {navLinks.map((link, index) => (
-                <motion.li
-                  key={link.path}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 16 }}
-                  transition={{ duration: 0.3, delay: index * 0.08 }}
-                >
-                  <NavLink
-                    to={link.path}
-                    end={link.path === "/"}
-                    onClick={() => setIsOpen(false)}
-                    className={({ isActive }) =>
-                      `block py-3 text-3xl font-semibold tracking-tight no-underline transition-all duration-300 hover:scale-[1.03] active:scale-95 ${
-                        isActive
-                          ? "text-white"
-                          : "text-gray-500 hover:text-white"
-                      }`
-                    }
-                  >
-                    {link.label}
-                  </NavLink>
-                </motion.li>
-              ))}
-            </ul>
+            {navLinks.map((link, index) => (
+              link.path.startsWith("/#") ? (
+                <motion.a key={link.path} href={link.path} onClick={() => setIsOpen(false)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }} className="text-3xl font-medium text-white no-underline">{link.label}</motion.a>
+              ) : (
+                <motion.div key={link.path} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}>
+                  <NavLink to={link.path} onClick={() => setIsOpen(false)} className="text-3xl font-medium text-white no-underline">{link.label}</NavLink>
+                </motion.div>
+              )
+            ))}
+            <Link to="/contact" onClick={() => setIsOpen(false)} className="mt-4 inline-flex w-fit items-center gap-4 bg-[#d5b77c] px-5 py-4 text-sm font-medium text-[#081326] no-underline">Start a conversation ↗</Link>
           </motion.nav>
         )}
       </AnimatePresence>
