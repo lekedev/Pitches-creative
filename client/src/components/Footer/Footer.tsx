@@ -3,8 +3,10 @@ import { NavLink } from "react-router-dom";
 const footerLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Branding", path: "/branding" },
   { label: "Technology", path: "/technology" },
+  { label: "Video Production", path: "/video-production" },
+  { label: "Photography", path: "/photography" },
+  { label: "Services", path: "/services" },
   // { label: "Testimonials", path: "/testimonials" },
   { label: "Insights", path: "/insights" },
   { label: "Contact", path: "/contact" },
@@ -25,9 +27,9 @@ function Footer() {
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2 no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95">
           <img
-            src="/icon/PitchesCreativeLogoBlack1.svg"
-            alt="Pitches Creative Logo"
-            className="h-[79px] w-[201px] flex-shrink-0 object-contain"
+            src="/icon/StableCompanyLogo.svg"
+            alt="The Stable Company Logo"
+            className="h-[56px] w-[220px] flex-shrink-0 object-contain"
           />
 
           
@@ -98,7 +100,7 @@ function Footer() {
         {/* Contact */}
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
             <a
-              href="mailto:hello@squareup.com"
+              href="mailto:info@thestablecompany.com"
               className="flex items-center gap-2 text-sm text-white/80 no-underline transition-all hover:scale-[1.03] active:scale-95 hover:text-white"
             >
               <img
@@ -106,11 +108,11 @@ function Footer() {
                 alt=""
                 className="h-4 w-5"
               />
-              hello@squareup.com
+              info@thestablecompany.com
             </a>
 
             <a
-              href="tel:+919181323209"
+              href="tel:+23482490875567"
               className="flex items-center gap-2 text-sm text-white/80 no-underline transition-all hover:scale-[1.03] active:scale-95 hover:text-white"
             >
               <img
@@ -118,7 +120,7 @@ function Footer() {
                 alt=""
                 className="h-4 w-5"
               />
-              +91 91813 23 2309
+              +234 824 908 75567
             </a>
 
             <span className="flex items-center gap-2 text-sm text-white/80">
@@ -127,13 +129,13 @@ function Footer() {
                 alt=""
                 className="h-4 w-5"
               />
-              Somewhere in the World
+              12, Moore heaven road, Ikeja, Lagos.
             </span>
           </div>
 
 
         <p className="text-sm text-white/40">
-          © 2026 Pitches Creative. All rights reserved.
+          © {new Date().getFullYear()} The Stable Company. All rights reserved.
         </p>
 
       </div>

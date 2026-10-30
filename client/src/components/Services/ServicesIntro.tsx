@@ -4,8 +4,12 @@ import { NavLink } from "react-router-dom";
 
 const services = [
   {
-    title: "Service 1",
+    title: "Video Production",
     image: "/Service.webp",
+  },
+  {
+    title: "Photography",
+    image: "/Rectangle 11.webp",
   },
   {
     title: "Brand Design",
@@ -111,9 +115,9 @@ function ServicesSection() {
 
             {/* Description */}
             <p className="max-w-[430px] font-[Aspekta] text-sm leading-relaxed text-[#D9D9D9] sm:text-base">
-              From identity to interface, campaign to conversion, we build the
-              assets businesses need to show up professionally and grow with
-              confidence.
+              From software to screen to still image, we build the technology,
+              films, and photographs businesses need to show up professionally
+              and grow with confidence.
             </p>
 
             {/* Buttons */}
@@ -126,7 +130,7 @@ function ServicesSection() {
               </NavLink>
 
               <NavLink
-                to="/work"
+                to="/about/our-process"
                 className="text-sm font-medium text-white/80 no-underline transition-all duration-300 hover:scale-[1.03] active:scale-95 hover:text-white"
               >
                 See How We Work

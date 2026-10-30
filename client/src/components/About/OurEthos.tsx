@@ -18,7 +18,7 @@ function OurEthos() {
       }
       paragraphs={[
         "We do not believe in design that only looks good on the surface. We believe every visual decision should support a bigger purpose — clarity, trust, recognition, communication, conversion, or growth.",
-        "Our ethos is simple: build creative systems that help brands show up with confidence and direction.",
+        "Our ethos is simple: build creative systems that help businesses show up with confidence and direction.",
       ]}
       ctaLabel="Lets Talk"
       ctaTo="/contact"

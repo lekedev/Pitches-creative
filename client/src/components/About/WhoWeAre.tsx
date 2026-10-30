@@ -7,14 +7,14 @@ function WhoWeAre() {
         id="who-we-are"
         heading={
           <>
-            A <span className="text-[#FFC24F]">creative agency</span> for
-            brands that want to be taken seriously.
+            A <span className="text-[#FFC24F]">technology and media company</span>{" "}
+            for businesses that want to be taken seriously.
           </>
         }
         paragraphs={[
-          "Pitches Creative exists for businesses and organizations that know they need more than ordinary design. We work with founders, companies, startups, service providers, product brands, and institutions that want to improve how they are seen, how they communicate, and how they convert attention into trust.",
-          "Our work sits at the intersection of creativity, strategy, and digital execution. We help clients define the right message, design the right visual system, and build the right digital experience to support their goals.",
-          "Whether we are creating a brand identity, designing a campaign, building a website, or developing an app, our focus remains the same: to make your business clearer, stronger, and more memorable.",
+          "The Stable Company is a separate, independent organisation built for businesses that need more than one kind of expertise. We work with founders, companies, startups, service providers, product brands, and institutions that want to improve how they are seen, how they communicate, and how they convert attention into trust.",
+          "Our work sits at the intersection of technology, video production, photography, and design. We build the software, produce the films, and capture the images our clients need to support their goals.",
+          "Whether we are developing an app, shooting a commercial, photographing a product line, or covering a live event, our focus remains the same: to make your business clearer, stronger, and more memorable.",
         ]}
         ctaLabel="Lets Talk"
         ctaTo="/contact"
@@ -28,15 +28,15 @@ function WhoWeAre() {
           },
           {
             icon: "/about/icon-diamond.png",
-            heading: "Design-Driven",
+            heading: "Production-Ready",
             description:
-              "We create visual systems that feel polished, consistent, modern, and built for professional presentation.",
+              "Professional cameras, lighting, audio, and engineering — the tools and crew to deliver at a high standard.",
           },
           {
             icon: "/about/icon-diamond.png",
-            heading: "Digitally Focused",
+            heading: "Multi-Disciplinary",
             description:
-              "We design for the platforms where your audience actually experiences your brand.",
+              "Technology, video, photography, and design under one roof, so every part of your project fits together.",
           },
           {
             icon: "/about/icon-diamond.png",

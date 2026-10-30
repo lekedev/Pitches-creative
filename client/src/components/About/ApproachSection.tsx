@@ -14,9 +14,9 @@ function ApproachSection() {
             transition={{ duration: 0.6 }}
             className="text-4xl font-[Aspekta] leading-[1.05] text-white sm:text-5xl lg:text-6xl"
           >
-            Ideas. Brands.
+            Code. Camera.
             <br />
-           <div className="px-30">Product. <span className="text-[#FFC24F]">Growth</span></div>
+           <div className="px-30">Creativity. <span className="text-[#FFC24F]">Growth</span></div>
           </motion.h2>
 
           
@@ -35,7 +35,7 @@ function ApproachSection() {
   >
     <img
       src="/Rectangle 1.webp"
-      alt="Pitches Creative brand and product work"
+      alt="The Stable Company technology and media work"
       loading="lazy"
       className="block h-full w-full object-cover"
     />
@@ -52,22 +52,22 @@ function ApproachSection() {
     <div className="flex flex-col gap-4 text-base leading-relaxed text-[#D9D9D9]">
       <p>
         Every business has something to say. The challenge is making
-        people care, trust it, and act on it. Pitches Creative helps
-        brands move from scattered ideas to clear creative systems —
-        identity, messaging, marketing assets, websites, and digital
-        products working together with purpose.
+        people care, trust it, and act on it. The Stable Company brings
+        the tools to do that under one roof — software and websites,
+        video production, photography, and design, all working
+        together with purpose.
       </p>
 
       <p>
-        Whether you are launching, repositioning, scaling, or rebuilding
-        your digital presence, we help you create the kind of brand
-        experience that feels intentional from the first click.
+        Whether you need a platform built, a film produced, a product
+        shoot, or all three, one team handles it from first idea to
+        final delivery — so everything looks, sounds, and works as one.
       </p>
     </div>
 
     <div className="flex flex-wrap items-center gap-6">
       <NavLink
-        to="/contact"
+        to="/services"
         className="inline-flex items-center rounded-full bg-[#FFC24F] px-9 py-4 text-sm font-medium text-black no-underline transition-all hover:scale-[1.03] active:scale-95 hover:bg-orange-300"
       >
         Explore Our Services

@@ -7,11 +7,12 @@ interface EnquiryModalProps {
 }
 
 const serviceCategories = [
-  "Brand Identity",
-  "Website Development",
-  "App Development",
-  "Marketing Campaign",
-  "Full Creative System",
+  "Website / App Development",
+  "Software & SaaS",
+  "Video Production",
+  "Photography",
+  "Branding & Design",
+  "Event Coverage / Live Streaming",
   "Other",
 ];
 

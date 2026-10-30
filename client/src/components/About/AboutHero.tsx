@@ -33,9 +33,9 @@ function AboutHero() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl text-4xl font-medium leading-[1.15] text-white sm:text-5xl lg:text-6xl"
         >
-          Building brands with{" "}
-          <span className="text-[#FFC24F]">clarity,</span> presence, and{" "}
-          <span className="text-[#FFC24F]">purpose.</span>
+          A stable foundation for{" "}
+          <span className="text-[#FFC24F]">technology,</span> media, and{" "}
+          <span className="text-[#FFC24F]">creativity.</span>
         </motion.h1>
 
         <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-8">
@@ -57,19 +57,17 @@ function AboutHero() {
             className="flex flex-col gap-6 lg:col-span-5"
           >
             <p className="text-sm leading-relaxed text-white/80">
-              We believe every serious business deserves a brand presence
-              that reflects its ambition. That means more than a good logo,
-              a beautiful website, or a few social media designs. It means
-              building a clear visual and digital system that helps people
-              understand who you are, trust what you offer, and choose you
-              with confidence.
+              We believe every serious business deserves partners it can
+              rely on. That means more than a website, a video, or a few
+              photos. It means technology that works, stories that move
+              people, and images that build trust — delivered by one team
+              that understands how they fit together.
             </p>
 
             <p className="text-sm leading-relaxed text-white/80">
-              At Pitches Creative, we combine brand thinking, visual design,
-              marketing strategy, website development, and app development
-              to help businesses show up professionally across every
-              touchpoint.
+              At The Stable Company, we combine software development, video
+              production, photography, and design to help businesses show
+              up professionally across every screen and touchpoint.
             </p>
 
             <NavLink
