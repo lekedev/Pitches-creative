@@ -195,9 +195,9 @@ function PortfolioShowcase() {
           className="mb-16 flex flex-col gap-6 lg:mb-20 lg:flex-row lg:items-center"
         >
           <p className="max-w-md text-justify text-sm leading-relaxed text-white/80">
-            Pitches Creative helps ambitious businesses turn ideas into
-            powerful brand identities, persuasive marketing systems,
-            high-performing websites, and digital products built for growth.
+            The Stable Company helps ambitious businesses grow with
+            high-performing software, cinematic video production,
+            professional photography, and design built for growth.
           </p>
           <NavLink
             to="/services"

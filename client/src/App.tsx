@@ -14,6 +14,9 @@ const InsightsAll = lazy(() => import('./pages/InsightsAll'));
 const InsightDetail = lazy(() => import('./pages/InsightDetail'));
 const Technology = lazy(() => import('./pages/Technology'));
 const Branding = lazy(() => import('./pages/Branding'));
+const VideoProduction = lazy(() => import('./pages/VideoProduction'));
+const Photography = lazy(() => import('./pages/Photography'));
+const Services = lazy(() => import('./pages/Services'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetails'));
 const Contact = lazy(() => import('./pages/Contact'));
 
@@ -42,6 +45,10 @@ function AppContent() {
           <Route path="/insights/:slug" element={<InsightDetail />} />
           <Route path="/technology/" element={<Technology />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/video-production" element={<VideoProduction />} />
+          <Route path="/photography" element={<Photography />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/work" element={<Services />} />
           <Route path="/branding" element={<Branding />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="admin/dashboard" element={<Dashboard />} />

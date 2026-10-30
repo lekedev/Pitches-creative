@@ -26,7 +26,7 @@ const insightSchema = new Schema<IInsight>(
     content: { type: String, required: true },
     coverImage: { url: { type: String }, publicId: { type: String } },
     category: { type: String, required: true },
-    author: { type: String, default: 'Pitches Creative' },
+    author: { type: String, default: 'The Stable Company' },
     tags: [{ type: String }],
     published: { type: Boolean, default: true },
     likes: { type: Number, default: 0 },

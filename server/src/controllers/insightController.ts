@@ -55,7 +55,7 @@ export const createInsight = asyncHandler(async (req: AuthRequest, res: Response
     excerpt,
     content,
     category,
-    author: author || "Pitches Creative",
+    author: author || "The Stable Company",
     tags: tags ? JSON.parse(tags) : [],
     published: published !== "false",
     enableSharing: enableSharing !== "false",

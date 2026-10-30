@@ -6,9 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Branding", path: "/branding" },
   { label: "Technology", path: "/technology" },
-  { label: "Insight", path: "/insight" },
+  { label: "Video", path: "/video-production" },
+  { label: "Photography", path: "/photography" },
+  { label: "Services", path: "/services" },
+  { label: "Insights", path: "/insights" },
   { label: "Contact", path: "/contact" },
 ];
 
@@ -46,8 +48,8 @@ function Navbar() {
           className="text-xl font-semibold tracking-tight text-white no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95"
         >
           <img
-            src="/PitchesCreative.png"
-            alt="Pitches Creative"
+            src="/icon/StableCompanyLogo.svg"
+            alt="The Stable Company"
             className="h-10 w-auto"
           />
         </NavLink>

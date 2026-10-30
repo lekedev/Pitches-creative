@@ -41,7 +41,7 @@ function AboutIntro() {
           >
             <img
               src="/Aboutsectionpitches.webp"
-              alt="Pitches Creative studio and brand work"
+              alt="The Stable Company studio and production work"
               loading="lazy"
               className="h-full w-full object-cover"
             />
@@ -55,10 +55,11 @@ function AboutIntro() {
             className="flex flex-col items-start gap-10 lg:col-span-5 lg:col-start-8 lg:justify-start"
           >
             <p className="text-justify font-[Aspekta] text-base leading-relaxed text-white/80">
-              Pitches Creative helps ambitious businesses turn ideas into
-              powerful brand identities, persuasive marketing systems,
-              high-performing websites, and digital products built for
-              growth.
+              The Stable Company is a multi-disciplinary studio helping
+              ambitious businesses grow through technology, video
+              production, photography, and design — building software,
+              telling stories on screen, and capturing images that make
+              people pay attention.
             </p>
 
             <NavLink

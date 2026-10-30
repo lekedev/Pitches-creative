@@ -61,7 +61,7 @@ function MeetTheTeam() {
           className="max-w-2xl text-4xl font-medium leading-[1.15] text-white sm:text-5xl lg:text-6xl"
         >
           <span className="text-[#FFC24F]">The minds</span> behind the
-          strategy, design, and digital execution.
+          code, the camera, and the creative.
         </motion.h2>
 
         <motion.div
@@ -72,14 +72,14 @@ function MeetTheTeam() {
           className="mt-8 flex max-w-2xl flex-col gap-4"
         >
           <p className="text-sm leading-relaxed text-white/80">
-            Pitches Creative is built by creative thinkers, designers,
-            strategists, developers, and problem-solvers who understand that
+            The Stable Company is built by engineers, filmmakers,
+            photographers, designers, and problem-solvers who understand that
             great work needs both imagination and structure.
           </p>
           <p className="text-sm leading-relaxed text-white/80">
             Our team brings together different skills with one shared goal:
             helping businesses show up better, communicate clearer, and
-            build brand experiences that people remember.
+            create work that people remember.
           </p>
         </motion.div>
 

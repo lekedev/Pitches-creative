@@ -13,11 +13,11 @@ function NewsletterSignup() {
         <div className="flex flex-col gap-4">
           <h2 className="text-2xl font-medium text-white sm:text-3xl">
             <span className="text-[#FFC24F]">Get Sharper Ideas</span> For
-            Building A Better Brand.
+            Building A Better Business.
           </h2>
           <p className="max-w-sm text-sm text-white/70">
-            Receive practical insights on branding, design, websites,
-            marketing, and digital growth.
+            Receive practical insights on technology, video, photography,
+            design, and digital growth.
           </p>
 
           <form className="flex flex-col gap-3 sm:flex-row">

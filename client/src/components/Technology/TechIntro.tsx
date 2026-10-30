@@ -53,7 +53,7 @@ function TechIntro() {
               use cases.
             </p>
             <p className="text-sm leading-relaxed text-white/70">
-              At Pitches Creative, we approach technology with a balance of
+              At The Stable Company, we approach technology with a balance of
               product strategy, user experience design, interface design,
               and development execution. The goal is to create digital
               products that are not only functional, but also intuitive,

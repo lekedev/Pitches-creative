@@ -68,9 +68,9 @@ function Hero() {
                 font-[Aspekta]
                 "
             >
-                // We Transform Concepts into<br />
-                powerful brand stories with impact<br />
-                and clarity.
+                // Technology, video, and photography<br />
+                under one roof — built to help your<br />
+                business stand firm and stand out.
             </p>
 
             <NavLink

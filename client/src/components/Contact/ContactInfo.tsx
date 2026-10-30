@@ -6,8 +6,8 @@ import EnquiryModal from "./EnquiryModal";
 const contactDetails = [
   {
     icon: "/contactimg/Email.png",
-    label: "info@pitchescreative.com",
-    href: "mailto:info@pitchescreative.com",
+    label: "info@thestablecompany.com",
+    href: "mailto:info@thestablecompany.com",
   },
   {
     icon: "/contactimg/Location.png",

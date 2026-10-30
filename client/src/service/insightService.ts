@@ -65,7 +65,7 @@ const mapInsight = (raw: RawInsight): Post => ({
     month: "short",
     day: "numeric",
   }),
-  author: raw.author || "Pitches Creative",
+  author: raw.author || "The Stable Company",
   category: raw.category,
   content: raw.content,
 
