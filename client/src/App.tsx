@@ -61,6 +61,7 @@ function App() {
             <Route path="/about/*" element={<About />} />
             <Route path="/services" element={<InProgress title="Services" />} />
             <Route path="/work" element={<InProgress title="Work" />} />
+            <Route path="/work/:slug" element={<InProgress title="Case study" />} />
             <Route path="/insights" element={<Insights />} />
             <Route path="/insights/all" element={<InsightsAll />} />
             <Route path="/insights/:slug" element={<InsightDetail />} />

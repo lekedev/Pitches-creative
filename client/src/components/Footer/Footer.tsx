@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUp } from "lucide-react";
-import { primaryCta, primaryNav, serviceNav } from "../../data/navigation";
+import { primaryNav, serviceNav } from "../../data/navigation";
 import { site } from "../../data/site";
-import { ButtonLink } from "../ui/Button";
 import { Wordmark } from "../ui/Wordmark";
 
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
@@ -23,15 +22,12 @@ function Footer() {
   return (
     <footer className="bg-ink text-ivory">
       <div className="container-page pb-10 pt-20 md:pt-28">
-        {/* Closing statement */}
-        <div className="flex flex-col gap-10 border-b border-line-dark pb-16 md:flex-row md:items-end md:justify-between md:pb-20">
+        {/* Closing statement — pages carry their own CTA right above the footer */}
+        <div className="border-b border-line-dark pb-16 md:pb-20">
           <p className="max-w-[16ch] text-title md:text-headline">
             We build what moves business{" "}
             <em className="font-serif font-normal italic tracking-[-0.02em] text-ember-light">forward.</em>
           </p>
-          <ButtonLink to={primaryCta.to} tone="dark" className="shrink-0">
-            {primaryCta.label}
-          </ButtonLink>
         </div>
 
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
