@@ -30,7 +30,7 @@ const principles = [
 
 export function StableHome() {
   return (
-    <main className="bg-[#081326] text-[#f7f5ef]">
+    <div className="bg-[#081326] text-[#f7f5ef]">
       <section className="relative flex min-h-[94svh] items-end overflow-hidden px-5 pb-16 pt-32 sm:px-8 lg:min-h-screen lg:px-16 lg:pb-20">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -right-24 top-20 h-[34rem] w-[34rem] rounded-full border border-[#caa969]/20 sm:right-0 lg:right-[8%]" />
@@ -190,6 +190,6 @@ export function StableHome() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

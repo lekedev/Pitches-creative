@@ -7,19 +7,24 @@ import PostEngagement from "../components/Insights/PostEngagement";
 
 function InsightDetail() {
   const { slug } = useParams();
-  const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  // The result is tagged with the slug it belongs to, so navigating between posts
+  // shows the loading state without resetting state inside the effect.
+  const [result, setResult] = useState<{ slug: string; post: Post | null } | null>(null);
 
   useEffect(() => {
     if (!slug) return;
-    setLoading(true);
-    setNotFound(false);
+    let cancelled = false;
     getInsightBySlug(slug)
-      .then(setPost)
-      .catch(() => setNotFound(true))
-      .finally(() => setLoading(false));
+      .then((found) => !cancelled && setResult({ slug, post: found }))
+      .catch(() => !cancelled && setResult({ slug, post: null }));
+    return () => {
+      cancelled = true;
+    };
   }, [slug]);
+
+  const loading = !result || result.slug !== slug;
+  const post = loading ? null : result.post;
+  const notFound = !loading && !post;
 
   if (loading) {
     return <div className="min-h-screen bg-[#0a0a0a]" />;
@@ -77,7 +82,7 @@ function InsightDetail() {
         >
           ← Back to All Insights
         </NavLink>
-        <PostEngagement post={post} />
+        <PostEngagement key={post.id} post={post} />
       </motion.div>
     </article>
   );

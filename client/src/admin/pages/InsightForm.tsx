@@ -42,7 +42,7 @@ export default function InsightForm() {
       setEnableComments(data.enableComments ?? true);
       setEnableLikes(data.enableLikes ?? true);
     });
-  }, [id]);
+  }, [id, isEdit]);
 
   const submit = async (e: FormEvent, publish: boolean) => {
     e.preventDefault();

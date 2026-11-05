@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import { AuthProvider } from './admin/context/AuthContext';
@@ -12,10 +13,9 @@ const About = lazy(() => import('./pages/About'));
 const Insights = lazy(() => import('./pages/Insights'));
 const InsightsAll = lazy(() => import('./pages/InsightsAll'));
 const InsightDetail = lazy(() => import('./pages/InsightDetail'));
-const Technology = lazy(() => import('./pages/Technology'));
-const Branding = lazy(() => import('./pages/Branding'));
-const ProjectDetail = lazy(() => import('./pages/ProjectDetails'));
 const Contact = lazy(() => import('./pages/Contact'));
+const InProgress = lazy(() => import('./pages/InProgress'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Admin
 const Login = lazy(() => import('./admin/pages/Login'));
@@ -23,77 +23,67 @@ const Dashboard = lazy(() => import('./admin/pages/Dashboard'));
 const InsightForm = lazy(() => import('./admin/pages/InsightForm'));
 const Messages = lazy(() => import('./admin/pages/Messages'));
 
-function AppContent() {
-  const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+const PageFallback = () => <div className="min-h-screen bg-ivory" />;
 
+/** Chrome shared by every public page. */
+function SiteLayout() {
   return (
-    <div className="app">
-      <ScrollToTop />
-      {!isAdminRoute && <Navbar />}
+    <>
+      <Navbar />
+      <main id="main">
+        <Suspense fallback={<PageFallback />}>
+          <Outlet />
+        </Suspense>
+      </main>
+      <Footer />
+    </>
+  );
+}
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
-        <Routes>
-          {/* Public site */}
-          <Route path="/" element={<Home />} />
-          <Route path="/about/*" element={<About />} />
-          <Route path="/insights" element={<Insights />} />
-          <Route path="/insights/all" element={<InsightsAll />} />
-          <Route path="/insights/:slug" element={<InsightDetail />} />
-          <Route path="/technology/" element={<Technology />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/branding" element={<Branding />} />
-          <Route path="/projects/:slug" element={<ProjectDetail />} />
-          <Route path="admin/dashboard" element={<Dashboard />} />
-          <Route path="admin/insights/new" element={<InsightForm />} />
-          <Route path="admin/messages" element={<Messages />} />
-
-          {/* Admin */}
-          <Route path="/admin/login" element={<Login />} />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/insights/new"
-            element={
-              <ProtectedRoute>
-                <InsightForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/insights/:id/edit"
-            element={
-              <ProtectedRoute>
-                <InsightForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/messages"
-            element={
-              <ProtectedRoute>
-                <Messages />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Suspense>
-
-      {!isAdminRoute && <Footer />}
-    </div>
+/** Every /admin page except login requires a token. */
+function AdminGuard() {
+  return (
+    <ProtectedRoute>
+      <Outlet />
+    </ProtectedRoute>
   );
 }
 
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      {/* reducedMotion="user": Framer skips transform animations for visitors who ask for less motion. */}
+      <MotionConfig reducedMotion="user">
+        <ScrollToTop />
+        <Routes>
+          <Route element={<SiteLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about/*" element={<About />} />
+            <Route path="/services" element={<InProgress title="Services" />} />
+            <Route path="/work" element={<InProgress title="Work" />} />
+            <Route path="/insights" element={<Insights />} />
+            <Route path="/insights/all" element={<InsightsAll />} />
+            <Route path="/insights/:slug" element={<InsightDetail />} />
+            <Route path="/contact" element={<Contact />} />
+
+            {/* Legacy Pitches Creative URLs */}
+            <Route path="/technology" element={<Navigate to="/services" replace />} />
+            <Route path="/branding" element={<Navigate to="/work" replace />} />
+            <Route path="/projects/*" element={<Navigate to="/work" replace />} />
+
+            <Route path="*" element={<NotFound />} />
+          </Route>
+
+          <Route path="/admin/login" element={<Suspense fallback={<PageFallback />}><Login /></Suspense>} />
+          <Route element={<Suspense fallback={<PageFallback />}><AdminGuard /></Suspense>}>
+            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/insights/new" element={<InsightForm />} />
+            <Route path="/admin/insights/:id/edit" element={<InsightForm />} />
+            <Route path="/admin/messages" element={<Messages />} />
+          </Route>
+        </Routes>
+      </MotionConfig>
     </AuthProvider>
   );
 }

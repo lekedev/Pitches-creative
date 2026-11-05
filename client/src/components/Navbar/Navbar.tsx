@@ -1,93 +1,156 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-
-const navLinks = [
-  { label: "Company", path: "/about" },
-  { label: "Our approach", path: "/#approach" },
-  { label: "Contact", path: "/contact" },
-];
+import { primaryCta, primaryNav } from "../../data/navigation";
+import { ButtonLink } from "../ui/Button";
+import { Wordmark } from "../ui/Wordmark";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const close = () => setIsOpen(false);
 
   useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 18);
+    const onScroll = () => setIsScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm transition-colors no-underline ${isActive ? "text-white" : "text-white/60 hover:text-white"}`;
+  // While the mobile menu is open: Escape closes it and the page behind can't scroll.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-[100] flex items-center justify-between px-5 py-4 transition-all duration-300 sm:px-8 lg:px-16 lg:py-5 ${isScrolled ? "border-b border-white/10 bg-[#081326]/90 backdrop-blur-xl" : "border-b border-transparent bg-[#081326]/30"}`}>
-        <Link to="/" aria-label="The Stable Company home" onClick={() => setIsOpen(false)} className="group flex items-center gap-3 text-white no-underline">
-          <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center border border-[#d5b77c]/70 text-lg font-serif text-[#d5b77c] transition-colors group-hover:bg-[#d5b77c] group-hover:text-[#081326]">S</span>
-          <span className="flex flex-col leading-tight">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] sm:text-xs">The Stable Company</span>
-            <span className="mt-1 text-[8px] uppercase tracking-[0.32em] text-white/45">Limited</span>
-          </span>
-        </Link>
+      <a
+        href="#main"
+        className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-ink px-4 py-2 text-sm text-ivory focus:translate-y-0"
+      >
+        Skip to content
+      </a>
 
-        <nav aria-label="Main navigation" className="hidden items-center gap-9 lg:flex">
-          {navLinks.map((link) => (
-            link.path.startsWith("/#") ? (
-              <a key={link.path} href={link.path} className="text-sm text-white/60 no-underline transition-colors hover:text-white">{link.label}</a>
-            ) : (
-              <NavLink key={link.path} to={link.path} className={linkClass}>{link.label}</NavLink>
-            )
-          ))}
-          <Link to="/contact" className="inline-flex items-center gap-3 border border-[#d5b77c]/60 px-4 py-3 text-xs text-[#e4ca97] no-underline transition-colors hover:bg-[#d5b77c] hover:text-[#081326]">
-            Start a conversation <span>↗</span>
+      <header
+        className={`fixed inset-x-0 top-0 z-[100] border-b transition-[background-color,border-color] duration-500 ease-out-expo ${
+          isScrolled || isOpen ? "border-line bg-ivory/90 backdrop-blur-md" : "border-transparent bg-transparent"
+        }`}
+      >
+        <div className="container-page flex h-[72px] items-center justify-between lg:h-[84px]">
+          <Link to="/" aria-label="The Stable Company — home" onClick={close} className="text-ink">
+            <Wordmark />
           </Link>
-        </nav>
 
-        <button
-          type="button"
-          onClick={() => setIsOpen((open) => !open)}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isOpen}
-          className="relative z-[120] flex h-10 w-10 flex-col items-center justify-center gap-1.5 border border-white/20 bg-transparent lg:hidden"
-        >
-          <span className={`h-px w-5 bg-white transition-transform ${isOpen ? "translate-y-[4px] rotate-45" : ""}`} />
-          <span className={`h-px w-5 bg-white transition-opacity ${isOpen ? "opacity-0" : ""}`} />
-          <span className={`h-px w-5 bg-white transition-transform ${isOpen ? "-translate-y-[6px] -rotate-45" : ""}`} />
-        </button>
+          <nav aria-label="Main" className="hidden lg:block">
+            <ul className="flex items-center gap-1">
+              {primaryNav.map((item) => (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    end={item.to === "/"}
+                    className={({ isActive }) =>
+                      `relative block px-3.5 py-2 text-[14px] transition-colors duration-300 ${
+                        isActive ? "text-ink" : "text-stone hover:text-ink"
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {item.label}
+                        {isActive && (
+                          <motion.span
+                            layoutId="nav-active"
+                            aria-hidden="true"
+                            className="absolute bottom-0 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-ember"
+                            transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="hidden lg:block">
+            <ButtonLink to={primaryCta.to} className="!h-11 !px-5 !text-[14px]">
+              {primaryCta.label}
+            </ButtonLink>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsOpen((open) => !open)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            className="-mr-2 flex h-11 w-11 flex-col items-center justify-center gap-[7px] lg:hidden"
+          >
+            <span
+              className={`h-[1.5px] w-6 bg-ink transition-transform duration-300 ease-out-expo ${
+                isOpen ? "translate-y-[4.25px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`h-[1.5px] w-6 bg-ink transition-transform duration-300 ease-out-expo ${
+                isOpen ? "-translate-y-[4.25px] -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
       </header>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.nav
-            aria-label="Mobile navigation"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[110] flex flex-col justify-center gap-7 bg-[#081326] px-8 lg:hidden"
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[90] flex flex-col overflow-y-auto bg-ivory pt-[72px] lg:hidden"
           >
-            {navLinks.map((link, index) => (
-              link.path.startsWith("/#") ? (
-                <motion.a key={link.path} href={link.path} onClick={() => setIsOpen(false)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }} className="text-3xl font-medium text-white no-underline">{link.label}</motion.a>
-              ) : (
-                <motion.div key={link.path} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}>
-                  <NavLink to={link.path} onClick={() => setIsOpen(false)} className="text-3xl font-medium text-white no-underline">{link.label}</NavLink>
-                </motion.div>
-              )
-            ))}
-            <Link to="/contact" onClick={() => setIsOpen(false)} className="mt-4 inline-flex w-fit items-center gap-4 bg-[#d5b77c] px-5 py-4 text-sm font-medium text-[#081326] no-underline">Start a conversation ↗</Link>
-          </motion.nav>
+            <nav aria-label="Mobile" className="container-page flex flex-1 flex-col justify-center py-10">
+              <ul className="border-t border-line">
+                {primaryNav.map((item, index) => (
+                  <motion.li
+                    key={item.to}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.04 * index, ease: [0.16, 1, 0.3, 1] }}
+                    className="border-b border-line"
+                  >
+                    <NavLink
+                      to={item.to}
+                      end={item.to === "/"}
+                      onClick={close}
+                      className={({ isActive }) =>
+                        `flex items-baseline justify-between py-4 ${isActive ? "text-ink" : "text-ink/70"}`
+                      }
+                    >
+                      <span className="font-serif text-[2.5rem] leading-none tracking-[-0.02em]">{item.label}</span>
+                      <span className="text-eyebrow tabular-nums text-stone">{String(index + 1).padStart(2, "0")}</span>
+                    </NavLink>
+                  </motion.li>
+                ))}
+              </ul>
+            </nav>
+            <div className="container-page pb-[max(2rem,env(safe-area-inset-bottom))]">
+              <ButtonLink to={primaryCta.to} onClick={close} className="w-full">
+                {primaryCta.label}
+              </ButtonLink>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

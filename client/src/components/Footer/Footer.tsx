@@ -1,26 +1,114 @@
 import { Link } from "react-router-dom";
+import { ArrowUp } from "lucide-react";
+import { primaryCta, primaryNav, serviceNav } from "../../data/navigation";
+import { site } from "../../data/site";
+import { ButtonLink } from "../ui/Button";
+import { Wordmark } from "../ui/Wordmark";
+
+function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h2 className="mb-5 text-eyebrow font-medium uppercase text-stone-light">{title}</h2>
+      <ul className="space-y-3 text-[15px]">{children}</ul>
+    </div>
+  );
+}
+
+const linkClass = "text-ivory/80 transition-colors duration-300 hover:text-ember-light";
 
 function Footer() {
+  const { email, phone, location } = site.contact;
+  const hasContact = Boolean(email || phone || location);
+
   return (
-    <footer className="border-t border-white/10 bg-[#061020] px-5 py-10 text-[#f7f5ef] sm:px-8 lg:px-16">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-9">
-        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-center">
-          <Link to="/" className="flex w-fit items-center gap-3 text-white no-underline">
-            <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center border border-[#d5b77c]/70 font-serif text-xl text-[#d5b77c]">S</span>
-            <span className="flex flex-col leading-tight">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em]">The Stable Company</span>
-              <span className="mt-1 text-[9px] uppercase tracking-[0.3em] text-white/45">Limited</span>
-            </span>
-          </Link>
-          <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-7 gap-y-3">
-            <Link to="/about" className="text-sm text-white/60 no-underline hover:text-white">Company</Link>
-            <a href="/#ventures" className="text-sm text-white/60 no-underline hover:text-white">Our approach</a>
-            <Link to="/contact" className="text-sm text-white/60 no-underline hover:text-white">Contact</Link>
-          </nav>
+    <footer className="bg-ink text-ivory">
+      <div className="container-page pb-10 pt-20 md:pt-28">
+        {/* Closing statement */}
+        <div className="flex flex-col gap-10 border-b border-line-dark pb-16 md:flex-row md:items-end md:justify-between md:pb-20">
+          <p className="max-w-[16ch] text-title md:text-headline">
+            We build what moves business{" "}
+            <em className="font-serif font-normal italic tracking-[-0.02em] text-ember-light">forward.</em>
+          </p>
+          <ButtonLink to={primaryCta.to} tone="dark" className="shrink-0">
+            {primaryCta.label}
+          </ButtonLink>
         </div>
-        <div className="flex flex-col justify-between gap-3 border-t border-white/10 pt-5 text-xs text-white/40 sm:flex-row sm:items-center">
-          <p>Building what comes next.</p>
-          <p>© {new Date().getFullYear()} The Stable Company Limited. All rights reserved.</p>
+
+        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
+          <div className="max-w-xs">
+            <Link to="/" aria-label="The Stable Company — home" className="text-ivory">
+              <Wordmark showLegal />
+            </Link>
+            <p className="mt-6 text-[15px] leading-relaxed text-stone-light">
+              A creative and technology company building brands, digital experiences and solutions for
+              businesses and the people behind them.
+            </p>
+          </div>
+
+          <FooterColumn title="Navigate">
+            {primaryNav.map((item) => (
+              <li key={item.to}>
+                <Link to={item.to} className={linkClass}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title="Services">
+            {serviceNav.map((item) => (
+              <li key={item.to}>
+                <Link to={item.to} className={linkClass}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title="Contact">
+            {hasContact ? (
+              <>
+                {email && (
+                  <li>
+                    <a href={`mailto:${email}`} className={linkClass}>
+                      {email}
+                    </a>
+                  </li>
+                )}
+                {phone && (
+                  <li>
+                    <a href={`tel:${phone.replace(/\s+/g, "")}`} className={linkClass}>
+                      {phone}
+                    </a>
+                  </li>
+                )}
+                {location && <li className="text-stone-light">{location}</li>}
+              </>
+            ) : (
+              <li>
+                <Link to="/contact" className={linkClass}>
+                  Send us an enquiry
+                </Link>
+              </li>
+            )}
+            {site.socials.map((social) => (
+              <li key={social.href}>
+                <a href={social.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </FooterColumn>
+        </div>
+
+        <div className="flex flex-col gap-4 border-t border-line-dark pt-8 text-[13px] text-stone-light sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} {site.legalName}. All rights reserved.
+          </p>
+          <a href="#main" className="group inline-flex w-fit items-center gap-2 transition-colors hover:text-ivory">
+            Back to top
+            <ArrowUp aria-hidden="true" strokeWidth={1.75} className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5" />
+          </a>
         </div>
       </div>
     </footer>

@@ -15,15 +15,18 @@ export default function Dashboard() {
   const [insights, setInsights] = useState<Insight[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchInsights = async () => {
-    setLoading(true);
-    const { data } = await api.get("/insights/admin/all");
-    setInsights(data);
-    setLoading(false);
-  };
+  // Refreshes keep the current list on screen; `loading` only covers the first fetch.
+  const fetchInsights = () =>
+    api.get<Insight[]>("/insights/admin/all").then(({ data }) => {
+      setInsights(data);
+      setLoading(false);
+    });
 
   useEffect(() => {
-    fetchInsights();
+    api.get<Insight[]>("/insights/admin/all").then(({ data }) => {
+      setInsights(data);
+      setLoading(false);
+    });
   }, []);
 
   const handleDelete = async (id: string) => {

@@ -21,19 +21,20 @@ export default function PostEngagement({
   post: EngagementPost;
 }) {
   const [likes, setLikes] = useState(post.likes ?? 0);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState<boolean>(() => {
+    try {
+      const likedPosts: string[] = JSON.parse(localStorage.getItem("liked_insights") || "[]");
+      return likedPosts.includes(post.id);
+    } catch {
+      return false;
+    }
+  });
   const [comments, setComments] = useState<Comment[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    const likedPosts = JSON.parse(
-      localStorage.getItem("liked_insights") || "[]"
-    );
-
-    setLiked(likedPosts.includes(post.id));
-
     if (post.enableComments ?? true) {
       getComments(post.id).then(setComments);
     }
