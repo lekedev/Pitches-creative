@@ -3,9 +3,9 @@ import { HomeHero } from "../sections/home/HomeHero";
 import { BrandIntro } from "../sections/home/BrandIntro";
 import { WhatWeDo } from "../sections/home/WhatWeDo";
 import { FeaturedWork } from "../sections/home/FeaturedWork";
-import { Approach } from "../sections/home/Approach";
+import { Approach } from "../components/shared/Approach";
 import { WhyUs } from "../sections/home/WhyUs";
-import { ClosingCta } from "../sections/home/ClosingCta";
+import { CtaSection } from "../components/ui/CtaSection";
 
 export default function Home() {
   usePageMeta();
@@ -18,7 +18,7 @@ export default function Home() {
       <FeaturedWork />
       <Approach />
       <WhyUs />
-      <ClosingCta />
+      <CtaSection />
     </>
   );
 }

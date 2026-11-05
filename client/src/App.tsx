@@ -11,10 +11,11 @@ import ScrollToTop from './components/shared/ScrollToTop';
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Insights = lazy(() => import('./pages/Insights'));
-const InsightsAll = lazy(() => import('./pages/InsightsAll'));
 const InsightDetail = lazy(() => import('./pages/InsightDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
-const InProgress = lazy(() => import('./pages/InProgress'));
+const Services = lazy(() => import('./pages/Services'));
+const Work = lazy(() => import('./pages/Work'));
+const CaseStudy = lazy(() => import('./pages/CaseStudy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Admin
@@ -58,12 +59,11 @@ function App() {
         <Routes>
           <Route element={<SiteLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/about/*" element={<About />} />
-            <Route path="/services" element={<InProgress title="Services" />} />
-            <Route path="/work" element={<InProgress title="Work" />} />
-            <Route path="/work/:slug" element={<InProgress title="Case study" />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/work/:slug" element={<CaseStudy />} />
             <Route path="/insights" element={<Insights />} />
-            <Route path="/insights/all" element={<InsightsAll />} />
             <Route path="/insights/:slug" element={<InsightDetail />} />
             <Route path="/contact" element={<Contact />} />
 
@@ -71,6 +71,8 @@ function App() {
             <Route path="/technology" element={<Navigate to="/services" replace />} />
             <Route path="/branding" element={<Navigate to="/work" replace />} />
             <Route path="/projects/*" element={<Navigate to="/work" replace />} />
+            <Route path="/about/*" element={<Navigate to="/about" replace />} />
+            <Route path="/insights/all" element={<Navigate to="/insights" replace />} />
 
             <Route path="*" element={<NotFound />} />
           </Route>

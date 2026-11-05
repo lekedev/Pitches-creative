@@ -36,7 +36,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] font-[Aspekta] text-white">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <div className="mx-auto max-w-5xl px-6 py-10">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-2xl font-medium">Insights</h1>
