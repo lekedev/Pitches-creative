@@ -4,7 +4,7 @@ The site has two parts:
 
 | Part | Folder | Hosting | Purpose |
 | --- | --- | --- | --- |
-| Website | `client/` | Netlify (`client/netlify.toml`) | React + Vite single-page app |
+| Website | `client/` | Netlify (`client/netlify.toml`); Vercel also builds previews (`client/vercel.json`, applies when the Vercel project's root directory is `client`) | React + Vite single-page app |
 | API | `server/` | Any Node host (wherever it runs today) | Contact enquiries, Insights CMS, admin login |
 
 The website works without the API — Insights falls back to clearly labelled
@@ -63,7 +63,9 @@ Server environment variables (names from `server/src`):
 
 ## 4. Domain
 
-The site currently assumes `https://pitchescreative.netlify.app`. When the
+The site currently assumes `https://pitchescreative.netlify.app` (the `pitchescreative`
+Netlify project). A second Netlify project, `comforting-centaur-ee1192`, also
+builds this repo behind a password; one of the two can probably be retired. When the
 domain changes, update it in:
 
 - `client/src/data/site.ts` → `url`
