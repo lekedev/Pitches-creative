@@ -1,15 +1,10 @@
+import { insightCategories } from "../../data/insightCategories";
 import { useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/client";
 
-const CATEGORIES = [
-  "Brand Strategy",
-  "Visual Design",
-  "Web Development",
-  "Marketing",
-  "Business Growth",
-];
+const CATEGORIES = insightCategories;
 
 export default function InsightForm() {
   const { id } = useParams();
@@ -19,7 +14,7 @@ export default function InsightForm() {
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [category, setCategory] = useState<string>(CATEGORIES[0]);
   const [tagsInput, setTagsInput] = useState("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [existingImageUrl, setExistingImageUrl] = useState("");
@@ -42,7 +37,7 @@ export default function InsightForm() {
       setEnableComments(data.enableComments ?? true);
       setEnableLikes(data.enableLikes ?? true);
     });
-  }, [id]);
+  }, [id, isEdit]);
 
   const submit = async (e: FormEvent, publish: boolean) => {
     e.preventDefault();
@@ -92,7 +87,7 @@ export default function InsightForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] font-[Aspekta] text-white">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <div className="mx-auto max-w-6xl px-6 py-10">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-2xl font-medium">

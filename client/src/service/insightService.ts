@@ -19,8 +19,9 @@ export interface Post {
   enableSharing: boolean;
   enableComments: boolean;
   enableLikes: boolean;
+  /** True for placeholder articles from data/sampleInsights.ts. */
+  sample?: boolean;
 }
-
 
 export interface Comment {
   _id: string;
@@ -51,7 +52,8 @@ interface RawInsight {
   enableLikes?: boolean;
 }
 
-const FALLBACK_IMAGE = "/insight/insight.jpeg";
+// Empty means "no cover": the UI renders a typographic cover instead.
+const FALLBACK_IMAGE = "";
 
 const mapInsight = (raw: RawInsight): Post => ({
   id: raw._id,
@@ -60,12 +62,12 @@ const mapInsight = (raw: RawInsight): Post => ({
   excerpt: raw.excerpt,
   description: raw.excerpt,
   coverImage: raw.coverImage?.url || FALLBACK_IMAGE,
-  date: new Date(raw.createdAt).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
+  date: new Date(raw.createdAt).toLocaleDateString("en-GB", {
     day: "numeric",
+    month: "short",
+    year: "numeric",
   }),
-  author: raw.author || "Pitches Creative",
+  author: raw.author || "The Stable Company",
   category: raw.category,
   content: raw.content,
 

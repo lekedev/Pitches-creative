@@ -1,86 +1,97 @@
 import { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
-import { getInsightBySlug } from "../service/insightService";
-import type { Post } from "../service/insightService";
-import PostEngagement from "../components/Insights/PostEngagement";
+import { useParams } from "react-router-dom";
+import Markdown from "react-markdown";
+import { getInsightBySlug, type Post } from "../service/insightService";
+import { sampleInsights } from "../data/sampleInsights";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { Eyebrow } from "../components/ui/Eyebrow";
+import { Reveal } from "../components/ui/Reveal";
+import { ButtonLink } from "../components/ui/Button";
+import { CtaSection } from "../components/ui/CtaSection";
+import { InsightCover, SampleBadge } from "../components/insights/InsightCover";
+import PostEngagement from "../components/insights/PostEngagement";
+import NotFound from "./NotFound";
 
-function InsightDetail() {
+// Editorial article typography for Markdown output.
+const prose =
+  "max-w-[68ch] text-lg leading-[1.75] text-ink/85 [&_a]:underline [&_a]:decoration-ember [&_a]:underline-offset-4 [&_blockquote]:border-l-2 [&_blockquote]:border-ember [&_blockquote]:pl-6 [&_blockquote]:font-serif [&_blockquote]:text-2xl [&_blockquote]:italic [&_h2]:mb-4 [&_h2]:mt-14 [&_h2]:text-3xl [&_h2]:tracking-[-0.02em] [&_h2]:text-ink [&_h3]:mb-3 [&_h3]:mt-10 [&_h3]:text-xl [&_h3]:text-ink [&_img]:my-10 [&_img]:rounded-sm [&_li]:mt-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-6 [&_ul]:list-disc [&_ul]:pl-6";
+
+export default function InsightDetail() {
   const { slug } = useParams();
-  const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const sample = sampleInsights.find((p) => p.slug === slug) ?? null;
+
+  // The result is tagged with the slug it belongs to, so navigating between posts
+  // shows the loading state without resetting state inside the effect.
+  const [result, setResult] = useState<{ slug: string; post: Post | null } | null>(null);
 
   useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    setNotFound(false);
+    if (!slug || sample) return;
+    let cancelled = false;
     getInsightBySlug(slug)
-      .then(setPost)
-      .catch(() => setNotFound(true))
-      .finally(() => setLoading(false));
-  }, [slug]);
+      .then((found) => !cancelled && setResult({ slug, post: found }))
+      .catch(() => !cancelled && setResult({ slug, post: null }));
+    return () => {
+      cancelled = true;
+    };
+  }, [slug, sample]);
+
+  const loading = !sample && (!result || result.slug !== slug);
+  const post = sample ?? (loading ? null : result?.post ?? null);
+
+  usePageMeta({
+    title: post?.title ?? "Insights",
+    description: post?.excerpt,
+    image: post?.coverImage || undefined,
+  });
 
   if (loading) {
-    return <div className="min-h-screen bg-[#0a0a0a]" />;
+    return <div className="min-h-screen" aria-busy="true" />;
   }
-
-  if (notFound || !post) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#0a0a0a] px-5 text-center text-white">
-        <p className="text-xl">Insight not found.</p>
-        <NavLink
-          to="/insights/all"
-          className="rounded-full border border-white/30 px-5 py-2 text-sm text-white no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95"
-        >
-          Back to All Insights
-        </NavLink>
-      </div>
-    );
-  }
+  if (!post) return <NotFound />;
 
   return (
-    <article className="bg-[#0a0a0a] px-5 pb-20 pt-32 font-[Aspekta] text-white lg:px-12 lg:pt-40">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mx-auto max-w-3xl"
-      >
-        <p className="mb-4 flex items-center gap-3 text-xs tracking-widest text-white/50">
-          <span>{post.category}</span>
-          <span>·</span>
-          <span>{post.date}</span>
-          <span>·</span>
-          <span>{post.author}</span>
-        </p>
+    <>
+      <article>
+        <header className="container-page pb-14 pt-36 sm:pt-44 lg:pt-52">
+          <Reveal immediate>
+            <Eyebrow>{post.category}</Eyebrow>
+          </Reveal>
+          <Reveal immediate delay={0.08}>
+            <h1 className="mt-8 max-w-[20ch] text-headline">{post.title}</h1>
+          </Reveal>
+          <Reveal immediate delay={0.16}>
+            <p className="mt-10 flex flex-wrap items-center gap-3 text-stone">
+              {post.sample && <SampleBadge />}
+              <span>{post.author}</span>
+              {!post.sample && <span>· {post.date}</span>}
+            </p>
+          </Reveal>
+        </header>
 
-        <h1 className="mb-8 text-3xl font-bold leading-tight sm:text-4xl">
-          {post.title}
-        </h1>
+        <Reveal immediate delay={0.22} className="container-page">
+          <div className="aspect-[16/8] overflow-hidden rounded-sm">
+            <InsightCover post={post} />
+          </div>
+        </Reveal>
 
-        <div className="mb-10 aspect-[16/9] overflow-hidden rounded-2xl">
-          <img
-            src={post.coverImage}
-            alt={post.title}
-            className="h-full w-full object-cover"
-          />
+        <div className="container-page grid gap-10 pb-24 pt-16 md:pb-32 lg:grid-cols-12">
+          <div className="lg:col-span-8 lg:col-start-3">
+            {post.excerpt && <p className="max-w-[60ch] text-lede text-stone">{post.excerpt}</p>}
+            <div className={prose}>
+              <Markdown>{post.content}</Markdown>
+            </div>
+
+            {!post.sample && <PostEngagement key={post.id} post={post} />}
+
+            <div className="mt-16 border-t border-line pt-10">
+              <ButtonLink to="/insights" variant="secondary" arrow="right">
+                All insights
+              </ButtonLink>
+            </div>
+          </div>
         </div>
-
-        <p className="text-base leading-relaxed text-white/80">
-          {post.content}
-        </p>
-
-        <NavLink
-          to="/insights/all"
-          className="liquid-glass-btn mt-12 inline-flex w-fit items-center rounded-full px-6 py-3 text-sm font-medium text-white no-underline transition-transform hover:scale-[1.03] active:scale-95"
-        >
-          ← Back to All Insights
-        </NavLink>
-        <PostEngagement post={post} />
-      </motion.div>
-    </article>
+      </article>
+      <CtaSection />
+    </>
   );
 }
-
-export default InsightDetail;

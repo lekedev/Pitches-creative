@@ -1,149 +1,156 @@
-// components/Navbar/Navbar.tsx
-import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-
-const navLinks = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Branding", path: "/branding" },
-  { label: "Technology", path: "/technology" },
-  { label: "Insight", path: "/insight" },
-  { label: "Contact", path: "/contact" },
-];
+import { primaryCta, primaryNav } from "../../data/navigation";
+import { ButtonLink } from "../ui/Button";
+import { Wordmark } from "../ui/Wordmark";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const close = () => setIsOpen(false);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    const onScroll = () => setIsScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // While the mobile menu is open: Escape closes it and the page behind can't scroll.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <>
+      <a
+        href="#main"
+        className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-ink px-4 py-2 text-sm text-ivory focus:translate-y-0"
+      >
+        Skip to content
+      </a>
+
       <header
-        className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-5 py-5 transition-colors duration-300 lg:px-12 lg:py-6 ${
-          isScrolled
-            ? "bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10"
-            : "bg-transparent border-b border-transparent"
+        className={`fixed inset-x-0 top-0 z-[100] border-b transition-[background-color,border-color] duration-500 ease-out-expo ${
+          isScrolled || isOpen ? "border-line bg-ivory/90 backdrop-blur-md" : "border-transparent bg-transparent"
         }`}
       >
-        <NavLink
-          to="/"
-          end
-          className="text-xl font-semibold tracking-tight text-white no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95"
-        >
-          <img
-            src="/PitchesCreative.png"
-            alt="Pitches Creative"
-            className="h-10 w-auto"
-          />
-        </NavLink>
+        <div className="container-page flex h-[72px] items-center justify-between lg:h-[84px]">
+          <Link to="/" aria-label="The Stable Company — home" onClick={close} className="text-ink">
+            <Wordmark />
+          </Link>
 
-        {/* Desktop: horizontal links, slides in from the right, settles centered within the navbar row */}
-        <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
-          <AnimatePresence>
-            {isOpen && (
-              <motion.nav
-                initial={{ x: 80, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 80, opacity: 0 }}
-                transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
-                className="flex items-center gap-10"
-              >
-                {navLinks.map((link) => (
+          <nav aria-label="Main" className="hidden lg:block">
+            <ul className="flex items-center gap-1">
+              {primaryNav.map((item) => (
+                <li key={item.to}>
                   <NavLink
-                    key={link.path}
-                    to={link.path}
-                    end={link.path === "/"}
-                    onClick={() => setIsOpen(false)}
+                    to={item.to}
+                    end={item.to === "/"}
                     className={({ isActive }) =>
-                      `text-sm font-medium tracking-tight no-underline transition-all duration-200 hover:scale-[1.03] active:scale-95 whitespace-nowrap ${
-                        isActive ? "text-white" : "text-white/60 hover:text-white"
+                      `relative block px-3.5 py-2 text-[14px] transition-colors duration-300 ${
+                        isActive ? "text-ink" : "text-stone hover:text-ink"
                       }`
                     }
                   >
-                    {link.label}
+                    {({ isActive }) => (
+                      <>
+                        {item.label}
+                        {isActive && (
+                          <motion.span
+                            layoutId="nav-active"
+                            aria-hidden="true"
+                            className="absolute bottom-0 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-ember"
+                            transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                          />
+                        )}
+                      </>
+                    )}
                   </NavLink>
-                ))}
-              </motion.nav>
-            )}
-          </AnimatePresence>
-        </div>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <button
-          onClick={() => setIsOpen((prev) => !prev)}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isOpen}
-          className="relative z-[110] flex h-9 w-9 flex-col items-end justify-center gap-1.5 border-none bg-transparent p-0 cursor-pointer transition-all duration-200 hover:scale-[1.03] active:scale-95"
-        >
-          <span
-            className={`block h-0.5 rounded bg-white transition-all duration-300 ${
-              isOpen ? "w-6 translate-y-2 rotate-45" : "w-6"
-            }`}
-          />
-          <span
-            className={`block h-0.5 rounded bg-white transition-all duration-300 ${
-              isOpen ? "w-6 opacity-0" : "w-[18px]"
-            }`}
-          />
-          <span
-            className={`block h-0.5 rounded bg-white transition-all duration-300 ${
-              isOpen ? "w-6 -translate-y-2 -rotate-45" : "w-6"
-            }`}
-          />
-        </button>
+          <div className="hidden lg:block">
+            <ButtonLink to={primaryCta.to} className="!h-11 !px-5 !text-[14px]">
+              {primaryCta.label}
+            </ButtonLink>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsOpen((open) => !open)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            className="-mr-2 flex h-11 w-11 flex-col items-center justify-center gap-[7px] lg:hidden"
+          >
+            <span
+              className={`h-[1.5px] w-6 bg-ink transition-transform duration-300 ease-out-expo ${
+                isOpen ? "translate-y-[4.25px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`h-[1.5px] w-6 bg-ink transition-transform duration-300 ease-out-expo ${
+                isOpen ? "-translate-y-[4.25px] -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
       </header>
 
-      {/* Mobile: unchanged, still the centered vertical full-screen fade */}
       <AnimatePresence>
         {isOpen && (
-          <motion.nav
+          <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[105] flex items-center justify-center bg-[#0a0a0a] lg:hidden"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[90] flex flex-col overflow-y-auto bg-ivory pt-[72px] lg:hidden"
           >
-            <ul className="m-0 list-none p-0 text-center">
-              {navLinks.map((link, index) => (
-                <motion.li
-                  key={link.path}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 16 }}
-                  transition={{ duration: 0.3, delay: index * 0.08 }}
-                >
-                  <NavLink
-                    to={link.path}
-                    end={link.path === "/"}
-                    onClick={() => setIsOpen(false)}
-                    className={({ isActive }) =>
-                      `block py-3 text-3xl font-semibold tracking-tight no-underline transition-all duration-300 hover:scale-[1.03] active:scale-95 ${
-                        isActive
-                          ? "text-white"
-                          : "text-gray-500 hover:text-white"
-                      }`
-                    }
+            <nav aria-label="Mobile" className="container-page flex flex-1 flex-col justify-center py-10">
+              <ul className="border-t border-line">
+                {primaryNav.map((item, index) => (
+                  <motion.li
+                    key={item.to}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.04 * index, ease: [0.16, 1, 0.3, 1] }}
+                    className="border-b border-line"
                   >
-                    {link.label}
-                  </NavLink>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.nav>
+                    <NavLink
+                      to={item.to}
+                      end={item.to === "/"}
+                      onClick={close}
+                      className={({ isActive }) =>
+                        `flex items-baseline justify-between py-4 ${isActive ? "text-ink" : "text-ink/70"}`
+                      }
+                    >
+                      <span className="font-serif text-[2.5rem] leading-none tracking-[-0.02em]">{item.label}</span>
+                      <span className="text-eyebrow tabular-nums text-stone">{String(index + 1).padStart(2, "0")}</span>
+                    </NavLink>
+                  </motion.li>
+                ))}
+              </ul>
+            </nav>
+            <div className="container-page pb-[max(2rem,env(safe-area-inset-bottom))]">
+              <ButtonLink to={primaryCta.to} onClick={close} className="w-full">
+                {primaryCta.label}
+              </ButtonLink>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

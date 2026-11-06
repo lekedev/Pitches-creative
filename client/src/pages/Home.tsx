@@ -1,35 +1,24 @@
-// pages/Home.tsx
-import Hero from '../components/Hero/Hero';
-import AboutIntro from '../components/About/AboutIntro';
-import ApproachSection from '../components/About/ApproachSection';
-import StatsCarousel from '../components/Work/StatsCarousel';
-import ServicesIntro from '../components/Services/ServicesIntro';
-// import ServicesCarousel from '../components/Services/ServicesCarousel';
-import PortfolioShowcase from '../components/Services/PortfolioShowcase';
-import TestimonialsIntro from '../components/Testimonials/TestimonialsIntro';
-import TestimonialsGrid from '../components/Testimonials/TestimonialsGrid';
-import ContactHero from '../components/Contact/ContactHero';
-import LogoMarquee from './LogoMarquee';
-import InsightsTeaser from '../components/Insights/InsightsTeaser';
+import { usePageMeta } from "../hooks/usePageMeta";
+import { HomeHero } from "../sections/home/HomeHero";
+import { BrandIntro } from "../sections/home/BrandIntro";
+import { WhatWeDo } from "../sections/home/WhatWeDo";
+import { FeaturedWork } from "../sections/home/FeaturedWork";
+import { Approach } from "../components/shared/Approach";
+import { WhyUs } from "../sections/home/WhyUs";
+import { CtaSection } from "../components/ui/CtaSection";
 
-function Home() {
+export default function Home() {
+  usePageMeta();
+
   return (
-    <div>
-      <Hero />
-      <AboutIntro />
-      <StatsCarousel />
-      <ApproachSection />
-      <LogoMarquee />
-      
-      <ServicesIntro />
-      {/* <ServicesCarousel /> */}
-      <PortfolioShowcase />
-      <TestimonialsIntro />
-      <TestimonialsGrid />
-      <InsightsTeaser />
-      <ContactHero />
-    </div>
+    <>
+      <HomeHero />
+      <BrandIntro />
+      <WhatWeDo />
+      <FeaturedWork />
+      <Approach />
+      <WhyUs />
+      <CtaSection />
+    </>
   );
 }
-
-export default Home;

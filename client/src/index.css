@@ -1,157 +1,159 @@
+@import "@fontsource-variable/geist/wght.css";
+@import "@fontsource/instrument-serif/latin-400.css";
+@import "@fontsource/instrument-serif/latin-400-italic.css";
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   The Stable Company — design tokens
+   Every colour, font and type size the site uses lives here, so the
+   brand can be tuned in one place. Utilities: bg-ivory, text-stone,
+   border-line, font-serif, text-display, ease-out-expo, etc.
+   ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces */
+  --color-ivory: #f7f5f0;      /* primary background */
+  --color-sand: #efebe3;       /* alternate light section */
+  --color-line: #e5e1da;       /* hairlines on light */
+  --color-ink: #171717;        /* primary text + dark sections */
+  --color-ink-raised: #201f1d; /* cards/panels on dark */
+  --color-line-dark: #34322f;  /* hairlines on dark */
+
+  /* Text */
+  --color-stone: #6b675f;       /* secondary text on light — 5.2:1 on ivory (AA) */
+  --color-stone-light: #a8a29a; /* secondary text on dark — 7.1:1 on ink */
+
+  /* Brand accents — use sparingly */
+  --color-cocoa: #4a3426;       /* dark chocolate: quiet brand accent */
+  --color-ember: #b66a3c;       /* highlight: large text, rules, graphics */
+  --color-ember-deep: #9c5530;  /* small accent text on light — 5.1:1 */
+  --color-ember-light: #d08a5c; /* accent text on dark — 6.4:1 */
+
+  /* Type */
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+
+  /* Editorial type scale (fluid). Pair with font-serif or font-sans. */
+  --text-display: clamp(3.25rem, 9.5vw, 10rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.045em;
+  --text-headline: clamp(2.5rem, 6vw, 5.75rem);
+  --text-headline--line-height: 0.98;
+  --text-headline--letter-spacing: -0.04em;
+  --text-title: clamp(1.875rem, 3.6vw, 3.25rem);
+  --text-title--line-height: 1.05;
+  --text-title--letter-spacing: -0.03em;
+  --text-lede: clamp(1.25rem, 1.9vw, 1.625rem);
+  --text-lede--line-height: 1.4;
+  --text-lede--letter-spacing: -0.01em;
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
   html {
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-    max-width: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem; /* clears the fixed header for #anchor jumps */
+    background: var(--color-ivory);
   }
 
   body {
     margin: 0;
-    font-family: "Aspekta", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    overflow-x: hidden;
-    max-width: 100%;
-    /* font-family: system-ui, -apple-system, sans-serif; */
+    min-width: 0;
+    overflow-x: clip;
+    color: var(--color-ink);
+    background: var(--color-ivory);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
-  img {
+  img,
+  video,
+  svg {
     max-width: 100%;
     display: block;
   }
-}
 
-@font-face {
-  font-family: "Aspekta";
-  src:
-    url("./assets/fonts/AspektaVF.woff2") format("woff2"),
-    url("./assets/fonts/AspektaVF.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "InstrumentSans";
-  src:
-    url("./assets/fonts/InstrumentSans.woff2") format("woff2"),
-    url("./assets/fonts/InstrumentSans.ttf") format("truetype");
-  font-weight: 100 900;
-}
-
-@font-face {
-  font-family: "Barlow";
-  src:
-    url("./assets/fonts/Barlow-Thin.woff2") format("woff2"),
-    url("./assets/fonts/Barlow-Thin.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "barlow-regular";
-  src:
-    url("./assets/fonts/Barlow-Regular.woff2") format("woff2"),
-    url("./assets/fonts/Barlow-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "inter";
-  src:
-    url("./assets/fonts/Inter-Regular.woff2") format("woff2"),
-    url("./assets/fonts/Inter-Regular.otf") format("opentype");
-}
-
-
-
-@theme {
-  --animate-marquee: marquee 30s linear infinite;
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-}
-@theme {
-  --animate-marquee: marquee 30s linear infinite;
-  --animate-marquee-reverse: marquee-reverse 30s linear infinite;
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 
-  @keyframes marquee-reverse {
-    from {
-      transform: translateX(-50%);
-    }
-    to {
-      transform: translateX(0);
-    }
+  h1, h2, h3, h4 {
+    margin: 0;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    color: var(--color-ivory);
+    background: var(--color-ember);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-@theme {
-  --animate-ken-burns: ken-burns 9s ease-out forwards;
+@layer components {
+  /* Shared page gutter + max width. Use on any section's inner wrapper. */
+  .container-page {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-page { padding-inline: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .container-page { padding-inline: 3rem; }
+  }
 
-  @keyframes ken-burns {
-    from {
-      transform: scale(1) translate(0, 0);
-    }
-    to {
-      transform: scale(1.12) translate(-2%, -1%);
-    }
+  /* Vertical rhythm for top-level sections */
+  .section-y {
+    padding-block: 5.5rem;
+  }
+  @media (min-width: 768px) {
+    .section-y { padding-block: 8rem; }
+  }
+  @media (min-width: 1280px) {
+    .section-y { padding-block: 10rem; }
   }
 }
 
-/* body{
-    font-family: "Aspekta", sans-serif;
-} */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-.liquid-glass-btn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  background: linear-gradient(180deg, rgba(20, 26, 26, 0.35), rgba(8, 12, 12, 0.45));
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.3),
-    inset 0 -1px 3px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 10px 28px rgba(0, 0, 0, 0.45);
-  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.liquid-glass-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.05) 35%,
-    rgba(255, 255, 255, 0) 60%
-  );
-  pointer-events: none;
-}
-
-.liquid-glass-btn:hover {
-  background: linear-gradient(180deg, rgba(26, 34, 34, 0.4), rgba(10, 14, 14, 0.5));
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.35),
-    inset 0 -1px 3px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
-    0 12px 32px rgba(0, 0, 0, 0.5);
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

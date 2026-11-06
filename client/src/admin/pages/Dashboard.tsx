@@ -15,15 +15,18 @@ export default function Dashboard() {
   const [insights, setInsights] = useState<Insight[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchInsights = async () => {
-    setLoading(true);
-    const { data } = await api.get("/insights/admin/all");
-    setInsights(data);
-    setLoading(false);
-  };
+  // Refreshes keep the current list on screen; `loading` only covers the first fetch.
+  const fetchInsights = () =>
+    api.get<Insight[]>("/insights/admin/all").then(({ data }) => {
+      setInsights(data);
+      setLoading(false);
+    });
 
   useEffect(() => {
-    fetchInsights();
+    api.get<Insight[]>("/insights/admin/all").then(({ data }) => {
+      setInsights(data);
+      setLoading(false);
+    });
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -33,7 +36,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] font-[Aspekta] text-white">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <div className="mx-auto max-w-5xl px-6 py-10">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-2xl font-medium">Insights</h1>
